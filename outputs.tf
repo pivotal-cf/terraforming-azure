@@ -37,6 +37,9 @@ output "env_dns_zone_name_servers" {
 output "web_lb_name" {
   value = "${data.template_file.load_balancers.vars.web_lb_name}"
 }
+
+output "mysql_lb_name" {
+  value = "${data.template_file.load_balancers.vars.mysql_lb_name}"
 }
 
 output "pcf_subnet_id" {
