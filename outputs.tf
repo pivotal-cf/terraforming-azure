@@ -22,6 +22,10 @@ output "mysql_dns" {
   value = "mysql.${azurerm_dns_cname_record.mysql.zone_name}"
 }
 
+output "tcp_dns" {
+  value = "tcp.${azurerm_dns_cname_record.tcp.zone_name}"
+}
+
 output "sys_domain" {
   value = "sys.${azurerm_dns_cname_record.sys.zone_name}"
 }
@@ -40,6 +44,10 @@ output "web_lb_name" {
 
 output "mysql_lb_name" {
   value = "${data.template_file.load_balancers.vars.mysql_lb_name}"
+}
+
+output "tcp_lb_name" {
+  value = "${data.template_file.load_balancers.vars.tcp_lb_name}"
 }
 
 output "pcf_subnet_id" {

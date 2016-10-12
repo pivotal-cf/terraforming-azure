@@ -34,3 +34,11 @@ resource "azurerm_dns_cname_record" "mysql" {
   ttl                 = "60"
   record              = "${var.env_name}-mysql-lb-public-ip.${var.location}.cloudapp.azure.com"
 }
+
+resource "azurerm_dns_cname_record" "tcp" {
+  name                = "tcp"
+  zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  ttl                 = "60"
+  record              = "${var.env_name}-tcp-lb-public-ip.${var.location}.cloudapp.azure.com"
+}
