@@ -43,8 +43,6 @@ function check_prerequisites() {
 function prep_azure() {
 	azure config mode arm
 
-	local app_display_name="Service Principal for PCF"
-
   local account_count
   account_count=$(azure account list --json | jq ". | length")
   if [[ $account_count -eq 0 ]]; then
@@ -58,11 +56,11 @@ function prep_azure() {
   local tenant_id
   tenant_id=$(azure account show -s "$account" --json | jq ".[0].tenantId" --raw-output)
 
-  app_list=$(azure ad app show -c "$app_display_name" --json)
+  app_list=$(azure ad app show -c "$display_name" --json)
   if [[ "$app_list" != "data: No matching application was found" ]]; then
-    app_object_id=$(azure ad app show -c "$app_display_name" --json | jq ".[0].objectId")
+    app_object_id=$(azure ad app show -c "$display_name" --json | jq ".[0].objectId")
     if [[ -n "$app_object_id" ]]; then
-      echo "The \"$app_display_name\" application already exists (objectId: $app_object_id)."
+      echo "The \"$display_name\" application already exists (objectId: $app_object_id)."
       echo "Cannot determine password. Quitting."
       echo "You may need to create a service principal for the application."
       exit 1
@@ -73,7 +71,7 @@ function prep_azure() {
 	client_secret=$(uuidgen)
 
   local client_id
-	client_id=$(azure ad app create --name "$app_display_name" --password "$client_secret" --home-page "http://example.com" --identifier-uris "http://example.com" --json | jq ".appId" --raw-output)
+	client_id=$(azure ad app create --name "$display_name" --password "$client_secret" --home-page "$identifier_uri" --identifier-uris "$identifier_uri" --json | jq ".appId" --raw-output)
 
 	azure ad sp create --applicationId "$client_id"
 	azure ad sp show --spn "$client_id"
@@ -101,6 +99,8 @@ function cmdline() {
         case "$arg" in
             #translate --gnu-long-options to -g (short options)
             --account)  args="${args}-a ";;
+            --display-name)  args="${args}-d ";;
+            --identifier-uri)  args="${args}-i ";;
             --credential-output-file)  args="${args}-o ";;
             #pass through anything else
             *) [[ "${arg:0:1}" == "-" ]] || delim="\""
@@ -113,8 +113,10 @@ function cmdline() {
 
     export credential_output_file
     export account
+    export display_name
+    export identifier_uri
 
-    while getopts ":o:a:" OPTION
+    while getopts ":o:a:i:d:" OPTION
     do
          case $OPTION in
          o)
@@ -122,6 +124,12 @@ function cmdline() {
              ;;
          a)
              account=$OPTARG
+             ;;
+         i)
+             identifier_uri=$OPTARG
+             ;;
+         d)
+             display_name=$OPTARG
              ;;
          :)
              echo "Missing option argument for -$OPTARG" >&2
@@ -137,6 +145,16 @@ function cmdline() {
 
     if [ -z "${account+x}" ]; then
       echo "--account must be specified (either id or name). Use \`azure account list\` to see your accounts"
+      exit 1
+    fi
+
+    if [ -z "${identifier_uri+x}" ]; then
+      echo "--identifier_uri must be specified and must be unique"
+      exit 1
+    fi
+
+    if [ -z "${display_name+x}" ]; then
+      echo "--display_name must be specified and must be unique"
       exit 1
     fi
 }
