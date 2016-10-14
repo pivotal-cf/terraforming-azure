@@ -149,12 +149,12 @@ function cmdline() {
     fi
 
     if [ -z "${identifier_uri+x}" ]; then
-      echo "--identifier_uri must be specified and must be unique"
+      echo "--identifier-uri must be specified and must be unique"
       exit 1
     fi
 
     if [ -z "${display_name+x}" ]; then
-      echo "--display_name must be specified and must be unique"
+      echo "--display-name must be specified and must be unique"
       exit 1
     fi
 }
