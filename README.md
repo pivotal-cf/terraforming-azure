@@ -47,6 +47,7 @@ bin/create-automation-account.sh --account 47B0A6EC-B2E5-4995-ACC1-E055AF0264E4 
 - vm_admin_username: **(required)** Admin username for OpsMan VM
 - vm_admin_password: **(required)** Admin password for OpsMan VM
 - vm_admin_public_key: **(required)** SSH public key for OpsMan VM
+- vm_admin_private_key: **(required)** SSH private key for OpsMan VM
 - dns_suffix: **(required)** Domain to add environment subdomain to
 
 ## Running
@@ -56,6 +57,7 @@ bin/create-automation-account.sh --account 47B0A6EC-B2E5-4995-ACC1-E055AF0264E4 
 ```bash
 terraform apply \
   -var "env_name=banana" \
+  -var "env_short_name=banana" \
   -var "subscription_id=azure-subscription-id" \
   -var "tenant_id=azure-tenant-id" \
   -var "client_id=azure-client-id" \
@@ -64,7 +66,8 @@ terraform apply \
   -var "location=westus" \
   -var "vm_admin_username=admin-username" \
   -var "vm_admin_password=admin-password" \
-  -var "vm_admin_public_key=admin-ssh-key" \
+  -var "vm_admin_public_key=admin-public-key" \
+  -var "vm_admin_private_key=admin-private-key" \
   -var "dns_suffix=some.domain.com"
 ```
 
@@ -73,6 +76,7 @@ terraform apply \
 ```bash
 terraform destroy \
   -var "env_name=banana" \
+  -var "env_short_name=banana" \
   -var "subscription_id=azure-subscription-id" \
   -var "tenant_id=azure-tenant-id" \
   -var "client_id=azure-client-id" \
@@ -81,7 +85,8 @@ terraform destroy \
   -var "location=westus" \
   -var "vm_admin_username=admin-username" \
   -var "vm_admin_password=admin-password" \
-  -var "vm_admin_public_key=admin-ssh-key" \
+  -var "vm_admin_public_key=admin-public-key" \
+  -var "vm_admin_private_key=admin-private-key" \
   -var "dns_suffix=some.domain.com"
 ```
 
