@@ -20,18 +20,30 @@ go get -u github.com/hashicorp/terraform
 
 ## Creating An Automation Account
 
-You need these credentials to deploy anything on top of azure. Before you can create an automation
-account you must be able to log into the azure portal
+You need an automation account to deploy anything on top of Azure. However, before you can create an automation
+account you must be able to log into the Azure portal.
 
-run this command to get the azure account:
-
-1. account *required* - your account id listed by running `azure accounts list`
-2. credential-output-file *required* - credentials for your azure account will be written here
-
-The file created as an output here should include information about the account credentials listed below.
-
+First, find your account by running the following commands using the [Azure CLI](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/):
 ```bash
-bin/create-automation-account.sh --account 47B0A6EC-B2E5-4995-ACC1-E055AF0264E4 --credential-output-file some-credentials.tfvars
+azure login
+azure account list
+```
+
+You can then run the script located at `bin/create-automation-account.sh`. An example can be seen here:
+```bash
+./bin/create-automation-account.sh \
+  --account some-account-id \
+  --identifier-uri http://example.com \
+  --display-name some-display-name \
+  --credential-output-file some-credentials.tfvars
+```
+
+The file created as an output here should include the following:
+```hcl
+subscription_id = "some-subscription-id"
+tenant_id       = "some-tenant-id"
+client_id       = "some-client-id"
+client_secret   = "some-client-secret"
 ```
 
 ## Variables
