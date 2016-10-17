@@ -23,6 +23,15 @@ resource "azurerm_lb_backend_address_pool" "web-backend-pool" {
   loadbalancer_id     = "${azurerm_lb.web.id}"
 }
 
+resource "azurerm_lb_probe" "web-https-probe" {
+  name                = "web-https-probe"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  loadbalancer_id     = "${azurerm_lb.web.id}"
+  protocol            = "Tcp"
+  port                = 443
+}
+
 resource "azurerm_lb_rule" "web-https-rule" {
   name                = "web-https-rule"
   location            = "${var.location}"
@@ -33,17 +42,19 @@ resource "azurerm_lb_rule" "web-https-rule" {
   protocol                       = "Tcp"
   frontend_port                  = 443
   backend_port                   = 443
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
-  probe_id                       = "${azurerm_lb_probe.web-https-probe.id}"
+
+  # Workaround until the backend_address_pool and probe resources output their own ids
+  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
+  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-https-probe.name}"
 }
 
-resource "azurerm_lb_probe" "web-https-probe" {
-  name                = "web-https-probe"
+resource "azurerm_lb_probe" "web-http-probe" {
+  name                = "web-http-probe"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
   protocol            = "Tcp"
-  port                = 443
+  port                = 80
 }
 
 resource "azurerm_lb_rule" "web-http-rule" {
@@ -56,17 +67,19 @@ resource "azurerm_lb_rule" "web-http-rule" {
   protocol                       = "Tcp"
   frontend_port                  = 80
   backend_port                   = 80
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
-  probe_id                       = "${azurerm_lb_probe.web-http-probe.id}"
+
+  # Workaround until the backend_address_pool and probe resources output their own ids
+  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
+  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-http-probe.name}"
 }
 
-resource "azurerm_lb_probe" "web-http-probe" {
-  name                = "web-http-probe"
+resource "azurerm_lb_probe" "web-ssh-probe" {
+  name                = "web-ssh-probe"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
   protocol            = "Tcp"
-  port                = 80
+  port                = 2222
 }
 
 resource "azurerm_lb_rule" "web-ssh-rule" {
@@ -79,15 +92,8 @@ resource "azurerm_lb_rule" "web-ssh-rule" {
   protocol                       = "Tcp"
   frontend_port                  = 2222
   backend_port                   = 2222
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
-  probe_id                       = "${azurerm_lb_probe.web-ssh-probe.id}"
-}
 
-resource "azurerm_lb_probe" "web-ssh-probe" {
-  name                = "web-ssh-probe"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  loadbalancer_id     = "${azurerm_lb.web.id}"
-  protocol            = "Tcp"
-  port                = 2222
+  # Workaround until the backend_address_pool and probe resources output their own ids
+  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
+  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-ssh-probe.name}"
 }
