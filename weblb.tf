@@ -28,7 +28,7 @@ resource "azurerm_lb_probe" "web-https-probe" {
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
-  protocol            = "Tcp"
+  protocol            = "TCP"
   port                = 443
 }
 
@@ -39,7 +39,7 @@ resource "azurerm_lb_rule" "web-https-rule" {
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
   frontend_ip_configuration_name = "frontendip"
-  protocol                       = "Tcp"
+  protocol                       = "TCP"
   frontend_port                  = 443
   backend_port                   = 443
 
@@ -53,7 +53,7 @@ resource "azurerm_lb_probe" "web-http-probe" {
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
-  protocol            = "Tcp"
+  protocol            = "TCP"
   port                = 80
 }
 
@@ -64,7 +64,7 @@ resource "azurerm_lb_rule" "web-http-rule" {
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
   frontend_ip_configuration_name = "frontendip"
-  protocol                       = "Tcp"
+  protocol                       = "TCP"
   frontend_port                  = 80
   backend_port                   = 80
 
@@ -78,7 +78,7 @@ resource "azurerm_lb_probe" "web-ssh-probe" {
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
-  protocol            = "Tcp"
+  protocol            = "TCP"
   port                = 2222
 }
 
@@ -89,7 +89,7 @@ resource "azurerm_lb_rule" "web-ssh-rule" {
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
   frontend_ip_configuration_name = "frontendip"
-  protocol                       = "Tcp"
+  protocol                       = "TCP"
   frontend_port                  = 2222
   backend_port                   = 2222
 
