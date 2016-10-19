@@ -17,7 +17,6 @@ resource "azurerm_lb" "web" {
 }
 
 resource "azurerm_lb_backend_address_pool" "web-backend-pool" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-backend-pool"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -25,7 +24,6 @@ resource "azurerm_lb_backend_address_pool" "web-backend-pool" {
 }
 
 resource "azurerm_lb_probe" "web-https-probe" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-https-probe"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -35,7 +33,6 @@ resource "azurerm_lb_probe" "web-https-probe" {
 }
 
 resource "azurerm_lb_rule" "web-https-rule" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-https-rule"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -52,7 +49,6 @@ resource "azurerm_lb_rule" "web-https-rule" {
 }
 
 resource "azurerm_lb_probe" "web-http-probe" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-http-probe"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -62,7 +58,6 @@ resource "azurerm_lb_probe" "web-http-probe" {
 }
 
 resource "azurerm_lb_rule" "web-http-rule" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-http-rule"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -79,7 +74,6 @@ resource "azurerm_lb_rule" "web-http-rule" {
 }
 
 resource "azurerm_lb_probe" "web-ssh-probe" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-ssh-probe"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -89,7 +83,6 @@ resource "azurerm_lb_probe" "web-ssh-probe" {
 }
 
 resource "azurerm_lb_rule" "web-ssh-rule" {
-  depends_on          = ["azurerm_lb.web"]
   name                = "web-ssh-rule"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
