@@ -1,5 +1,7 @@
 #How Does One Use This?
 
+Please note that the master branch is generally *unstable*. If you are looking for something "tested", please consume one of our [releases](https://github.com/pivotal-cf/terraforming-azure/releases).
+
 ## What Does This Do?
 
 Will go from zero to having a deployed ops-manager. You'll get networking, a storage account, and
