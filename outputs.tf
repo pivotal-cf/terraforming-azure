@@ -47,7 +47,7 @@ output "mysql_lb_name" {
 }
 
 output "tcp_lb_name" {
-  value = "${data.template_file.load_balancers.vars.tcp_lb_name}"
+  value = "${azurerm_lb.tcp.name}"
 }
 
 output "pcf_virtual_network_name" {
