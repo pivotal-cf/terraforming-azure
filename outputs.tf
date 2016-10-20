@@ -43,7 +43,7 @@ output "web_lb_name" {
 }
 
 output "mysql_lb_name" {
-  value = "${data.template_file.load_balancers.vars.mysql_lb_name}"
+  value = "${azurerm_lb.mysql.name}"
 }
 
 output "tcp_lb_name" {
