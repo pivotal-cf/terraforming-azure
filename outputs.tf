@@ -50,20 +50,32 @@ output "tcp_lb_name" {
   value = "${data.template_file.load_balancers.vars.tcp_lb_name}"
 }
 
-output "pcf_subnet_id" {
-  value = "${azurerm_subnet.pcf_subnet.id}"
-}
-
 output "pcf_virtual_network_name" {
   value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
 
-output "pcf_subnet_name" {
-  value = "${azurerm_subnet.pcf_subnet.name}"
+output "opsman_and_director_subnet_name" {
+  value = "${azurerm_subnet.opsman_and_director_subnet.name}"
 }
 
-output "pcf_subnet_address_prefix" {
-  value = "${azurerm_subnet.pcf_subnet.address_prefix}"
+output "opsman_and_director_subnet_cidr" {
+  value = "${azurerm_subnet.opsman_and_director_subnet.address_prefix}"
+}
+
+output "ert_subnet_name" {
+  value = "${azurerm_subnet.ert_subnet.name}"
+}
+
+output "ert_subnet_cidr" {
+  value = "${azurerm_subnet.ert_subnet.address_prefix}"
+}
+
+output "services_subnet_name" {
+  value = "${azurerm_subnet.services_subnet.name}"
+}
+
+output "services_subnet_cidr" {
+  value = "${azurerm_subnet.services_subnet.address_prefix}"
 }
 
 output "pcf_resource_group_name" {
@@ -93,11 +105,6 @@ output "ops_manager_ssh_public_key" {
 output "ops_manager_ssh_private_key" {
   value = "${var.vm_admin_private_key}"
 }
-
-output "pcf_subnet_cidr" {
-  value = "${azurerm_subnet.pcf_subnet.address_prefix}"
-}
-
 output "gateway" {
   value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
 }

@@ -13,9 +13,9 @@ resource "azurerm_network_interface" "ops_manager_nic" {
 
   ip_configuration {
     name                          = "${var.env_name}-ops-manager-ip-config"
-    subnet_id                     = "${azurerm_subnet.pcf_subnet.id}"
+    subnet_id                     = "${azurerm_subnet.opsman_and_director_subnet.id}"
     private_ip_address_allocation = "static"
-    private_ip_address            = "10.0.0.4"
+    private_ip_address            = "10.0.8.4"
     public_ip_address_id          = "${azurerm_public_ip.ops_manager_public_ip.id}"
   }
 }
