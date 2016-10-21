@@ -62,6 +62,10 @@ output "opsman_and_director_subnet_cidr" {
   value = "${azurerm_subnet.opsman_and_director_subnet.address_prefix}"
 }
 
+output "opsman_and_director_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.opsman_and_director_subnet.address_prefix, 1)}"
+}
+
 output "ert_subnet_name" {
   value = "${azurerm_subnet.ert_subnet.name}"
 }
@@ -70,12 +74,20 @@ output "ert_subnet_cidr" {
   value = "${azurerm_subnet.ert_subnet.address_prefix}"
 }
 
+output "ert_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.ert_subnet.address_prefix, 1)}"
+}
+
 output "services_subnet_name" {
   value = "${azurerm_subnet.services_subnet.name}"
 }
 
 output "services_subnet_cidr" {
   value = "${azurerm_subnet.services_subnet.address_prefix}"
+}
+
+output "services_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.services_subnet.address_prefix, 1)}"
 }
 
 output "pcf_resource_group_name" {
@@ -104,9 +116,6 @@ output "ops_manager_ssh_public_key" {
 
 output "ops_manager_ssh_private_key" {
   value = "${var.vm_admin_private_key}"
-}
-output "gateway" {
-  value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
 }
 
 output "ops_manager_public_ip" {
