@@ -4,12 +4,6 @@ variable "env_short_name" {
   description = "Used for creating storage accounts. Must be a-z only, no longer than 10 characters"
 }
 
-variable "base_storage_account_wildcard" {
-  type        = "string"
-  default     = "boshvms"
-  description = "the CPI uses this as a wildcard to stripe disks across multiple storage accounts"
-}
-
 variable "subscription_id" {}
 
 variable "tenant_id" {}

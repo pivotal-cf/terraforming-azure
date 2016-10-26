@@ -107,7 +107,7 @@ output "ops_manager_storage_account" {
 }
 
 output "wildcard_vm_storage_account" {
-  value = "*${var.env_short_name}${var.base_storage_account_wildcard}*"
+  value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
 }
 
 output "ops_manager_ssh_public_key" {
