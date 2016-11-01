@@ -19,11 +19,11 @@ output "ops_manager_dns" {
 }
 
 output "mysql_dns" {
-  value = "mysql.${azurerm_dns_cname_record.mysql.zone_name}"
+  value = "mysql.${azurerm_dns_a_record.mysql.zone_name}"
 }
 
 output "tcp_dns" {
-  value = "tcp.${azurerm_dns_cname_record.tcp.zone_name}"
+  value = "tcp.${azurerm_dns_a_record.tcp.zone_name}"
 }
 
 output "sys_domain" {
