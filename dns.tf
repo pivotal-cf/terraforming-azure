@@ -27,18 +27,18 @@ resource "azurerm_dns_a_record" "sys" {
   records             = ["${azurerm_public_ip.web-lb-public-ip.ip_address}"]
 }
 
-resource "azurerm_dns_cname_record" "mysql" {
+resource "azurerm_dns_a_record" "mysql" {
   name                = "mysql"
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   ttl                 = "60"
-  record              = "${var.env_name}-mysql-lb-public-ip.${var.location}.cloudapp.azure.com"
+  records             = ["${azurerm_public_ip.mysql-lb-public-ip.ip_address}"]
 }
 
-resource "azurerm_dns_cname_record" "tcp" {
+resource "azurerm_dns_a_record" "tcp" {
   name                = "tcp"
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   ttl                 = "60"
-  record              = "${var.env_name}-tcp-lb-public-ip.${var.location}.cloudapp.azure.com"
+  records             = ["${azurerm_public_ip.tcp-lb-public-ip.ip_address}"]
 }
