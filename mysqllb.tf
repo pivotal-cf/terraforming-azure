@@ -4,7 +4,8 @@ resource "azurerm_lb" "mysql" {
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 
   frontend_ip_configuration = {
-    name = "frontendip"
+    name      = "frontendip"
+    subnet_id = "${azurerm_subnet.ert_subnet.id}"
   }
 }
 
