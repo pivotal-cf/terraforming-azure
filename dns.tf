@@ -32,7 +32,7 @@ resource "azurerm_dns_a_record" "mysql" {
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   ttl                 = "60"
-  records             = ["${azurerm_lb.mysql.frontend_ip_configuration.private_ip_address}"]
+  records             = ["${azurerm_lb.mysql.frontend_ip_configuration.0.private_ip_address}"]
 }
 
 resource "azurerm_dns_a_record" "tcp" {
