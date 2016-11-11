@@ -43,9 +43,8 @@ resource "azurerm_lb_rule" "web-https-rule" {
   frontend_port                  = 443
   backend_port                   = 443
 
-  # Workaround until the backend_address_pool and probe resources output their own ids
-  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
-  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-https-probe.name}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.web-https-probe.id}"
 }
 
 resource "azurerm_lb_probe" "web-http-probe" {
@@ -68,9 +67,8 @@ resource "azurerm_lb_rule" "web-http-rule" {
   frontend_port                  = 80
   backend_port                   = 80
 
-  # Workaround until the backend_address_pool and probe resources output their own ids
-  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
-  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-http-probe.name}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.web-http-probe.id}"
 }
 
 resource "azurerm_lb_probe" "web-ssh-probe" {
@@ -93,7 +91,6 @@ resource "azurerm_lb_rule" "web-ssh-rule" {
   frontend_port                  = 2222
   backend_port                   = 2222
 
-  # Workaround until the backend_address_pool and probe resources output their own ids
-  backend_address_pool_id = "${azurerm_lb.web.id}/backendAddressPools/${azurerm_lb_backend_address_pool.web-backend-pool.name}"
-  probe_id                = "${azurerm_lb.web.id}/probes/${azurerm_lb_probe.web-ssh-probe.name}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.web-ssh-probe.id}"
 }
