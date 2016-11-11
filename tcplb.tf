@@ -44,7 +44,6 @@ resource "azurerm_lb_rule" "tcp-rule" {
   frontend_port                  = "${count.index + 1024}"
   backend_port                   = "${count.index + 1024}"
 
-  # Workaround until the backend_address_pool and probe resources output their own ids
-  backend_address_pool_id = "${azurerm_lb.tcp.id}/backendAddressPools/${azurerm_lb_backend_address_pool.tcp-backend-pool.name}"
-  probe_id                = "${azurerm_lb.tcp.id}/probes/${azurerm_lb_probe.tcp-probe.name}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.tcp-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.tcp-probe.id}"
 }
