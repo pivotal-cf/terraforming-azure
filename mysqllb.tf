@@ -1,6 +1,5 @@
 resource "azurerm_lb" "mysql" {
   name                = "${var.env_name}-mysql-lb"
-  depends_on          = ["azurerm_subnet.ert_subnet"]
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 
