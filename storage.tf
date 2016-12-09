@@ -21,11 +21,19 @@ resource "azurerm_storage_container" "ops_manager_storage_container" {
 }
 
 resource "azurerm_storage_blob" "ops_manager_image" {
-  name                   = "opsman-18.vhd"
+  name                   = "opsman.vhd"
   resource_group_name    = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
   storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
   source_uri             = "${var.ops_manager_image_uri}"
+}
+
+resource "azurerm_storage_blob" "optional_ops_manager_image" {
+  name                   = "opsman-optional.vhd"
+  resource_group_name    = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
+  storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
+  source_uri             = "${var.optional_ops_manager_image_uri}"
 }
 
 resource "azurerm_storage_container" "bosh_storage_container" {

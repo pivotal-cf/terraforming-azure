@@ -121,3 +121,7 @@ output "ops_manager_ssh_private_key" {
 output "ops_manager_public_ip" {
   value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
 }
+
+output "optional_ops_manager_public_ip" {
+  value = "${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"
+}
