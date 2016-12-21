@@ -18,6 +18,10 @@ output "ops_manager_dns" {
   value = "${azurerm_dns_a_record.ops_manager_dns.name}.${azurerm_dns_a_record.ops_manager_dns.zone_name}"
 }
 
+output "optional_ops_manager_dns" {
+  value = "${azurerm_dns_a_record.optional_ops_manager_dns.name}.${azurerm_dns_a_record.optional_ops_manager_dns.zone_name}"
+}
+
 output "mysql_dns" {
   value = "mysql.${azurerm_dns_a_record.mysql.zone_name}"
 }
