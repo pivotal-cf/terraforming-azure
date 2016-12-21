@@ -11,6 +11,14 @@ resource "azurerm_dns_a_record" "ops_manager_dns" {
   records             = ["${azurerm_public_ip.ops_manager_public_ip.ip_address}"]
 }
 
+resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
+  name                = "pcf-optional"
+  zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  ttl                 = "60"
+  records             = ["${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"]
+}
+
 resource "azurerm_dns_a_record" "apps" {
   name                = "*.apps"
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
