@@ -17,6 +17,7 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   ttl                 = "60"
   records             = ["${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"]
+  count               = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 }
 
 resource "azurerm_dns_a_record" "apps" {
