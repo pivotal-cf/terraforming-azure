@@ -28,6 +28,14 @@ resource "azurerm_storage_blob" "ops_manager_image" {
   source_uri             = "${var.ops_manager_image_uri}"
 }
 
+resource "azurerm_storage_blob" "optional_ops_manager_image" {
+  name                   = "optional_opsman.vhd"
+  resource_group_name    = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
+  storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
+  source_uri             = "${var.optional_ops_manager_image_uri}"
+}
+
 resource "azurerm_storage_container" "bosh_storage_container" {
   name                  = "bosh"
   depends_on            = ["azurerm_storage_account.bosh_root_storage_account"]

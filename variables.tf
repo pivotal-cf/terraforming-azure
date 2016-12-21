@@ -16,6 +16,8 @@ variable "location" {}
 
 variable "ops_manager_image_uri" {}
 
+variable "optional_ops_manager_image_uri" {}
+
 variable "vm_admin_username" {}
 
 variable "vm_admin_password" {}
