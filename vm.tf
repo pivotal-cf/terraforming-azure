@@ -45,12 +45,13 @@ resource "azurerm_network_interface" "optional_ops_manager_nic" {
 }
 
 resource "azurerm_virtual_machine" "ops_manager_vm" {
-  name                  = "${var.env_name}-ops-manager-vm"
-  depends_on            = ["azurerm_network_interface.ops_manager_nic", "azurerm_storage_blob.ops_manager_image"]
-  location              = "${var.location}"
-  resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
-  network_interface_ids = ["${azurerm_network_interface.ops_manager_nic.id}"]
-  vm_size               = "Standard_DS2_v2"
+  name                          = "${var.env_name}-ops-manager-vm"
+  depends_on                    = ["azurerm_network_interface.ops_manager_nic", "azurerm_storage_blob.ops_manager_image"]
+  location                      = "${var.location}"
+  resource_group_name           = "${azurerm_resource_group.pcf_resource_group.name}"
+  network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic.id}"]
+  vm_size                       = "Standard_DS2_v2"
+  delete_os_disk_on_termination = "true"
 
   storage_os_disk {
     name          = "opsman-disk.vhd"
