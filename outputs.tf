@@ -115,11 +115,11 @@ output "wildcard_vm_storage_account" {
 }
 
 output "ops_manager_ssh_public_key" {
-  value = "${var.vm_admin_public_key}"
+  value = "${tls_private_key.ops_manager.public_key_openssh}"
 }
 
 output "ops_manager_ssh_private_key" {
-  value = "${var.vm_admin_private_key}"
+  value = "${tls_private_key.ops_manager.private_key_pem}"
 }
 
 output "ops_manager_public_ip" {

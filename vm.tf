@@ -74,7 +74,7 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
 
     ssh_keys {
       path     = "/home/${var.vm_admin_username}/.ssh/authorized_keys"
-      key_data = "${var.vm_admin_public_key}"
+      key_data = "${tls_private_key.ops_manager.public_key_openssh}"
     }
   }
 }
@@ -109,7 +109,12 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
 
     ssh_keys {
       path     = "/home/${var.vm_admin_username}/.ssh/authorized_keys"
-      key_data = "${var.vm_admin_public_key}"
+      key_data = "${tls_private_key.ops_manager.public_key_openssh}"
     }
   }
+}
+
+resource "tls_private_key" "ops_manager" {
+  algorithm = "RSA"
+  rsa_bits  = "4096"
 }
