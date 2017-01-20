@@ -58,39 +58,39 @@ output "network_name" {
   value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
 
-output "ops_manager_subnet" {
-  value = "${azurerm_subnet.opsman_and_director_subnet.name}"
+output "management_subnet_name" {
+  value = "${azurerm_subnet.management_subnet.name}"
 }
 
-output "ops_manager_cidr" {
-  value = "${azurerm_subnet.opsman_and_director_subnet.address_prefix}"
+output "management_subnet_cidr" {
+  value = "${azurerm_subnet.management_subnet.address_prefix}"
 }
 
-output "ops_manager_gateway" {
-  value = "${cidrhost(azurerm_subnet.opsman_and_director_subnet.address_prefix, 1)}"
+output "management_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.management_subnet.address_prefix, 1)}"
 }
 
-output "ert_subnet" {
+output "ert_subnet_name" {
   value = "${azurerm_subnet.ert_subnet.name}"
 }
 
-output "ert_cidr" {
+output "ert_subnet_cidr" {
   value = "${azurerm_subnet.ert_subnet.address_prefix}"
 }
 
-output "ert_gateway" {
+output "ert_subnet_gateway" {
   value = "${cidrhost(azurerm_subnet.ert_subnet.address_prefix, 1)}"
 }
 
-output "services_subnet" {
+output "services_subnet_name" {
   value = "${azurerm_subnet.services_subnet.name}"
 }
 
-output "services_cidr" {
+output "services_subnet_cidr" {
   value = "${azurerm_subnet.services_subnet.address_prefix}"
 }
 
-output "services_gateway" {
+output "services_subnet_gateway" {
   value = "${cidrhost(azurerm_subnet.services_subnet.address_prefix, 1)}"
 }
 

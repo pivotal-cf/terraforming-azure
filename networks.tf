@@ -6,8 +6,8 @@ resource "azurerm_virtual_network" "pcf_virtual_network" {
   location            = "${var.location}"
 }
 
-resource "azurerm_subnet" "opsman_and_director_subnet" {
-  name                 = "${var.env_name}-opsman-and-director-subnet"
+resource "azurerm_subnet" "management_subnet" {
+  name                 = "${var.env_name}-management-subnet"
   depends_on           = ["azurerm_resource_group.pcf_resource_group"]
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
