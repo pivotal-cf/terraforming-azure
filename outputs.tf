@@ -114,6 +114,22 @@ output "wildcard_vm_storage_account" {
   value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
 }
 
+output "cf_droplets_storage_container" {
+  value = "${azurerm_storage_container.cf_droplets_storage_container.name}"
+}
+
+output "cf_packages_storage_container" {
+  value = "${azurerm_storage_container.cf_packages_storage_container.name}"
+}
+
+output "cf_resources_storage_container" {
+  value = "${azurerm_storage_container.cf_resources_storage_container.name}"
+}
+
+output "cf_buildpacks_storage_container" {
+  value = "${azurerm_storage_container.cf_buildpacks_storage_container.name}"
+}
+
 output "ops_manager_ssh_public_key" {
   value = "${tls_private_key.ops_manager.public_key_openssh}"
 }

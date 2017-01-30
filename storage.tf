@@ -86,3 +86,44 @@ resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
 
   count = 3
 }
+
+# Storage containers to be used as CF Blobstore
+
+resource "azurerm_storage_account" "cf_storage_account" {
+  name                = "${var.env_short_name}cf"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  location            = "${var.location}"
+  account_type        = "Standard_LRS"
+}
+
+resource "azurerm_storage_container" "cf_buildpacks_storage_container" {
+  name                  = "buildpacks"
+  depends_on            = ["azurerm_storage_account.cf_storage_account"]
+  resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "cf_packages_storage_container" {
+  name                  = "packages"
+  depends_on            = ["azurerm_storage_account.cf_storage_account"]
+  resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "cf_droplets_storage_container" {
+  name                  = "droplets"
+  depends_on            = ["azurerm_storage_account.cf_storage_account"]
+  resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "cf_resources_storage_container" {
+  name                  = "resources"
+  depends_on            = ["azurerm_storage_account.cf_storage_account"]
+  resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
+  storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
+  container_access_type = "private"
+}
