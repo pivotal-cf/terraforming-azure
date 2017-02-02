@@ -114,6 +114,14 @@ output "wildcard_vm_storage_account" {
   value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
 }
 
+output "cf_storage_account_name" {
+  value = "${azurerm_storage_account.cf_storage_account.name}"
+}
+
+output "cf_storage_account_access_key" {
+  value = "${azurerm_storage_account.cf_storage_account.primary_access_key}"
+}
+
 output "cf_droplets_storage_container" {
   value = "${azurerm_storage_container.cf_droplets_storage_container.name}"
 }
