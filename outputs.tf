@@ -62,8 +62,8 @@ output "management_subnet_name" {
   value = "${azurerm_subnet.management_subnet.name}"
 }
 
-output "management_subnet_cidr" {
-  value = "${azurerm_subnet.management_subnet.address_prefix}"
+output "management_subnet_cidrs" {
+  value = ["${azurerm_subnet.management_subnet.address_prefix}"]
 }
 
 output "management_subnet_gateway" {
@@ -74,8 +74,8 @@ output "ert_subnet_name" {
   value = "${azurerm_subnet.ert_subnet.name}"
 }
 
-output "ert_subnet_cidr" {
-  value = "${azurerm_subnet.ert_subnet.address_prefix}"
+output "ert_subnet_cidrs" {
+  value = ["${azurerm_subnet.ert_subnet.address_prefix}"]
 }
 
 output "ert_subnet_gateway" {
@@ -86,8 +86,8 @@ output "services_subnet_name" {
   value = "${azurerm_subnet.services_subnet.name}"
 }
 
-output "services_subnet_cidr" {
-  value = "${azurerm_subnet.services_subnet.address_prefix}"
+output "services_subnet_cidrs" {
+  value = ["${azurerm_subnet.services_subnet.address_prefix}"]
 }
 
 output "services_subnet_gateway" {
