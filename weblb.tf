@@ -18,14 +18,12 @@ resource "azurerm_lb" "web" {
 
 resource "azurerm_lb_backend_address_pool" "web-backend-pool" {
   name                = "web-backend-pool"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
 }
 
 resource "azurerm_lb_probe" "web-https-probe" {
   name                = "web-https-probe"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
   protocol            = "TCP"
@@ -34,7 +32,6 @@ resource "azurerm_lb_probe" "web-https-probe" {
 
 resource "azurerm_lb_rule" "web-https-rule" {
   name                = "web-https-rule"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
@@ -49,7 +46,6 @@ resource "azurerm_lb_rule" "web-https-rule" {
 
 resource "azurerm_lb_probe" "web-http-probe" {
   name                = "web-http-probe"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
   protocol            = "TCP"
@@ -58,7 +54,6 @@ resource "azurerm_lb_probe" "web-http-probe" {
 
 resource "azurerm_lb_rule" "web-http-rule" {
   name                = "web-http-rule"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
@@ -73,7 +68,6 @@ resource "azurerm_lb_rule" "web-http-rule" {
 
 resource "azurerm_lb_probe" "web-ssh-probe" {
   name                = "web-ssh-probe"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
   protocol            = "TCP"
@@ -82,7 +76,6 @@ resource "azurerm_lb_probe" "web-ssh-probe" {
 
 resource "azurerm_lb_rule" "web-ssh-rule" {
   name                = "web-ssh-rule"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.web.id}"
 
