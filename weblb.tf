@@ -1,3 +1,7 @@
+/************************
+ * CF WEB LB *
+ ************************/
+
 resource "azurerm_public_ip" "web-lb-public-ip" {
   name                         = "web-lb-public-ip"
   location                     = "${var.location}"

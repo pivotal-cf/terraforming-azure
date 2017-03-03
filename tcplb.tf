@@ -1,3 +1,7 @@
+/************************
+ * CF TCP LB *
+ ************************/
+
 resource "azurerm_public_ip" "tcp-lb-public-ip" {
   name                         = "tcp-lb-public-ip"
   location                     = "${var.location}"

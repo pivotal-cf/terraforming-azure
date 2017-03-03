@@ -1,3 +1,7 @@
+/************************
+ * MYSQL LB *
+ ************************/
+
 resource "azurerm_lb" "mysql" {
   name                = "${var.env_name}-mysql-lb"
   location            = "${var.location}"
