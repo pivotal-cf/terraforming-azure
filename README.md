@@ -60,8 +60,6 @@ client_secret   = "some-client-secret"
 - location: **(required)** Azure location to stand up environment in
 - vm_admin_username: **(required)** Admin username for OpsMan VM
 - vm_admin_password: **(required)** Admin password for OpsMan VM
-- vm_admin_public_key: **(required)** SSH public key for OpsMan VM
-- vm_admin_private_key: **(required)** SSH private key for OpsMan VM
 - dns_suffix: **(required)** Domain to add environment subdomain to
 
 ## Running
@@ -80,8 +78,6 @@ terraform apply \
   -var "location=westus" \
   -var "vm_admin_username=admin-username" \
   -var "vm_admin_password=admin-password" \
-  -var "vm_admin_public_key=admin-public-key" \
-  -var "vm_admin_private_key=admin-private-key" \
   -var "dns_suffix=some.domain.com"
 ```
 
@@ -99,8 +95,6 @@ terraform destroy \
   -var "location=westus" \
   -var "vm_admin_username=admin-username" \
   -var "vm_admin_password=admin-password" \
-  -var "vm_admin_public_key=admin-public-key" \
-  -var "vm_admin_private_key=admin-private-key" \
   -var "dns_suffix=some.domain.com"
 ```
 
