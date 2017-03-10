@@ -54,6 +54,10 @@ output "tcp_lb_name" {
   value = "${azurerm_lb.tcp.name}"
 }
 
+output "isoseg_lb_name" {
+  value = "${azurerm_lb.iso.name}"
+}
+
 output "network_name" {
   value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
