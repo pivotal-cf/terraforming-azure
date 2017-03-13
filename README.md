@@ -51,7 +51,8 @@ client_secret   = "some-client-secret"
 ## Variables
 
 - env_name: **(required)** An arbitrary unique name for namespacing resources
-- env_short_name: **(required)** Used for creating storage accounts. Must be a-z only, no longer than 10 characters
+- env_short_name: **(required)** Used for creating storage accounts. Must be a-z only,
+no longer than 10 characters
 - subscription_id: **(required)** Azure account subscription id
 - tenant_id: **(required)** Azure account tenant id
 - client_id: **(required)** Azure automation account client id
@@ -61,6 +62,14 @@ client_secret   = "some-client-secret"
 - vm_admin_username: **(required)** Admin username for OpsMan VM
 - vm_admin_password: **(required)** Admin password for OpsMan VM
 - dns_suffix: **(required)** Domain to add environment subdomain to
+
+### Optional
+
+When deploying the isolation segments tile you can optionally route traffic through
+a separate domain and load balancer by specifying:
+
+- create_isoseg_resources: **(default 0)** Creates a DNS record and load balancer for
+isolation segment network traffic when set to 1
 
 ## Running
 
