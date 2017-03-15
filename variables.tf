@@ -26,12 +26,6 @@ variable "vm_admin_password" {}
 
 variable "dns_suffix" {}
 
-/*************************************
- * Optional Isolation Segment Config *
- *************************************/
-
-variable "create_isoseg_resources" {
-  type        = "string"
-  default     = "0"
-  description = "Optionally create a LB and DNS entries for a single isolation segment. Valid values are 0 or 1."
+variable "isolation_segment" {
+  default = false
 }
