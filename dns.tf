@@ -36,15 +36,6 @@ resource "azurerm_dns_a_record" "sys" {
   records             = ["${azurerm_public_ip.web-lb-public-ip.ip_address}"]
 }
 
-resource "azurerm_dns_a_record" "iso" {
-  name                = "*.iso"
-  zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  ttl                 = "60"
-  records             = ["${azurerm_public_ip.iso-lb-public-ip.ip_address}"]
-  count               = "${var.create_isoseg_resources}"
-}
-
 resource "azurerm_dns_a_record" "mysql" {
   name                = "mysql"
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"

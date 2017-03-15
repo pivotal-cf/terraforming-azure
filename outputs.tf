@@ -54,10 +54,6 @@ output "tcp_lb_name" {
   value = "${azurerm_lb.tcp.name}"
 }
 
-output "isoseg_lb_name" {
-  value = "${azurerm_lb.iso.name}"
-}
-
 output "network_name" {
   value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
@@ -152,4 +148,10 @@ output "ops_manager_ssh_private_key" {
 
 output "ops_manager_public_ip" {
   value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
+}
+
+output "isolation_segment" {
+  value = {
+    "lb_name" = "${module.isolation_segment.lb_name}"
+  }
 }
