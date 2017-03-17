@@ -20,6 +20,7 @@ resource "azurerm_lb" "iso" {
 
 resource "azurerm_lb_backend_address_pool" "iso-backend-pool" {
   name                = "iso-backend-pool"
+  location            = "${var.location}"
   count               = "${var.count}"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.iso.id}"
@@ -27,6 +28,7 @@ resource "azurerm_lb_backend_address_pool" "iso-backend-pool" {
 
 resource "azurerm_lb_probe" "iso-https-probe" {
   name                = "iso-https-probe"
+  location            = "${var.location}"
   count               = "${var.count}"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.iso.id}"
@@ -36,6 +38,7 @@ resource "azurerm_lb_probe" "iso-https-probe" {
 
 resource "azurerm_lb_rule" "iso-https-rule" {
   name                = "iso-https-rule"
+  location            = "${var.location}"
   count               = "${var.count}"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.iso.id}"
@@ -51,6 +54,7 @@ resource "azurerm_lb_rule" "iso-https-rule" {
 
 resource "azurerm_lb_probe" "iso-http-probe" {
   name                = "iso-http-probe"
+  location            = "${var.location}"
   count               = "${var.count}"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.iso.id}"
@@ -60,6 +64,7 @@ resource "azurerm_lb_probe" "iso-http-probe" {
 
 resource "azurerm_lb_rule" "iso-http-rule" {
   name                = "iso-http-rule"
+  location            = "${var.location}"
   count               = "${var.count}"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.iso.id}"

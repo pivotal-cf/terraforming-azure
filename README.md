@@ -68,7 +68,7 @@ no longer than 10 characters
 When deploying the isolation segments tile you can optionally route traffic through
 a separate domain and load balancer by specifying:
 
-- create_isoseg_resources: **(default 0)** Creates a DNS record and load balancer for
+- isolation_segment: **(default false)** Creates a DNS record and load balancer for
 isolation segment network traffic when set to 1
 
 ## Running
@@ -76,6 +76,8 @@ isolation segment network traffic when set to 1
 ### Standing up environment
 
 ```bash
+terraform get
+
 terraform apply \
   -var "env_name=banana" \
   -var "env_short_name=banana" \
