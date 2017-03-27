@@ -69,7 +69,7 @@ When deploying the isolation segments tile you can optionally route traffic thro
 a separate domain and load balancer by specifying:
 
 - isolation_segment: **(default false)** Creates a DNS record and load balancer for
-isolation segment network traffic when set to 1
+isolation segment network traffic when set to true.
 
 ## Running
 
