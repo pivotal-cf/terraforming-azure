@@ -64,7 +64,7 @@ resource "azurerm_storage_account" "bosh_vms_storage_account" {
   location            = "${var.location}"
   account_type        = "Premium_LRS"
 
-  count = 3
+  count = 5
 }
 
 resource "azurerm_storage_container" "bosh_vms_storage_container" {
@@ -74,7 +74,7 @@ resource "azurerm_storage_container" "bosh_vms_storage_container" {
   storage_account_name  = "${element(azurerm_storage_account.bosh_vms_storage_account.*.name, count.index)}"
   container_access_type = "private"
 
-  count = 3
+  count = 5
 }
 
 resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
@@ -84,7 +84,7 @@ resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
   storage_account_name  = "${element(azurerm_storage_account.bosh_vms_storage_account.*.name, count.index)}"
   container_access_type = "private"
 
-  count = 3
+  count = 5
 }
 
 # Storage containers to be used as CF Blobstore
