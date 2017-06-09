@@ -50,7 +50,7 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
   location                      = "${var.location}"
   resource_group_name           = "${azurerm_resource_group.pcf_resource_group.name}"
   network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic.id}"]
-  vm_size                       = "Standard_DS2_v2"
+  vm_size                       = "${var.ops_manager_vm_size}"
   delete_os_disk_on_termination = "true"
 
   storage_os_disk {
@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
   network_interface_ids = ["${azurerm_network_interface.optional_ops_manager_nic.id}"]
-  vm_size               = "Standard_DS2_v2"
+  vm_size               = "${var.ops_manager_vm_size}"
   count                 = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 
   storage_os_disk {

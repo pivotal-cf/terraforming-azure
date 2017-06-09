@@ -20,6 +20,11 @@ variable "optional_ops_manager_image_uri" {
   default = ""
 }
 
+variable "ops_manager_vm_size" {
+  type    = "string"
+  default = "Standard_DS2_v2"
+}
+
 variable "vm_admin_username" {}
 
 variable "vm_admin_password" {}
