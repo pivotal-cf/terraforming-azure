@@ -18,14 +18,12 @@ resource "azurerm_lb" "tcp" {
 
 resource "azurerm_lb_backend_address_pool" "tcp-backend-pool" {
   name                = "tcp-backend-pool"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
 }
 
 resource "azurerm_lb_probe" "tcp-probe" {
   name                = "tcp-probe"
-  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
   protocol            = "TCP"
@@ -34,7 +32,6 @@ resource "azurerm_lb_probe" "tcp-probe" {
 
 resource "azurerm_lb_rule" "tcp-rule" {
   count               = 150
-  location            = "${var.location}"
   name                = "tcp-rule-${count.index + 1024}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
