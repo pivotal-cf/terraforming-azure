@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
     caching       = "ReadWrite"
     os_type       = "linux"
     create_option = "FromImage"
-    disk_size_gb  = "100"
+    disk_size_gb  = "150"
   }
 
   os_profile {
@@ -95,7 +95,7 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
     caching       = "ReadWrite"
     os_type       = "linux"
     create_option = "FromImage"
-    disk_size_gb  = "100"
+    disk_size_gb  = "150"
   }
 
   os_profile {
