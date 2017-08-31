@@ -150,6 +150,10 @@ output "ops_manager_public_ip" {
   value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
 }
 
+output "ops_manager_private_ip" {
+  value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
+}
+
 output "isolation_segment" {
   value = {
     "lb_name" = "${module.isolation_segment.lb_name}"
