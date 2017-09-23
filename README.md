@@ -17,7 +17,8 @@ We have have other terraform templates to help you!
 ## Prerequisites
 
 ```bash
-go get -u github.com/hashicorp/terraform
+brew update
+brew install terraform
 ```
 
 ## Creating An Automation Account
@@ -48,11 +49,31 @@ client_id       = "some-client-id"
 client_secret   = "some-client-secret"
 ```
 
+### Var File
+
+Copy the stub content below into a file called `terraform.tfvars` and put it in the root of this project.
+These vars will be used when you run `terraform  apply`.
+You should fill in the stub values with the correct content.
+
+```hcl
+subscription_id = "some-subscription-id"
+tenant_id       = "some-tenant-id"
+client_id       = "some-client-id"
+client_secret   = "some-client-secret"
+
+env_name              = "banana"
+env_short_name        = "banana"
+ops_manager_image_uri = "url-to-opsman-image"
+location              = "West US"
+vm_admin_username     = "admin-username"
+vm_admin_password     = "admin-password"
+dns_suffix            = "some.domain.com"
+```
+
 ## Variables
 
 - env_name: **(required)** An arbitrary unique name for namespacing resources
-- env_short_name: **(required)** Used for creating storage accounts. Must be a-z only,
-no longer than 10 characters
+- env_short_name: **(required)** Used for creating storage accounts. Must be a-z only, no longer than 10 characters
 - subscription_id: **(required)** Azure account subscription id
 - tenant_id: **(required)** Azure account tenant id
 - client_id: **(required)** Azure automation account client id
@@ -73,43 +94,17 @@ isolation segment network traffic when set to true.
 
 ## Running
 
+Note: please make sure you have created the `terraform.tfvars` file above as mentioned.
+
 ### Standing up environment
 
 ```bash
-terraform get
-
-terraform apply \
-  -var "env_name=banana" \
-  -var "env_short_name=banana" \
-  -var "subscription_id=azure-subscription-id" \
-  -var "tenant_id=azure-tenant-id" \
-  -var "client_id=azure-client-id" \
-  -var "client_secret=azure-client-secret" \
-  -var "ops_manager_image_uri=url-to-opsman-image" \
-  -var "location=westus" \
-  -var "vm_admin_username=admin-username" \
-  -var "vm_admin_password=admin-password" \
-  -var "dns_suffix=some.domain.com"
+terraform init
+terraform apply
 ```
 
 ### Tearing down environment
 
 ```bash
-terraform destroy \
-  -var "env_name=banana" \
-  -var "env_short_name=banana" \
-  -var "subscription_id=azure-subscription-id" \
-  -var "tenant_id=azure-tenant-id" \
-  -var "client_id=azure-client-id" \
-  -var "client_secret=azure-client-secret" \
-  -var "ops_manager_image_uri=url-to-opsman-image" \
-  -var "location=westus" \
-  -var "vm_admin_username=admin-username" \
-  -var "vm_admin_password=admin-password" \
-  -var "dns_suffix=some.domain.com"
+terraform destroy
 ```
-
-## Troubleshooting
-
-We have found terraform to not provide good error outputs. The audit logs in the Azure Portal
-are very helpful.
