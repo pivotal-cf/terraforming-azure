@@ -14,8 +14,8 @@ resource "azurerm_subnet" "management_subnet" {
   address_prefix       = "10.0.8.0/26"
 }
 
-resource "azurerm_subnet" "ert_subnet" {
-  name                 = "${var.env_name}-ert-subnet"
+resource "azurerm_subnet" "pas_subnet" {
+  name                 = "${var.env_name}-pas-subnet"
   depends_on           = ["azurerm_resource_group.pcf_resource_group"]
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"

@@ -70,16 +70,16 @@ output "management_subnet_gateway" {
   value = "${cidrhost(azurerm_subnet.management_subnet.address_prefix, 1)}"
 }
 
-output "ert_subnet_name" {
-  value = "${azurerm_subnet.ert_subnet.name}"
+output "pas_subnet_name" {
+  value = "${azurerm_subnet.pas_subnet.name}"
 }
 
-output "ert_subnet_cidrs" {
-  value = ["${azurerm_subnet.ert_subnet.address_prefix}"]
+output "pas_subnet_cidrs" {
+  value = ["${azurerm_subnet.pas_subnet.address_prefix}"]
 }
 
-output "ert_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.ert_subnet.address_prefix, 1)}"
+output "pas_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.pas_subnet.address_prefix, 1)}"
 }
 
 output "services_subnet_name" {
