@@ -5,7 +5,7 @@ resource "azurerm_lb" "mysql" {
 
   frontend_ip_configuration = {
     name      = "frontendip"
-    subnet_id = "${azurerm_subnet.ert_subnet.id}"
+    subnet_id = "${azurerm_subnet.pas_subnet.id}"
   }
 }
 
