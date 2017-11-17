@@ -1,15 +1,17 @@
 resource "azurerm_storage_account" "bosh_root_storage_account" {
-  name                = "${var.env_short_name}director"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  location            = "${var.location}"
-  account_type        = "Standard_LRS"
+  name                     = "${var.env_short_name}director"
+  resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
+  location                 = "${var.location}"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
-  name                = "${var.env_short_name}opsmanager"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  location            = "${var.location}"
-  account_type        = "Premium_LRS"
+  name                     = "${var.env_short_name}opsmanager"
+  resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
+  location                 = "${var.location}"
+  account_tier             = "Premium"
+  account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_container" "ops_manager_storage_container" {
@@ -59,10 +61,11 @@ resource "azurerm_storage_table" "stemcells_storage_table" {
 }
 
 resource "azurerm_storage_account" "bosh_vms_storage_account" {
-  name                = "${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}${count.index}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  location            = "${var.location}"
-  account_type        = "Premium_LRS"
+  name                     = "${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}${count.index}"
+  resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
+  location                 = "${var.location}"
+  account_tier             = "Premium"
+  account_replication_type = "LRS"
 
   count = 5
 }
@@ -90,10 +93,11 @@ resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
 # Storage containers to be used as CF Blobstore
 
 resource "azurerm_storage_account" "cf_storage_account" {
-  name                = "${var.env_short_name}cf"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  location            = "${var.location}"
-  account_type        = "Standard_LRS"
+  name                     = "${var.env_short_name}cf"
+  resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
+  location                 = "${var.location}"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_container" "cf_buildpacks_storage_container" {
