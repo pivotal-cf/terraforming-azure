@@ -19,7 +19,7 @@ output "ops_manager_dns" {
 }
 
 output "optional_ops_manager_dns" {
-  value = "${azurerm_dns_a_record.optional_ops_manager_dns.name}.${azurerm_dns_a_record.optional_ops_manager_dns.zone_name}"
+  value = "${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.name, list("")), 0)}.${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.zone_name, list("")), 0)}"
 }
 
 output "mysql_dns" {
