@@ -66,7 +66,6 @@ env_short_name        = "banana"
 ops_manager_image_uri = "url-to-opsman-image"
 location              = "West US"
 vm_admin_username     = "admin-username"
-vm_admin_password     = "admin-password"
 dns_suffix            = "some.domain.com"
 ```
 
@@ -81,7 +80,6 @@ dns_suffix            = "some.domain.com"
 - ops_manager_image_uri: **(required)** URL for an OpsMan image hosted on Azure
 - location: **(required)** Azure location to stand up environment in
 - vm_admin_username: **(required)** Admin username for OpsMan VM
-- vm_admin_password: **(required)** Admin password for OpsMan VM
 - dns_suffix: **(required)** Domain to add environment subdomain to
 
 ### Optional

@@ -100,7 +100,6 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   os_profile {
     computer_name  = "${var.env_name}-optional-ops-manager"
     admin_username = "${var.vm_admin_username}"
-    admin_password = "${var.vm_admin_password}"
   }
 
   os_profile_linux_config {

@@ -27,8 +27,6 @@ variable "ops_manager_vm_size" {
 
 variable "vm_admin_username" {}
 
-variable "vm_admin_password" {}
-
 variable "dns_suffix" {}
 
 variable "isolation_segment" {
