@@ -1,17 +1,21 @@
 output "subscription_id" {
-  value = "${var.subscription_id}"
+  sensitive = true
+  value     = "${var.subscription_id}"
 }
 
 output "tenant_id" {
-  value = "${var.tenant_id}"
+  sensitive = true
+  value     = "${var.tenant_id}"
 }
 
 output "client_id" {
-  value = "${var.client_id}"
+  sensitive = true
+  value     = "${var.client_id}"
 }
 
 output "client_secret" {
-  value = "${var.client_secret}"
+  sensitive = true
+  value     = "${var.client_secret}"
 }
 
 output "ops_manager_dns" {
@@ -139,11 +143,13 @@ output "cf_buildpacks_storage_container" {
 }
 
 output "ops_manager_ssh_public_key" {
-  value = "${tls_private_key.ops_manager.public_key_openssh}"
+  sensitive = true
+  value    = "${tls_private_key.ops_manager.public_key_openssh}"
 }
 
 output "ops_manager_ssh_private_key" {
-  value = "${tls_private_key.ops_manager.private_key_pem}"
+  sensitive = true
+  value     = "${tls_private_key.ops_manager.private_key_pem}"
 }
 
 output "ops_manager_public_ip" {
