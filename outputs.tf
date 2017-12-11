@@ -106,6 +106,10 @@ output "ops_manager_security_group_name" {
   value = "${azurerm_network_security_group.ops_manager_security_group.name}"
 }
 
+output "bosh_deployed_vms_security_group_name" {
+  value = "${azurerm_network_security_group.bosh_deployed_vms_security_group.name}"
+}
+
 output "bosh_root_storage_account" {
   value = "${azurerm_storage_account.bosh_root_storage_account.name}"
 }

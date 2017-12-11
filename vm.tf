@@ -14,10 +14,11 @@ resource "azurerm_public_ip" "optional_ops_manager_public_ip" {
 }
 
 resource "azurerm_network_interface" "ops_manager_nic" {
-  name                = "${var.env_name}-ops-manager-nic"
-  depends_on          = ["azurerm_public_ip.ops_manager_public_ip"]
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  name                      = "${var.env_name}-ops-manager-nic"
+  depends_on                = ["azurerm_public_ip.ops_manager_public_ip"]
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
+  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 
   ip_configuration {
     name                          = "${var.env_name}-ops-manager-ip-config"
@@ -29,11 +30,12 @@ resource "azurerm_network_interface" "ops_manager_nic" {
 }
 
 resource "azurerm_network_interface" "optional_ops_manager_nic" {
-  name                = "${var.env_name}-optional-ops-manager-nic"
-  depends_on          = ["azurerm_public_ip.optional_ops_manager_public_ip"]
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
-  count               = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
+  name                      = "${var.env_name}-optional-ops-manager-nic"
+  depends_on                = ["azurerm_public_ip.optional_ops_manager_public_ip"]
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
+  count                     = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
+  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 
   ip_configuration {
     name                          = "${var.env_name}-optional-ops-manager-ip-config"
