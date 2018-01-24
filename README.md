@@ -32,9 +32,19 @@ azure login
 azure account list
 ```
 
-You can then run the script located at `bin/create-automation-account.sh`. An example can be seen here:
+To create the automation account, you need `az-automation`. You can use brew or
+go to the [releases](https://github.com/genevievelesperance/az-automation/releases)
+and get the necessary binary.
+
+```
+brew tap genevievelesperance/tap
+brew install az-automation
+```
+
+Then run:
+
 ```bash
-./bin/create-automation-account.sh \
+az-automation \
   --account some-account-id \
   --identifier-uri http://example.com \
   --display-name some-display-name \
