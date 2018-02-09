@@ -30,7 +30,7 @@ output "mysql_dns" {
   value = "mysql.${azurerm_dns_a_record.mysql.zone_name}"
 }
 
-output "tcp_dns" {
+output "tcp_domain" {
   value = "tcp.${azurerm_dns_a_record.tcp.zone_name}"
 }
 
