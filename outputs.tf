@@ -86,6 +86,10 @@ output "management_subnet_name" {
   value = "${azurerm_subnet.management_subnet.name}"
 }
 
+output "management_subnets" {
+  value = ["${azurerm_subnet.management_subnet.name}"]
+}
+
 output "management_subnet_cidrs" {
   value = ["${azurerm_subnet.management_subnet.address_prefix}"]
 }
@@ -98,6 +102,10 @@ output "pas_subnet_name" {
   value = "${azurerm_subnet.pas_subnet.name}"
 }
 
+output "pas_subnets" {
+  value = ["${azurerm_subnet.pas_subnet.name}"]
+}
+
 output "pas_subnet_cidrs" {
   value = ["${azurerm_subnet.pas_subnet.address_prefix}"]
 }
@@ -108,6 +116,10 @@ output "pas_subnet_gateway" {
 
 output "services_subnet_name" {
   value = "${azurerm_subnet.services_subnet.name}"
+}
+
+output "services_subnets" {
+  value = ["${azurerm_subnet.services_subnet.name}"]
 }
 
 output "services_subnet_cidrs" {
@@ -177,6 +189,10 @@ output "ops_manager_ssh_private_key" {
 }
 
 output "ops_manager_public_ip" {
+  value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
+}
+
+output "ops_manager_ip" {
   value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
 }
 
