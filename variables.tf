@@ -49,8 +49,6 @@ variable "ops_manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "vm_admin_username" {}
-
 variable "dns_suffix" {}
 
 variable "isolation_segment" {
