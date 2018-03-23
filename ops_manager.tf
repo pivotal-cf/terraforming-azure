@@ -74,7 +74,7 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
     disable_password_authentication = true
 
     ssh_keys {
-      path     = "/home/${var.vm_admin_username}/.ssh/authorized_keys"
+      path     = "/home/ubuntu/.ssh/authorized_keys"
       key_data = "${tls_private_key.ops_manager.public_key_openssh}"
     }
   }
@@ -101,14 +101,14 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
 
   os_profile {
     computer_name  = "${var.env_name}-optional-ops-manager"
-    admin_username = "${var.vm_admin_username}"
+    admin_username = "ubuntu"
   }
 
   os_profile_linux_config {
     disable_password_authentication = true
 
     ssh_keys {
-      path     = "/home/${var.vm_admin_username}/.ssh/authorized_keys"
+      path     = "/home/ubuntu/.ssh/authorized_keys"
       key_data = "${tls_private_key.ops_manager.public_key_openssh}"
     }
   }
