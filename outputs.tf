@@ -196,6 +196,10 @@ output "ops_manager_ip" {
   value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
 }
 
+output "optional_ops_manager_public_ip" {
+  value = "${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"
+}
+
 output "ops_manager_private_ip" {
   value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
 }
