@@ -197,7 +197,7 @@ output "ops_manager_ip" {
 }
 
 output "optional_ops_manager_public_ip" {
-  value = "${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"
+  value = "${element(concat(azurerm_public_ip.optional_ops_manager_public_ip.*.ip_address, list("")), 0)}"
 }
 
 output "ops_manager_private_ip" {
