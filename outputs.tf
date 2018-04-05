@@ -70,6 +70,10 @@ output "web_lb_name" {
   value = "${azurerm_lb.web.name}"
 }
 
+output "diego_ssh_lb_name" {
+  value = "${azurerm_lb.diego-ssh.name}"
+}
+
 output "mysql_lb_name" {
   value = "${azurerm_lb.mysql.name}"
 }
