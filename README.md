@@ -33,11 +33,11 @@ azure account list
 ```
 
 To create the automation account, you need `az-automation`. You can use brew or
-go to the [releases](https://github.com/genevievelesperance/az-automation/releases)
+go to the [releases](https://github.com/genevieve/az-automation/releases)
 and get the necessary binary.
 
 ```
-brew tap genevievelesperance/tap
+brew tap genevieve/tap
 brew install az-automation
 ```
 
