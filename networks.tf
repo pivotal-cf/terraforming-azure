@@ -29,3 +29,11 @@ resource "azurerm_subnet" "services_subnet" {
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix       = "10.0.4.0/22"
 }
+
+resource "azurerm_subnet" "dynamic_services_subnet" {
+  name                 = "${var.env_name}-dynamic-services-subnet"
+  depends_on           = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
+  virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
+  address_prefix       = "10.0.12.0/22"
+}
