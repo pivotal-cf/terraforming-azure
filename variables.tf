@@ -4,6 +4,36 @@ variable "env_short_name" {
   description = "Used for creating storage accounts. Must be a-z only, no longer than 10 characters"
 }
 
+variable cf_storage_account_name {
+  type        = "string"
+  description = "storage account name for cf"
+  default     = "cf"
+}
+
+variable cf_buildpacks_storage_container_name {
+  type        = "string"
+  description = "container name for cf buildpacks"
+  default     = "buildpacks"
+}
+
+variable cf_packages_storage_container_name {
+  type        = "string"
+  description = "container name for cf packages"
+  default     = "packages"
+}
+
+variable cf_droplets_storage_container_name {
+  type        = "string"
+  description = "container name for cf droplets"
+  default     = "droplets"
+}
+
+variable cf_resources_storage_container_name {
+  type        = "string"
+  description = "container name for cf resources"
+  default     = "resources"
+}
+
 variable "subscription_id" {}
 
 variable "tenant_id" {}
@@ -39,6 +69,12 @@ variable "ssl_ca_private_key" {
 }
 
 variable "ops_manager_image_uri" {}
+
+variable "ops_manager_private_ip" {
+  type        = "string"
+  description = "IP for the Ops Manager instance if not deploying in the default management subnet"
+  default     = "10.0.8.4"
+}
 
 variable "optional_ops_manager_image_uri" {
   default = ""
@@ -85,18 +121,21 @@ variable "pcf_virtual_network_address_space" {
 }
 
 variable "pcf_management_subnet" {
-  type = "string"
+  type    = "string"
   default = "10.0.8.0/26"
 }
+
 variable "pcf_pas_subnet" {
-  type = "string"
+  type    = "string"
   default = "10.0.0.0/22"
 }
+
 variable "pcf_services_subnet" {
-  type = "string"
+  type    = "string"
   default = "10.0.4.0/22"
 }
+
 variable "pcf_dynamic_services_subnet" {
-  type = "string"
+  type    = "string"
   default = "10.0.12.0/22"
 }

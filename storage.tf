@@ -93,7 +93,7 @@ resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
 # Storage containers to be used as CF Blobstore
 
 resource "azurerm_storage_account" "cf_storage_account" {
-  name                     = "${var.env_short_name}cf"
+  name                     = "${var.env_short_name}${var.cf_storage_account_name}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Standard"
@@ -101,7 +101,7 @@ resource "azurerm_storage_account" "cf_storage_account" {
 }
 
 resource "azurerm_storage_container" "cf_buildpacks_storage_container" {
-  name                  = "buildpacks"
+  name                  = "${var.cf_buildpacks_storage_container_name}"
   depends_on            = ["azurerm_storage_account.cf_storage_account"]
   resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
@@ -109,7 +109,7 @@ resource "azurerm_storage_container" "cf_buildpacks_storage_container" {
 }
 
 resource "azurerm_storage_container" "cf_packages_storage_container" {
-  name                  = "packages"
+  name                  = "${var.cf_packages_storage_container_name}"
   depends_on            = ["azurerm_storage_account.cf_storage_account"]
   resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
@@ -117,7 +117,7 @@ resource "azurerm_storage_container" "cf_packages_storage_container" {
 }
 
 resource "azurerm_storage_container" "cf_droplets_storage_container" {
-  name                  = "droplets"
+  name                  = "${var.cf_droplets_storage_container_name}"
   depends_on            = ["azurerm_storage_account.cf_storage_account"]
   resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
@@ -125,7 +125,7 @@ resource "azurerm_storage_container" "cf_droplets_storage_container" {
 }
 
 resource "azurerm_storage_container" "cf_resources_storage_container" {
-  name                  = "resources"
+  name                  = "${var.cf_resources_storage_container_name}"
   depends_on            = ["azurerm_storage_account.cf_storage_account"]
   resource_group_name   = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name  = "${azurerm_storage_account.cf_storage_account.name}"
