@@ -3,12 +3,14 @@ resource "azurerm_public_ip" "diego-ssh-lb-public-ip" {
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.pcf_resource_group.name}"
   public_ip_address_allocation = "static"
+  sku                          = "Standard"
 }
 
 resource "azurerm_lb" "diego-ssh" {
   name                = "${var.env_name}-diego-ssh-lb"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  sku                 = "Standard"
 
   frontend_ip_configuration = {
     name                 = "frontendip"

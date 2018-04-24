@@ -2,6 +2,7 @@ resource "azurerm_lb" "mysql" {
   name                = "${var.env_name}-mysql-lb"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  sku                 = "Standard"
 
   frontend_ip_configuration = {
     name      = "frontendip"
