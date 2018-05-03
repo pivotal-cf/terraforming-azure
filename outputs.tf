@@ -1,3 +1,7 @@
+output "iaas" {
+  value = "azure"
+}
+
 output "subscription_id" {
   sensitive = true
   value     = "${var.subscription_id}"
