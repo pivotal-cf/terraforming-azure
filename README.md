@@ -9,7 +9,7 @@ a booted ops-manager VM.
 
 ## Looking to setup a different IAAS
 
-We have have other terraform templates to help you!
+We have other terraform templates to help you!
 
 - [aws](https://github.com/pivotal-cf/terraforming-aws)
 - [gcp](https://github.com/pivotal-cf/terraforming-gcp)
