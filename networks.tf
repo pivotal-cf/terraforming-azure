@@ -12,6 +12,7 @@ resource "azurerm_subnet" "management_subnet" {
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix       = "${var.pcf_management_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 }
 
 resource "azurerm_subnet" "pas_subnet" {
@@ -20,6 +21,7 @@ resource "azurerm_subnet" "pas_subnet" {
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix       = "${var.pcf_pas_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.bosh_deployed_vms_security_group.id}"
 }
 
 resource "azurerm_subnet" "services_subnet" {
@@ -28,6 +30,7 @@ resource "azurerm_subnet" "services_subnet" {
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix       = "${var.pcf_services_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.bosh_deployed_vms_security_group.id}"
 }
 
 resource "azurerm_subnet" "dynamic_services_subnet" {
@@ -36,4 +39,5 @@ resource "azurerm_subnet" "dynamic_services_subnet" {
   resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix       = "${var.pcf_dynamic_services_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.bosh_deployed_vms_security_group.id}"
 }
