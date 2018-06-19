@@ -76,6 +76,7 @@ env_short_name        = "banana"
 ops_manager_image_uri = "url-to-opsman-image"
 location              = "West US"
 dns_suffix            = "some.domain.com"
+dns_subdomain         = "cf"
 ```
 
 ## Variables
