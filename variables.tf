@@ -87,6 +87,10 @@ variable "ops_manager_vm_size" {
 
 variable "dns_suffix" {}
 
+variable "dns_subdomain" {
+  "description" = "The base subdomain used for PCF. For example, if your dns_subdomain is `cf`, and your dns_suffix is `pivotal.io`, your PCF domain would be `cf.pivotal.io`"
+}
+
 variable "isolation_segment" {
   default = false
 }
