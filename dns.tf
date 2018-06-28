@@ -1,5 +1,5 @@
 locals {
-  dns_subdomain = "pcf"
+  dns_subdomain = "${var.env_name}"
 }
 
 resource "azurerm_dns_zone" "env_dns_zone" {
