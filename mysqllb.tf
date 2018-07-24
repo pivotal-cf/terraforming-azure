@@ -37,3 +37,17 @@ resource "azurerm_lb_rule" "mysql-rule" {
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.mysql-backend-pool.id}"
   probe_id                = "${azurerm_lb_probe.mysql-probe.id}"
 }
+
+resource "azurerm_lb_rule" "mysql-ntp-rule" {
+  name                = "mysql-ntp-rule"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  loadbalancer_id     = "${azurerm_lb.mysql.id}"
+
+  frontend_ip_configuration_name = "frontendip"
+  protocol                       = "UDP"
+  frontend_port                  = 123
+  backend_port                   = 123
+
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.mysql-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.mysql-probe.id}"
+}

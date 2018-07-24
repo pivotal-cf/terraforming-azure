@@ -45,3 +45,17 @@ resource "azurerm_lb_rule" "diego-ssh-rule" {
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.diego-ssh-backend-pool.id}"
   probe_id                = "${azurerm_lb_probe.diego-ssh-probe.id}"
 }
+
+resource "azurerm_lb_rule" "diego-ntp-rule" {
+  name                = "diego-ntp-rule"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  loadbalancer_id     = "${azurerm_lb.diego-ssh.id}"
+
+  frontend_ip_configuration_name = "frontendip"
+  protocol                       = "UDP"
+  frontend_port                  = 123
+  backend_port                   = 123
+
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.diego-ssh-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.diego-ssh-probe.id}"
+}

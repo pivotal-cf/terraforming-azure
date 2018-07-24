@@ -67,3 +67,17 @@ resource "azurerm_lb_rule" "web-http-rule" {
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
   probe_id                = "${azurerm_lb_probe.web-http-probe.id}"
 }
+
+resource "azurerm_lb_rule" "web-ntp-rule" {
+  name                = "web-ntp-rule"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  loadbalancer_id     = "${azurerm_lb.web.id}"
+
+  frontend_ip_configuration_name = "frontendip"
+  protocol                       = "UDP"
+  frontend_port                  = 123
+  backend_port                   = 123
+
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.web-backend-pool.id}"
+  probe_id                = "${azurerm_lb_probe.web-http-probe.id}"
+}
