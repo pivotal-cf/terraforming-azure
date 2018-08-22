@@ -1,5 +1,10 @@
+locals {
+  tcp_lb_public_ip_name = "tcp-lb-public-ip"
+  tcp_lb_name           = "${var.env_name}-tcp-lb"
+}
+
 resource "azurerm_public_ip" "tcp-lb-public-ip" {
-  name                         = "tcp-lb-public-ip"
+  name                         = "${var.tcp_lb_public_ip_name != "" ? var.tcp_lb_public_ip_name : local.tcp_lb_public_ip_name}"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.pcf_resource_group.name}"
   public_ip_address_allocation = "static"
@@ -7,7 +12,7 @@ resource "azurerm_public_ip" "tcp-lb-public-ip" {
 }
 
 resource "azurerm_lb" "tcp" {
-  name                = "${var.env_name}-tcp-lb"
+  name                = "${var.tcp_lb_name != "" ? var.tcp_lb_name : local.tcp_lb_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   sku                 = "Standard"

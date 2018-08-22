@@ -75,13 +75,28 @@ env_name              = "banana"
 env_short_name        = "banana"
 ops_manager_image_uri = "url-to-opsman-image"
 location              = "West US"
-dns_suffix            = "domain.com"
+dns_suffix            = "cf.com"
 
-# optional. if left blank, will default to "pcf".
-dns_subdomain         = ""
+# optional variables for a more custom deployment. most of the variables below are for naming. if they are not passed, default names will be selected.
+
+dns_subdomain                         = "apples" # apples.cf.com
+resource_group_name                   = "apples"
+root_bosh_storage_account_name        = "green" # name of the default storage account for bosh.
+bosh_vms_storage_account_name         = "apl" # 3 letter identifier for managed disk striping. must be lowercase a-z.
+cf_storage_account_name               = "cfapples" # name of the storage account for cf storage artifacts.
+pcf_virtual_network_name              = "orchard" # name of the virtual network.
+management_subnet_name                = "grannysmith" # name of the management subnet within the virtual network.
+pas_subnet_name                       = "jonathan" # name of the app subnet within the virtual network.
+services_subnet_name                  = "macintosh" # name of the services subnet within the virtual network.
+web_lb_public_ip_name                 = "harvester" # name of the public IP for the HTTP-based web load balancer.
+web_lb_name                           = "angryorchard" # name of the web load balancer.
+tcp_lb_public_ip_name                 = "fiji" # name of the public IP for the tcp-based load balancer.
+tcp_lb_name                           = "strongbow"  # name of the tcp load balancer.
+ops_manager_security_group_name       = "bill" # name of the ops manager NSG.
+bosh_deployed_vms_security_group_name = "ted" # name of the security group for bosh vms.
 ```
 
-## Variables
+## Required Variables
 
 - env_name: **(required)** An arbitrary unique name for namespacing resources
 - env_short_name: **(required)** Used for creating storage accounts. Must be a-z only, no longer than 10 characters

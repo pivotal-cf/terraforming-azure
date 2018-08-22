@@ -1,5 +1,10 @@
+locals {
+  ops_manager_security_group_name       = "${var.env_name}-ops-manager-security-group"
+  bosh_deployed_vms_security_group_name = "${var.env_name}-bosh-deployed-vms-security-group"
+}
+
 resource "azurerm_network_security_group" "ops_manager_security_group" {
-  name                = "${var.env_name}-ops-manager-security-group"
+  name                = "${var.ops_manager_security_group_name != "" ? var.ops_manager_security_group_name : local.ops_manager_security_group_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 
@@ -41,7 +46,7 @@ resource "azurerm_network_security_group" "ops_manager_security_group" {
 }
 
 resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
-  name                = "${var.env_name}-bosh-deployed-vms-security-group"
+  name                = "${var.bosh_deployed_vms_security_group_name != "" ? var.bosh_deployed_vms_security_group_name : local.bosh_deployed_vms_security_group_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 

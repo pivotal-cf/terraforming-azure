@@ -1,5 +1,10 @@
+locals {
+  web_lb_public_ip_name = "web-lb-public-ip"
+  web_lb_name           = "${var.env_name}-web-lb"
+}
+
 resource "azurerm_public_ip" "web-lb-public-ip" {
-  name                         = "web-lb-public-ip"
+  name                         = "${var.web_lb_public_ip_name != "" ? var.web_lb_public_ip_name : local.web_lb_public_ip_name}"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.pcf_resource_group.name}"
   public_ip_address_allocation = "static"
@@ -7,7 +12,7 @@ resource "azurerm_public_ip" "web-lb-public-ip" {
 }
 
 resource "azurerm_lb" "web" {
-  name                = "${var.env_name}-web-lb"
+  name                = "${var.web_lb_name != "" ? var.web_lb_name : local.web_lb_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   sku                 = "Standard"

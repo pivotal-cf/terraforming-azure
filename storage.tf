@@ -1,5 +1,13 @@
+# these locals are just the original defaults in case variables aren't passed.
+locals {
+  root_bosh_storage_account_name   = "${var.env_short_name}director"
+  ops_manager_storage_account_name = "${var.env_short_name}opsmanager"
+  bosh_vms_storage_account_name    = "${var.env_short_name}"
+  cf_storage_account_name          = "${var.env_short_name}${var.cf_storage_account_name}"
+}
+
 resource "azurerm_storage_account" "bosh_root_storage_account" {
-  name                     = "${var.env_short_name}director"
+  name                     = "${var.root_bosh_storage_account_name != "" ? var.root_bosh_storage_account_name : local.root_bosh_storage_account_name}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Standard"
@@ -61,7 +69,7 @@ resource "azurerm_storage_table" "stemcells_storage_table" {
 }
 
 resource "azurerm_storage_account" "bosh_vms_storage_account" {
-  name                     = "${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}${count.index}"
+  name                     = "${var.bosh_vms_storage_account_name != "" ? var.bosh_vms_storage_account_name : local.bosh_vms_storage_account_name}${data.template_file.base_storage_account_wildcard.rendered}${count.index}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Premium"
@@ -93,7 +101,7 @@ resource "azurerm_storage_container" "bosh_vms_stemcell_storage_container" {
 # Storage containers to be used as CF Blobstore
 
 resource "azurerm_storage_account" "cf_storage_account" {
-  name                     = "${var.env_short_name}${var.cf_storage_account_name}"
+  name                     = "${var.cf_storage_account_name != "" ? var.cf_storage_account_name : local.cf_storage_account_name}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Standard"

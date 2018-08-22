@@ -1,13 +1,27 @@
 variable "env_name" {}
 
+variable "resource_group_name" {
+  type    = "string"
+  default = ""
+}
+
 variable "env_short_name" {
   description = "Used for creating storage accounts. Must be a-z only, no longer than 10 characters"
 }
 
+variable "root_bosh_storage_account_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "bosh_vms_storage_account_name" {
+  type    = "string"
+  default = ""
+}
+
 variable cf_storage_account_name {
-  type        = "string"
-  description = "storage account name for cf"
-  default     = "cf"
+  type    = "string"
+  default = ""
 }
 
 variable cf_buildpacks_storage_container_name {
@@ -121,6 +135,26 @@ variable "iso_seg_ssl_ca_private_key" {
   default     = ""
 }
 
+variable "pcf_virtual_network_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "management_subnet_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "pas_subnet_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "services_subnet_name" {
+  type    = "string"
+  default = ""
+}
+
 variable "pcf_virtual_network_address_space" {
   type    = "list"
   default = ["10.0.0.0/16"]
@@ -144,4 +178,34 @@ variable "pcf_services_subnet" {
 variable "pcf_dynamic_services_subnet" {
   type    = "string"
   default = "10.0.12.0/22"
+}
+
+variable "web_lb_public_ip_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "web_lb_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "tcp_lb_public_ip_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "tcp_lb_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "ops_manager_security_group_name" {
+  type    = "string"
+  default = ""
+}
+
+variable "bosh_deployed_vms_security_group_name" {
+  type    = "string"
+  default = ""
 }
