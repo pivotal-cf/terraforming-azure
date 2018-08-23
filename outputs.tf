@@ -90,20 +90,20 @@ output "network_name" {
   value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
 
-output "infrastructure_subnet_name" {
-  value = "${azurerm_subnet.infrastructure_subnet.name}"
+output "management_subnet_name" {
+  value = "${azurerm_subnet.management_subnet.name}"
 }
 
-output "infrastructure_subnets" {
-  value = ["${azurerm_subnet.infrastructure_subnet.name}"]
+output "management_subnets" {
+  value = ["${azurerm_subnet.management_subnet.name}"]
 }
 
-output "infrastructure_subnet_cidrs" {
-  value = ["${azurerm_subnet.infrastructure_subnet.address_prefix}"]
+output "management_subnet_cidrs" {
+  value = ["${azurerm_subnet.management_subnet.address_prefix}"]
 }
 
-output "infrastructure_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.infrastructure_subnet.address_prefix, 1)}"
+output "management_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.management_subnet.address_prefix, 1)}"
 }
 
 output "pas_subnet_name" {
