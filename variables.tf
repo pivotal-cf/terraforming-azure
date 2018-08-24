@@ -72,7 +72,7 @@ variable "ops_manager_image_uri" {}
 
 variable "ops_manager_private_ip" {
   type        = "string"
-  description = "IP for the Ops Manager instance if not deploying in the default management subnet"
+  description = "IP for the Ops Manager instance if not deploying in the default infrasstructure subnet"
   default     = "10.0.8.4"
 }
 
@@ -126,7 +126,7 @@ variable "pcf_virtual_network_address_space" {
   default = ["10.0.0.0/16"]
 }
 
-variable "pcf_management_subnet" {
+variable "pcf_infrastructure_subnet" {
   type    = "string"
   default = "10.0.8.0/26"
 }
