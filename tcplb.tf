@@ -33,7 +33,7 @@ resource "azurerm_lb_probe" "tcp-probe" {
 }
 
 resource "azurerm_lb_rule" "tcp-rule" {
-  count               = 150
+  count               = 5
   name                = "tcp-rule-${count.index + 1024}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
