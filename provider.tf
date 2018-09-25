@@ -4,3 +4,7 @@ provider "azurerm" {
   client_secret   = "${var.client_secret}"
   tenant_id       = "${var.tenant_id}"
 }
+
+terraform {
+  required_version = "< 0.12.0"
+}
