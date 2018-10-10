@@ -1,4 +1,6 @@
-# How Does One Use This?
+# Terraforming Azure [![build-status](https://infra.ci.cf-app.com/api/v1/teams/main/pipelines/terraforming/jobs/terraforming-azure/badge)](https://infra.ci.cf-app.com/teams/main/pipelines/terraforming/jobs/terraforming-azure)
+
+## How Does One Use This?
 
 Please note that the master branch is generally *unstable*. If you are looking for something "tested", please consume one of our [releases](https://github.com/pivotal-cf/terraforming-azure/releases).
 
