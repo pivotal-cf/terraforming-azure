@@ -6,7 +6,7 @@ iaas-configuration:
   client_id: {{.client_id}}
   client_secret: {{.client_secret}}
   resource_group_name: {{.pcf_resource_group_name}}
-  bosh_storage_account_name: {{.cf_storage_account_name}}
+  bosh_storage_account_name: {{.bosh_root_storage_account}}
   ssh_public_key: {{.ops_manager_ssh_public_key}}
   ssh_private_key: {{toJson .ops_manager_ssh_private_key}}
 network-assignment:
@@ -21,7 +21,7 @@ networks-configuration:
     - cidr: {{index $.infrastructure_subnet_cidrs $i}}
       dns: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 2}}
       gateway: {{$.infrastructure_subnet_gateway}}
-      iaas_identifier: {{$.infrastructure_subnet_name}}
+      iaas_identifier: {{$.network_name}}/{{$.infrastructure_subnet_name}}
       reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 4}}
     {{end}}
 {{if  index . "pas_subnet_cidrs"}}
@@ -31,7 +31,7 @@ networks-configuration:
     - cidr: {{index $.pas_subnet_cidrs $i}}
       dns: {{cidrhost (index $.pas_subnet_cidrs $i) 2}}
       gateway: {{$.pas_subnet_gateway}}
-      iaas_identifier: {{$.pas_subnet_name}}
+      iaas_identifier: {{$.network_name}}/{{$.pas_subnet_name}}
       reserved_ip_ranges: {{cidrhost (index $.pas_subnet_cidrs $i) 0}}-{{cidrhost (index $.pas_subnet_cidrs $i) 4}}
     {{end}}
 {{end}}
@@ -41,7 +41,7 @@ networks-configuration:
     - cidr: {{index $.services_subnet_cidrs $i}}
       dns: {{cidrhost (index $.services_subnet_cidrs $i) 2}}
       gateway: {{$.services_subnet_gateway}}
-      iaas_identifier: {{$.services_subnet_name}}
+      iaas_identifier: {{$.network_name}}/{{$.services_subnet_name}}
       reserved_ip_ranges: {{cidrhost (index $.services_subnet_cidrs $i) 0}}-{{cidrhost (index $.services_subnet_cidrs $i) 4}}
     {{end}}
 resource-configuration:
