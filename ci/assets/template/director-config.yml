@@ -1,5 +1,5 @@
 director-configuration:
-  ntp_servers_string: time1.google.com,time2.google.com,time3.google.com,time4.google.com
+  ntp_servers_string: us.pool.ntp.org
 iaas-configuration:
   subscription_id: {{.subscription_id}}
   tenant_id: {{.tenant_id}}
@@ -19,30 +19,30 @@ networks-configuration:
     subnets:
     {{range $i, $a := .infrastructure_subnet_cidrs}}
     - cidr: {{index $.infrastructure_subnet_cidrs $i}}
-      dns: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 2}}
+      dns: 168.63.129.16
       gateway: {{$.infrastructure_subnet_gateway}}
       iaas_identifier: {{$.network_name}}/{{$.infrastructure_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 4}}
+      reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 5}}
     {{end}}
 {{if  index . "pas_subnet_cidrs"}}
   - name: pas
     subnets:
     {{range $i, $a := .pas_subnet_cidrs}}
     - cidr: {{index $.pas_subnet_cidrs $i}}
-      dns: {{cidrhost (index $.pas_subnet_cidrs $i) 2}}
+      dns: 168.63.129.16
       gateway: {{$.pas_subnet_gateway}}
       iaas_identifier: {{$.network_name}}/{{$.pas_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.pas_subnet_cidrs $i) 0}}-{{cidrhost (index $.pas_subnet_cidrs $i) 4}}
+      reserved_ip_ranges: {{cidrhost (index $.pas_subnet_cidrs $i) 0}}-{{cidrhost (index $.pas_subnet_cidrs $i) 5}}
     {{end}}
 {{end}}
   - name: services
     subnets:
     {{range $i, $a := .services_subnet_cidrs}}
     - cidr: {{index $.services_subnet_cidrs $i}}
-      dns: {{cidrhost (index $.services_subnet_cidrs $i) 2}}
+      dns: 168.63.129.16
       gateway: {{$.services_subnet_gateway}}
       iaas_identifier: {{$.network_name}}/{{$.services_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.services_subnet_cidrs $i) 0}}-{{cidrhost (index $.services_subnet_cidrs $i) 4}}
+      reserved_ip_ranges: {{cidrhost (index $.services_subnet_cidrs $i) 0}}-{{cidrhost (index $.services_subnet_cidrs $i) 5}}
     {{end}}
 resource-configuration:
   compilation:

@@ -1,0 +1,82 @@
+network-properties:
+  network:
+    name: pas
+  service_network:
+    name: services
+  other_availability_zones:
+    - name: 'null'
+  singleton_availability_zone:
+    name: 'null'
+product-properties:
+  .cloud_controller.apps_domain:
+    value: {{.apps_domain}}
+  .cloud_controller.system_domain:
+    value: {{.sys_domain}}
+  .properties.cf_networking_search_domains:
+    value: apps.internal
+  .ha_proxy.skip_cert_verify:
+    value: true
+  .mysql_monitor.recipient_email:
+    value: cf-infra@pivotal.io
+  .properties.credhub_key_encryption_passwords:
+    value:
+    - key:
+        secret: 1a2b3c4d5e6f7g8h9i0j
+      name: Key
+      primary: true
+      provider: internal
+  .properties.haproxy_forward_tls:
+    value: disable
+  .properties.networking_poe_ssl_certs:
+    value:
+    - certificate:
+        cert_pem: |
+{{indent 10 .ssl_cert}}
+        private_key_pem: |
+{{indent 10 .ssl_private_key}}
+      name: Certificate
+  .properties.security_acknowledgement:
+    value: X
+  .properties.system_blobstore:
+    value: external_azure
+  .properties.system_blobstore.external_azure.access_key:
+    value:
+      secret: {{.cf_storage_account_access_key}}
+  .properties.system_blobstore.external_azure.account_name:
+    value: {{.cf_storage_account_name}}
+  .properties.system_blobstore.external_azure.buildpacks_container:
+    value: {{.cf_buildpacks_storage_container}}
+  .properties.system_blobstore.external_azure.droplets_container:
+    value: {{.cf_droplets_storage_container}}
+  .properties.system_blobstore.external_azure.packages_container:
+    value: {{.cf_packages_storage_container}}
+  .properties.system_blobstore.external_azure.resources_container:
+    value: {{.cf_resources_storage_container}}
+  .router.frontend_idle_timeout:
+    value: 180
+  .properties.tcp_routing:
+    value: enable
+  .properties.tcp_routing.enable.reservable_ports:
+    value: 1024-1123
+  .uaa.service_provider_key_credentials:
+    value:
+        cert_pem: |
+{{indent 10 .ssl_cert}}
+        private_key_pem: |
+{{indent 10 .ssl_private_key}}
+resource-config:
+  compute:
+    instances: 1
+  control:
+    elb_names:
+    - {{.diego_ssh_lb_name}}
+  router:
+    elb_names:
+    - {{.web_lb_name}}
+    instances: 1
+  tcp_router:
+    elb_names:
+    - {{.tcp_lb_name}}
+  database:
+    elb_names:
+    - {{.mysql_lb_name}}
