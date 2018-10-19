@@ -1,3 +1,39 @@
+variable "env_name" {
+  default = ""
+}
+
+variable "env_short_name" {
+  default = ""
+}
+
+variable "location" {
+  default = ""
+}
+
+variable "dns_subdomain" {
+  default = ""
+}
+
+variable "dns_suffix" {
+  default = ""
+}
+
+variable "pcf_virtual_network_address_space" {
+  type    = "list"
+  default = []
+}
+
+variable "pcf_infrastructure_subnet" {
+  default = ""
+}
+
+resource "azurerm_resource_group" "pcf_resource_group" {
+  name     = "${var.env_name}"
+  location = "${var.location}"
+}
+
+# ============== Security Groups ===============
+
 resource "azurerm_network_security_group" "ops_manager_security_group" {
   name                = "${var.env_name}-ops-manager-security-group"
   location            = "${var.location}"
@@ -190,4 +226,91 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
     source_address_prefix      = "Internet"
     destination_address_prefix = "*"
   }
+}
+
+# ============= Networking
+
+resource "azurerm_virtual_network" "pcf_virtual_network" {
+  name                = "${var.env_name}-virtual-network"
+  depends_on          = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  address_space       = "${var.pcf_virtual_network_address_space}"
+  location            = "${var.location}"
+}
+
+resource "azurerm_subnet" "infrastructure_subnet" {
+  name                      = "${var.env_name}-infrastructure-subnet"
+  depends_on                = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
+  virtual_network_name      = "${azurerm_virtual_network.pcf_virtual_network.name}"
+  address_prefix            = "${var.pcf_infrastructure_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
+}
+
+# ============= DNS
+
+locals {
+  dns_subdomain = "${var.env_name}"
+}
+
+// the CPI uses this as a wildcard to stripe disks across multiple storage accounts
+data "template_file" "base_storage_account_wildcard" {
+  template = "boshvms"
+}
+
+resource "azurerm_dns_zone" "env_dns_zone" {
+  name                = "${var.dns_subdomain != "" ? var.dns_subdomain : local.dns_subdomain}.${var.dns_suffix}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+}
+
+output "dns_zone_name" {
+  value = "${azurerm_dns_zone.env_dns_zone.name}"
+}
+
+output "dns_zone_name_servers" {
+  value = "${azurerm_dns_zone.env_dns_zone.name_servers}"
+}
+
+output "resource_group_name" {
+  value = "${azurerm_resource_group.pcf_resource_group.name}"
+}
+
+output "network_name" {
+  value = "${azurerm_virtual_network.pcf_virtual_network.name}"
+}
+
+output "infrastructure_subnet_id" {
+  value = "${azurerm_subnet.infrastructure_subnet.id}"
+}
+
+output "infrastructure_subnet_name" {
+  value = "${azurerm_subnet.infrastructure_subnet.name}"
+}
+
+output "infrastructure_subnet_cidrs" {
+  value = ["${azurerm_subnet.infrastructure_subnet.address_prefix}"]
+}
+
+output "infrastructure_subnet_gateway" {
+  value = "${cidrhost(azurerm_subnet.infrastructure_subnet.address_prefix, 1)}"
+}
+
+output "security_group_id" {
+  value = "${azurerm_network_security_group.ops_manager_security_group.id}"
+}
+
+output "security_group_name" {
+  value = "${azurerm_network_security_group.ops_manager_security_group.name}"
+}
+
+output "bosh_deployed_vms_security_group_id" {
+  value = "${azurerm_network_security_group.bosh_deployed_vms_security_group.id}"
+}
+
+output "bosh_deployed_vms_security_group_name" {
+  value = "${azurerm_network_security_group.bosh_deployed_vms_security_group.name}"
+}
+
+output "wildcard_vm_storage_account" {
+  value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
 }

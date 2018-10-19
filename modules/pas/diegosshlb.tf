@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "diego-ssh-lb-public-ip" {
   name                         = "diego-ssh-lb-public-ip"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name          = "${var.resource_group_name}"
   public_ip_address_allocation = "static"
   sku                          = "Standard"
 }
@@ -9,7 +9,7 @@ resource "azurerm_public_ip" "diego-ssh-lb-public-ip" {
 resource "azurerm_lb" "diego-ssh" {
   name                = "${var.env_name}-diego-ssh-lb"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   sku                 = "Standard"
 
   frontend_ip_configuration = {
@@ -20,13 +20,13 @@ resource "azurerm_lb" "diego-ssh" {
 
 resource "azurerm_lb_backend_address_pool" "diego-ssh-backend-pool" {
   name                = "diego-ssh-backend-pool"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.diego-ssh.id}"
 }
 
 resource "azurerm_lb_probe" "diego-ssh-probe" {
   name                = "diego-ssh-probe"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.diego-ssh.id}"
   protocol            = "TCP"
   port                = 2222
@@ -34,7 +34,7 @@ resource "azurerm_lb_probe" "diego-ssh-probe" {
 
 resource "azurerm_lb_rule" "diego-ssh-rule" {
   name                = "diego-ssh-rule"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.diego-ssh.id}"
 
   frontend_ip_configuration_name = "frontendip"

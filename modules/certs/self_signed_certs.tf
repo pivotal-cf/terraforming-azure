@@ -1,3 +1,19 @@
+variable "env_name" {
+  default = ""
+}
+
+variable "dns_suffix" {
+  default = ""
+}
+
+variable "ssl_ca_cert" {
+  default = ""
+}
+
+variable "ssl_ca_private_key" {
+  default = ""
+}
+
 resource "tls_cert_request" "ssl_csr" {
   key_algorithm   = "RSA"
   private_key_pem = "${tls_private_key.ssl_private_key.private_key_pem}"
@@ -41,4 +57,14 @@ resource "tls_private_key" "ssl_private_key" {
   rsa_bits  = "2048"
 
   count = "${length(var.ssl_ca_cert) > 0 ? 1 : 0}"
+}
+
+output "ssl_cert" {
+  sensitive = true
+  value     = "${element(concat(tls_locally_signed_cert.ssl_cert.*.cert_pem, list("")), 0)}"
+}
+
+output "ssl_private_key" {
+  sensitive = true
+  value     = "${element(concat(tls_private_key.ssl_private_key.*.private_key_pem, list("")), 0)}"
 }

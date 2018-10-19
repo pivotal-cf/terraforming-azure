@@ -1,4 +1,4 @@
-# Terraforming Azure [![build-status](https://infra.ci.cf-app.com/api/v1/teams/main/pipelines/terraforming/jobs/terraforming-azure/badge)](https://infra.ci.cf-app.com/teams/main/pipelines/terraforming/jobs/terraforming-azure)
+# Terraforming Azure [![build-status](https://infra.ci.cf-app.com/api/v1/teams/main/pipelines/terraforming-azure/jobs/deploy-pas/badge)](https://infra.ci.cf-app.com/teams/main/pipelines/terraforming-azure)
 
 ## How Does One Use This?
 
@@ -60,6 +60,21 @@ tenant_id       = "some-tenant-id"
 client_id       = "some-client-id"
 client_secret   = "some-client-secret"
 ```
+
+## Deploying Ops Manager
+
+Depending if you're deploying PAS or PKS you need to perform the following steps:
+
+1. `cd` into the proper directory:
+    - [terraforming-pas/](terraforming-pas/)
+1. Create [`terraform.tfvars`](/README.md#var-file) file
+1. Run terraform apply:
+  ```bash
+  terraform init
+  terraform plan -out=plan
+  terraform apply plan
+  ```
+
 
 ### Var File
 

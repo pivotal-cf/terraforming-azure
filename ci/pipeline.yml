@@ -25,6 +25,12 @@ shared:
     OM_PASSWORD: ((om.password))
 
 resources:
+- name: after-midnight
+  type: time
+  source:
+    start: 12:00 AM -0700
+    stop: 2:00 AM -0700
+
 - name: cf-infra-tracker
   type: tracker
   source:
@@ -32,16 +38,10 @@ resources:
     project_id: ((cf_infrastructure_private_id))
     tracker_url: https://www.pivotaltracker.com
 
- - name: after-midnight
-   type: time
-   source:
-     start: 12:00 AM -0700
-     stop: 2:00 AM -0700
-
 - name: terraforming-azure
   type: git
   source:
-    branch: master
+    branch: modular-terraforming
     uri: git@github.com:pivotal-cf/terraforming-azure.git
     private_key: ((cf_infra_bot_github_user.private_key))
 
@@ -56,7 +56,7 @@ resources:
       credentials: ((cf_infra_gcp_service_account_key))
     vars:
       env_short_name: azurepas
-      location: "West US"
+      location: "East US"
       subscription_id: ((azure_subscription_id))
       tenant_id: ((azure_tenant_id))
       client_id: ((azure_client_id))
@@ -104,8 +104,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-     - get: after-midnight
-       trigger: true
+    - get: after-midnight
+      trigger: true
     - get: terraforming-azure
       trigger: true
     - get: ci
@@ -126,11 +126,11 @@ jobs:
       file: ci/scripts/terraforming/latest-opsman/task.yml
       params:
         IAAS: Azure
-        KEY: west_us
+        KEY: east_us
     - put: env-state-azure
       params:
         env_name: azurepas
-        terraform_source: terraforming-azure
+        terraform_source: terraforming-azure/terraforming-pas
         delete_on_failure: true
         var_files: [tfvars/terraform.yml]
     - task: add-dns
@@ -199,7 +199,7 @@ jobs:
         - put: env-state-azure
           params:
             env_name: azurepas
-            terraform_source: terraforming-azure
+            terraform_source: terraforming-azure/terraforming-pas
             delete_on_failure: true
             action: destroy
             var_files: [tfvars/terraform.yml]

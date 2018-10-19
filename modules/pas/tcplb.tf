@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "tcp-lb-public-ip" {
   name                         = "tcp-lb-public-ip"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name          = "${var.resource_group_name}"
   public_ip_address_allocation = "static"
   sku                          = "Standard"
 }
@@ -9,7 +9,7 @@ resource "azurerm_public_ip" "tcp-lb-public-ip" {
 resource "azurerm_lb" "tcp" {
   name                = "${var.env_name}-tcp-lb"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   sku                 = "Standard"
 
   frontend_ip_configuration = {
@@ -20,13 +20,13 @@ resource "azurerm_lb" "tcp" {
 
 resource "azurerm_lb_backend_address_pool" "tcp-backend-pool" {
   name                = "tcp-backend-pool"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
 }
 
 resource "azurerm_lb_probe" "tcp-probe" {
   name                = "tcp-probe"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
   protocol            = "TCP"
   port                = 80
@@ -35,7 +35,7 @@ resource "azurerm_lb_probe" "tcp-probe" {
 resource "azurerm_lb_rule" "tcp-rule" {
   count               = 5
   name                = "tcp-rule-${count.index + 1024}"
-  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
 
   frontend_ip_configuration_name = "frontendip"
