@@ -99,7 +99,7 @@ resources:
     sort_by: semver
 
 jobs:
-- name: deploy-pas-tmp
+- name: deploy-pas
   serial: true
   public: false
   plan:
@@ -172,6 +172,7 @@ jobs:
         product: srt
         product-config-repo: terraforming-azure
     - task: apply-changes
+      attempts: 3
       file: ci/scripts/terraforming/apply-changes/task.yml
       params:
         <<: *om-creds
@@ -211,7 +212,7 @@ jobs:
   - get: terraforming-azure
     trigger: true
     passed:
-    - deploy-pas-tmp
+    - deploy-pas
   - put: cf-infra-tracker
     params:
       repos:
