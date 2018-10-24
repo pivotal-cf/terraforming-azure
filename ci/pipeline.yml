@@ -41,7 +41,7 @@ resources:
 - name: terraforming-azure
   type: git
   source:
-    branch: modular-terraforming
+    branch: master
     uri: git@github.com:pivotal-cf/terraforming-azure.git
     private_key: ((cf_infra_bot_github_user.private_key))
 
