@@ -47,8 +47,8 @@ resource "azurerm_lb_rule" "tcp-rule" {
   probe_id                = "${azurerm_lb_probe.tcp-probe.id}"
 }
 
-resource "azurerm_lb_rule" "ntp" {
-  name                = "ntp-rule"
+resource "azurerm_lb_rule" "tcp-ntp" {
+  name                = "tcp-ntp-rule"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.tcp.id}"
 
