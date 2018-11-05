@@ -25,7 +25,7 @@ networks-configuration:
       reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 5}}
     {{end}}
 {{if  index . "pas_subnet_cidrs"}}
-  - name: {{.pas_subnet_cidrs}}
+  - name: {{.pas_subnet_name}}
     subnets:
     {{range $i, $a := .pas_subnet_cidrs}}
     - cidr: {{index $.pas_subnet_cidrs $i}}
