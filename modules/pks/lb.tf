@@ -18,7 +18,7 @@ resource "azurerm_lb" "pks-lb" {
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "pks-balancer-backend-pool" {
+resource "azurerm_lb_backend_address_pool" "pks-lb-backend-pool" {
   name                = "${var.env_id}-pks-backend-pool"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.pks-lb.id}"
@@ -43,5 +43,5 @@ resource "azurerm_lb_rule" "pks-lb-api-rule" {
   backend_port                   = 8443
   frontend_ip_configuration_name = "${azurerm_public_ip.pks-lb-ip.name}"
   probe_id                       = "${azurerm_lb_probe.api-health-probe.id}"
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.pks-balancer-backend-pool.id}"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.pks-lb-backend-pool.id}"
 }
