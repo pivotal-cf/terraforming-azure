@@ -76,7 +76,7 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${var.isolation_segment ? 1 : 0}"
+  count = "${var.isolation_segment ? length(var.iso_seg_names) : 0}"
 
   environment = "${var.env_name}"
   location    = "${var.location}"
@@ -86,6 +86,11 @@ module "isolation_segment" {
   ssl_ca_cert        = "${var.iso_seg_ssl_ca_cert}"
   ssl_ca_private_key = "${var.iso_seg_ssl_ca_private_key}"
 
-  resource_group_name = "${module.infra.resource_group_name}"
-  dns_zone            = "${module.infra.dns_zone_name}"
+  iso_seg_names         = "${var.iso_seg_names}"
+  iso_seg_subnet_blocks = ["${cidrsubnet(var.pcf_iso_segment_address_space, 4, 4)}", "${cidrsubnet(var.pcf_iso_segment_address_space, 4, 8)}"]
+
+  resource_group_name                 = "${module.infra.resource_group_name}"
+  dns_zone                            = "${module.infra.dns_zone_name}"
+  network_name                        = "${module.infra.network_name}"
+  bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
 }

@@ -1,5 +1,5 @@
 output "lb_name" {
-  value = "${element(concat(azurerm_lb.iso.*.name, list("")), 0)}"
+  value = "${azurerm_lb.iso-web.*.name}"
 }
 
 output "ssl_cert" {
