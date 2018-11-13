@@ -130,8 +130,8 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
   vm_size                       = "${var.ops_manager_vm_size}"
   delete_os_disk_on_termination = "true"
 
-storage_image_reference {
-  id    = "${azurerm_image.ops_manager_image.id}"
+  storage_image_reference {
+    id    = "${azurerm_image.ops_manager_image.id}"
   }
 
   storage_os_disk {
@@ -202,8 +202,8 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   vm_size               = "${var.ops_manager_vm_size}"
   count                 = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 
-storage_image_reference {
-  id    = "${azurerm_image.ops_manager_image.id}"
+  storage_image_reference {
+    id    = "${azurerm_image.ops_manager_image.id}"
   }
 
   storage_os_disk {
