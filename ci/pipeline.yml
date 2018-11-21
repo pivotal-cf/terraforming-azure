@@ -236,11 +236,15 @@ jobs:
       resource: infrastructure-ci
   - task: release
     file: ci/scripts/terraforming/release/task.yml
+    params:
+      IAAS: azure
   - put: terraforming-release
     params:
       name: release/version
       tag: release/version
       commitish: release/commitish
+      globs:
+      - release/terraforming-azure-*.tar.gz
   - put: version
     params:
       file: version/version
