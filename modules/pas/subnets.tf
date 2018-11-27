@@ -27,17 +27,3 @@ resource "azurerm_subnet_network_security_group_association" "services_subnet" {
   subnet_id                 = "${azurerm_subnet.services_subnet.id}"
   network_security_group_id = "${var.bosh_deployed_vms_security_group_id}"
 }
-
-resource "azurerm_subnet" "dynamic_services_subnet" {
-  name = "${var.env_name}-dynamic-services-subnet"
-
-  //  depends_on                = ["${var.resource_group_name}"]
-  resource_group_name       = "${var.resource_group_name}"
-  virtual_network_name      = "${var.network_name}"
-  address_prefix            = "${var.dynamic_services_subnet_cidr}"
-}
-
-resource "azurerm_subnet_network_security_group_association" "dynamic_services_subnet" {
-  subnet_id                 = "${azurerm_subnet.dynamic_services_subnet.id}"
-  network_security_group_id = "${var.bosh_deployed_vms_security_group_id}"
-}

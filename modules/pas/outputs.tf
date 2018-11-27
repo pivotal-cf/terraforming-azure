@@ -56,18 +56,6 @@ output "services_subnet_gateway" {
   value = "${cidrhost(azurerm_subnet.services_subnet.address_prefix, 1)}"
 }
 
-output "dynamic_services_subnet_name" {
-  value = "${azurerm_subnet.dynamic_services_subnet.name}"
-}
-
-output "dynamic_services_subnet_cidrs" {
-  value = ["${azurerm_subnet.dynamic_services_subnet.address_prefix}"]
-}
-
-output "dynamic_services_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.dynamic_services_subnet.address_prefix, 1)}"
-}
-
 # Storage
 
 output "cf_storage_account_name" {
