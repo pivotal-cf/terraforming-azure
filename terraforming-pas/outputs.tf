@@ -140,22 +140,6 @@ output "services_subnet_gateway" {
   value = "${module.pas.services_subnet_gateway}"
 }
 
-output "dynamic_services_subnet_name" {
-  value = "${module.pas.dynamic_services_subnet_name}"
-}
-
-output "dynamic_services_subnets" {
-  value = ["${module.pas.dynamic_services_subnet_name}"]
-}
-
-output "dynamic_services_subnet_cidrs" {
-  value = "${module.pas.dynamic_services_subnet_cidrs}"
-}
-
-output "dynamic_services_subnet_gateway" {
-  value = "${module.pas.dynamic_services_subnet_gateway}"
-}
-
 output "pcf_resource_group_name" {
   value = "${module.infra.resource_group_name}"
 }

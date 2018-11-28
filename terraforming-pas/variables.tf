@@ -145,8 +145,3 @@ variable "pcf_services_subnet" {
   type    = "string"
   default = "10.0.4.0/22"
 }
-
-variable "pcf_dynamic_services_subnet" {
-  type    = "string"
-  default = "10.0.12.0/22"
-}
