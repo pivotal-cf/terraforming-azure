@@ -1,3 +1,5 @@
+# ==================== Variables
+
 variable "env_name" {
   default = ""
 }
@@ -8,6 +10,10 @@ variable "env_short_name" {
 
 variable "location" {
   default = ""
+}
+
+variable "vm_count" {
+  default = 1
 }
 
 variable "ops_manager_private_ip" {
@@ -77,7 +83,7 @@ resource "azurerm_image" "ops_manager_image" {
   }
 }
 
-# ============== DNS
+# ==================== DNS
 
 resource "azurerm_dns_a_record" "ops_manager_dns" {
   name                = "pcf"
@@ -96,7 +102,7 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
   count               = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 }
 
-# ============== VMs
+# ==================== VMs
 
 resource "azurerm_public_ip" "ops_manager_public_ip" {
   name                         = "${var.env_name}-ops-manager-public-ip"
@@ -129,9 +135,10 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
   network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic.id}"]
   vm_size                       = "${var.ops_manager_vm_size}"
   delete_os_disk_on_termination = "true"
+  count                         = "${var.vm_count}"
 
   storage_image_reference {
-    id    = "${azurerm_image.ops_manager_image.id}"
+    id = "${azurerm_image.ops_manager_image.id}"
   }
 
   storage_os_disk {
@@ -163,7 +170,8 @@ resource "tls_private_key" "ops_manager" {
   rsa_bits  = "4096"
 }
 
-# OPTIONAL ==============
+# ==================== OPTIONAL
+
 variable "optional_ops_manager_image_uri" {
   default = ""
 }
@@ -203,7 +211,7 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   count                 = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 
   storage_image_reference {
-    id    = "${azurerm_image.ops_manager_image.id}"
+    id = "${azurerm_image.ops_manager_image.id}"
   }
 
   storage_os_disk {
@@ -229,6 +237,8 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
     }
   }
 }
+
+# ==================== Outputs
 
 output "dns_name" {
   value = "${azurerm_dns_a_record.ops_manager_dns.name}.${azurerm_dns_a_record.ops_manager_dns.zone_name}"
