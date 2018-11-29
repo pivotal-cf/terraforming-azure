@@ -19,13 +19,9 @@ variable "cloud_name" {
   default     = "public"
 }
 
-variable "env_name" {
-  default = ""
-}
+variable "env_name" {}
 
-variable "env_short_name" {
-  default = ""
-}
+variable "env_short_name" {}
 
 variable "location" {
   default = ""
