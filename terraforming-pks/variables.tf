@@ -59,6 +59,10 @@ variable "ssl_ca_private_key" {
   default     = ""
 }
 
+variable "ops_manager_vm" {
+  default = true
+}
+
 variable "ops_manager_image_uri" {}
 
 variable "ops_manager_vm_size" {
