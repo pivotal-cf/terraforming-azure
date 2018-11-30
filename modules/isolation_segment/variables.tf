@@ -20,8 +20,9 @@ variable "network_name" {
   type = "string"
 }
 
-variable "iso_seg_subnet_blocks" {
-  type = "list"
+variable "pcf_virtual_network_address_space" {
+  type    = "list"
+  default = []
 }
 
 variable "iso_seg_names" {
