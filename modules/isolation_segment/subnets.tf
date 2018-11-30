@@ -5,5 +5,4 @@ resource "azurerm_subnet" "iso_seg_subnet" {
   resource_group_name       = "${var.resource_group_name}"
   virtual_network_name      = "${var.network_name}"
   address_prefix            = "${element(var.iso_seg_subnet_blocks, count.index)}"
-  network_security_group_id = "${var.bosh_deployed_vms_security_group_id}"
 }
