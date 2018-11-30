@@ -1,4 +1,4 @@
-output "lb_name" {
+output "lb_names" {
   value = "${azurerm_lb.iso-web.*.name}"
 }
 
