@@ -20,10 +20,6 @@ variable "network_name" {
   type = "string"
 }
 
-variable "bosh_deployed_vms_security_group_id" {
-  type = "string"
-}
-
 variable "iso_seg_subnet_blocks" {
   type = "list"
 }
