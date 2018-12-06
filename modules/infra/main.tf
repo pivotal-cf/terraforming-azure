@@ -257,11 +257,6 @@ locals {
   dns_subdomain = "${var.env_name}"
 }
 
-// the CPI uses this as a wildcard to stripe disks across multiple storage accounts
-data "template_file" "base_storage_account_wildcard" {
-  template = "boshvms"
-}
-
 resource "azurerm_dns_zone" "env_dns_zone" {
   name                = "${var.dns_subdomain != "" ? var.dns_subdomain : local.dns_subdomain}.${var.dns_suffix}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
@@ -313,8 +308,4 @@ output "bosh_deployed_vms_security_group_id" {
 
 output "bosh_deployed_vms_security_group_name" {
   value = "${azurerm_network_security_group.bosh_deployed_vms_security_group.name}"
-}
-
-output "wildcard_vm_storage_account" {
-  value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
 }

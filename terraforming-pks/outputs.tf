@@ -84,10 +84,6 @@ output "ops_manager_storage_account" {
   value = "${module.ops_manager.ops_manager_storage_account}"
 }
 
-output "wildcard_vm_storage_account" {
-  value = "${module.infra.wildcard_vm_storage_account}"
-}
-
 output "ops_manager_ssh_public_key" {
   sensitive = true
   value     = "${module.ops_manager.ops_manager_ssh_public_key}"

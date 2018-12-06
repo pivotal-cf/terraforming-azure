@@ -160,10 +160,6 @@ output "ops_manager_storage_account" {
   value = "${module.ops_manager.ops_manager_storage_account}"
 }
 
-output "wildcard_vm_storage_account" {
-  value = "${module.infra.wildcard_vm_storage_account}"
-}
-
 output "cf_storage_account_name" {
   value = "${module.pas.cf_storage_account_name}"
 }
