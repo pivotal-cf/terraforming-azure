@@ -10,16 +10,28 @@ terraform {
   required_version = "< 0.12.0"
 }
 
+locals {
+  # ensure prefix is <= 10 chars
+  storage_account_prefix = "${substr("${var.env_short_name}", 0, min(10, length(var.env_short_name)))}"
+}
+
+resource "random_string" "storage_account_suffix" {
+  length = 4
+  upper = false
+  special = false
+}
+
 module "infra" {
   source = "../modules/infra"
 
   env_name                          = "${var.env_name}"
-  env_short_name                    = "${var.env_short_name}"
   location                          = "${var.location}"
   dns_subdomain                     = "${var.dns_subdomain}"
   dns_suffix                        = "${var.dns_suffix}"
   pcf_infrastructure_subnet         = "${var.pcf_infrastructure_subnet}"
   pcf_virtual_network_address_space = "${var.pcf_virtual_network_address_space}"
+  storage_account_prefix            = "${local.storage_account_prefix}"
+  storage_account_suffix            = "${random_string.storage_account_suffix.result}"  
 }
 
 module "certs" {
@@ -35,7 +47,6 @@ module "ops_manager" {
   source = "../modules/ops_manager"
 
   env_name       = "${var.env_name}"
-  env_short_name = "${var.env_short_name}"
   location       = "${var.location}"
 
   vm_count               = "${var.ops_manager_vm ? 1 : 0}"
@@ -49,6 +60,9 @@ module "ops_manager" {
   dns_zone_name       = "${module.infra.dns_zone_name}"
   security_group_id   = "${module.infra.security_group_id}"
   subnet_id           = "${module.infra.infrastructure_subnet_id}"
+
+  storage_account_prefix = "${local.storage_account_prefix}"
+  storage_account_suffix = "${random_string.storage_account_suffix.result}"
 }
 
 module "pks" {

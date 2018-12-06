@@ -2,7 +2,11 @@ variable "env_name" {
   default = ""
 }
 
-variable "env_short_name" {
+variable "storage_account_prefix" {
+  default = ""
+}
+
+variable "storage_account_suffix" {
   default = ""
 }
 

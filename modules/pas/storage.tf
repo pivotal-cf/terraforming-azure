@@ -1,7 +1,7 @@
 # Storage containers to be used as CF Blobstore
 
 resource "azurerm_storage_account" "cf_storage_account" {
-  name                     = "${var.env_short_name}${var.cf_storage_account_name}"
+  name                     = "${var.cf_storage_account_prefix}${var.cf_storage_account_name}${var.cf_storage_account_suffix}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Standard"

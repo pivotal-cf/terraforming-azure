@@ -4,7 +4,11 @@ variable "env_name" {
   default = ""
 }
 
-variable "env_short_name" {
+variable "storage_account_prefix" {
+  default = ""
+}
+
+variable "storage_account_suffix" {
   default = ""
 }
 
@@ -47,7 +51,7 @@ variable "dns_zone_name" {
 # ==================== Storage
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
-  name                     = "${var.env_short_name}opsmanager"
+  name                     = "${var.storage_account_prefix}opsmanager${var.storage_account_suffix}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Premium"

@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "bosh_root_storage_account" {
-  name                     = "${var.env_short_name}director"
+  name                     = "${var.storage_account_prefix}director${var.storage_account_suffix}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Standard"
