@@ -235,11 +235,12 @@ resource "azurerm_virtual_network" "pcf_virtual_network" {
 }
 
 resource "azurerm_subnet" "infrastructure_subnet" {
-  name                 = "${var.env_name}-infrastructure-subnet"
-  depends_on           = ["azurerm_resource_group.pcf_resource_group"]
-  resource_group_name  = "${azurerm_resource_group.pcf_resource_group.name}"
-  virtual_network_name = "${azurerm_virtual_network.pcf_virtual_network.name}"
-  address_prefix       = "${var.pcf_infrastructure_subnet}"
+  name                      = "${var.env_name}-infrastructure-subnet"
+  depends_on                = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
+  virtual_network_name      = "${azurerm_virtual_network.pcf_virtual_network.name}"
+  address_prefix            = "${var.pcf_infrastructure_subnet}"
+  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 }
 
 resource "azurerm_subnet_network_security_group_association" "ops_manager_security_group" {
