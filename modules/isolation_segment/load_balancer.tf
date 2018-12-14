@@ -8,7 +8,7 @@ resource "azurerm_public_ip" "iso_lb_public_ip" {
 }
 
 resource "azurerm_lb" "iso" {
-  name                = "${var.environment}-iso-lb-${element(var.iso_seg_names, count.index)}"
+  name                = "${var.env_name}-iso-lb-${element(var.iso_seg_names, count.index)}"
   count               = "${length(var.iso_seg_names)}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"

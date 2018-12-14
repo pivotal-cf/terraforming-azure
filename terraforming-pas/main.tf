@@ -76,8 +76,8 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  environment = "${var.env_name}"
-  location    = "${var.location}"
+  env_name = "${var.env_name}"
+  location = "${var.location}"
 
   ssl_cert           = "${var.iso_seg_ssl_cert}"
   ssl_private_key    = "${var.iso_seg_ssl_private_key}"

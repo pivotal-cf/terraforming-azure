@@ -2,7 +2,7 @@ variable "location" {
   type = "string"
 }
 
-variable "environment" {
+variable "env_name" {
   type = "string"
 }
 

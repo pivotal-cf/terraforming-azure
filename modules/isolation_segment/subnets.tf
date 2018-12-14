@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "iso_seg_subnet" {
-  name  = "${var.environment}-iso-seg-subnet-${element(var.iso_seg_names, count.index)}"
+  name  = "${var.env_name}-iso-seg-subnet-${element(var.iso_seg_names, count.index)}"
   count = "${length(var.iso_seg_names)}"
 
   resource_group_name  = "${var.resource_group_name}"
