@@ -76,8 +76,6 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${length(var.iso_seg_names)}"
-
   environment = "${var.env_name}"
   location    = "${var.location}"
 
