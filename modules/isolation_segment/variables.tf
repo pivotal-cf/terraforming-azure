@@ -26,7 +26,15 @@ variable "pcf_virtual_network_address_space" {
 }
 
 variable "iso_seg_names" {
-  type = "list"
+  type        = "list"
+  description = "The list of iso segment names used to generate DNS entries etc. The length of this should match the length of iso_seg_subnets"
+  default     = []
+}
+
+variable "iso_seg_subnets" {
+  type        = "list"
+  description = "The list of iso segment subnet CIDRs. The length of this should match the length of iso_seg_names"
+  default     = []
 }
 
 variable "ssl_cert" {

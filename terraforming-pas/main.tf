@@ -86,10 +86,10 @@ module "isolation_segment" {
   ssl_ca_cert        = "${var.iso_seg_ssl_ca_cert}"
   ssl_ca_private_key = "${var.iso_seg_ssl_ca_private_key}"
 
-  iso_seg_names                     = "${var.iso_seg_names}"
-  pcf_virtual_network_address_space = "${var.pcf_virtual_network_address_space}"
+  iso_seg_names   = "${var.iso_seg_names}"
+  iso_seg_subnets = "${var.iso_seg_subnets}"
 
-  resource_group_name                 = "${module.infra.resource_group_name}"
-  dns_zone                            = "${module.infra.dns_zone_name}"
-  network_name                        = "${module.infra.network_name}"
+  resource_group_name = "${module.infra.resource_group_name}"
+  dns_zone            = "${module.infra.dns_zone_name}"
+  network_name        = "${module.infra.network_name}"
 }

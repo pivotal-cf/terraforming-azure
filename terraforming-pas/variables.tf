@@ -99,9 +99,9 @@ variable "dns_subdomain" {
 }
 
 variable "iso_seg_names" {
-  description = "Create isolation segments with these names"
   type        = "list"
-  default     = [""]
+  description = "The list of iso segment names used to generate DNS entries etc. The length of this should match the length of iso_seg_subnets"
+  default     = []
 }
 
 variable "iso_seg_ssl_cert" {
@@ -151,4 +151,10 @@ variable "pcf_services_subnet" {
 variable "pcf_dynamic_services_subnet" {
   type    = "string"
   default = "10.0.12.0/22"
+}
+
+variable "iso_seg_subnets" {
+  type        = "list"
+  description = "The list of iso segment subnet CIDRs, 10.0.16.0/22 etc. The length of this should match the length of iso_seg_names"
+  default     = []
 }
