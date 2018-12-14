@@ -18,11 +18,6 @@ variable "network_name" {
   type = "string"
 }
 
-variable "pcf_virtual_network_address_space" {
-  type    = "list"
-  default = []
-}
-
 variable "iso_seg_names" {
   type        = "list"
   description = "The list of iso segment names used to generate DNS entries etc. The length of this should match the length of iso_seg_subnets"
