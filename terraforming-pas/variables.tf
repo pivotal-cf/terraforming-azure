@@ -104,10 +104,6 @@ variable "iso_seg_names" {
   default     = [""]
 }
 
-variable "isolation_segment" {
-  default = false
-}
-
 variable "iso_seg_ssl_cert" {
   type        = "string"
   description = "the contents of an SSL certificate which should be passed to the iso seg gorouter, optional if `iso_seg_ssl_ca_cert` is provided"
