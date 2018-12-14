@@ -1,5 +1,5 @@
 output "lb_names" {
-  value = "${azurerm_lb.iso-web.*.name}"
+  value = "${azurerm_lb.iso.*.name}"
 }
 
 output "ssl_cert" {
