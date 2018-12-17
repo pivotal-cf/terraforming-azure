@@ -1,3 +1,20 @@
+data "template_file" "subnets" {
+  count = "${length(var.iso_seg_names)}"
+  template = "${cidrhost(azurerm_subnet.iso_seg_subnet.*.address_prefix[count.index], 1)}"
+}
+
+output "subnet_names" {
+  value = "${azurerm_subnet.iso_seg_subnet.*.name}"
+}
+
+output "subnet_cidrs" {
+  value = "${azurerm_subnet.iso_seg_subnet.*.address_prefix}"
+}
+
+output "subnet_gateways" {
+  value = ["${join(",", data.template_file.subnets.*.rendered)}"]
+}
+
 output "lb_names" {
   value = "${azurerm_lb.iso.*.name}"
 }

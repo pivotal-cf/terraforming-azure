@@ -160,6 +160,18 @@ output "dynamic_services_subnet_gateway" {
   value = "${module.pas.dynamic_services_subnet_gateway}"
 }
 
+output "iso_subnets" {
+  value = "${module.isolation_segment.subnet_names}"
+}
+
+output "iso_subnet_cidrs" {
+  value = "${module.isolation_segment.subnet_cidrs}"
+}
+
+output "iso_subnet_gateways" {
+  value = "${module.isolation_segment.subnet_gateways}"
+}
+
 output "pcf_resource_group_name" {
   value = "${module.infra.resource_group_name}"
 }
