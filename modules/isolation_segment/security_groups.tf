@@ -3,10 +3,8 @@
 # bosh-to-shared  - in infra module
 # shared-internal - in infra module
 
-
-
 resource "azurerm_network_security_group" "iso_segment_vms" {
-  name                = "${var.env_name}-iso-seg-${element(var.iso_seg_names, count.index)}-vms" 
+  name                = "${var.env_name}-iso-seg-${element(var.iso_seg_names, count.index)}-security-group" 
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
   count               = "${length(var.iso_seg_names)}"
