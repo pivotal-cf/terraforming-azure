@@ -11,11 +11,11 @@ iaas-configuration:
   ssh_private_key: {{toJson .ops_manager_ssh_private_key}}
 network-assignment:
   network:
-    name: ops-manager
+    name: {{.infrastructure_subnet_name}}
 networks-configuration:
   icmp_checks_enabled: false
   networks:
-  - name: ops-manager
+  - name: {{.infrastructure_subnet_name}}
     subnets:
     {{range $i, $a := .infrastructure_subnet_cidrs}}
     - cidr: {{index $.infrastructure_subnet_cidrs $i}}
@@ -25,7 +25,7 @@ networks-configuration:
       reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 5}}
     {{end}}
 {{if  index . "pas_subnet_cidrs"}}
-  - name: pas
+  - name: {{.pas_subnet_name}}
     subnets:
     {{range $i, $a := .pas_subnet_cidrs}}
     - cidr: {{index $.pas_subnet_cidrs $i}}
@@ -35,7 +35,19 @@ networks-configuration:
       reserved_ip_ranges: {{cidrhost (index $.pas_subnet_cidrs $i) 0}}-{{cidrhost (index $.pas_subnet_cidrs $i) 5}}
     {{end}}
 {{end}}
-  - name: services
+{{if  index . "pks_subnet_cidrs"}}
+  - name: {{.pks_subnet_name}}
+    subnets:
+    {{range $i, $a := .pks_subnet_cidrs}}
+    - cidr: {{index $.pks_subnet_cidrs $i}}
+      dns: 168.63.129.16
+      gateway: {{$.pks_subnet_gateway}}
+      iaas_identifier: {{$.network_name}}/{{$.pks_subnet_name}}
+      reserved_ip_ranges: {{cidrhost (index $.pks_subnet_cidrs $i) 0}}-{{cidrhost (index $.pks_subnet_cidrs $i) 5}}
+    {{end}}
+{{end}}
+{{if index . "services_subnet_cidrs"}}
+  - name: {{.services_subnet_name}}
     subnets:
     {{range $i, $a := .services_subnet_cidrs}}
     - cidr: {{index $.services_subnet_cidrs $i}}
@@ -44,6 +56,7 @@ networks-configuration:
       iaas_identifier: {{$.network_name}}/{{$.services_subnet_name}}
       reserved_ip_ranges: {{cidrhost (index $.services_subnet_cidrs $i) 0}}-{{cidrhost (index $.services_subnet_cidrs $i) 5}}
     {{end}}
+{{end}}
 resource-configuration:
   compilation:
     instance_type:

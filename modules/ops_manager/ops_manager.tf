@@ -1,3 +1,5 @@
+# ==================== Variables
+
 variable "env_name" {
   default = ""
 }
@@ -8,6 +10,10 @@ variable "env_short_name" {
 
 variable "location" {
   default = ""
+}
+
+variable "vm_count" {
+  default = 1
 }
 
 variable "ops_manager_private_ip" {
@@ -64,15 +70,20 @@ resource "azurerm_storage_blob" "ops_manager_image" {
   source_uri             = "${var.ops_manager_image_uri}"
 }
 
-resource "azurerm_storage_blob" "optional_ops_manager_image" {
-  name                   = "optional_opsman.vhd"
-  resource_group_name    = "${var.resource_group_name}"
-  storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
-  storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
-  source_uri             = "${var.optional_ops_manager_image_uri}"
+resource "azurerm_image" "ops_manager_image" {
+  name                = "ops_manager_image"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
+
+  os_disk {
+    os_type  = "Linux"
+    os_state = "Generalized"
+    blob_uri = "${azurerm_storage_blob.ops_manager_image.url}"
+    size_gb  = 150
+  }
 }
 
-# ============== DNS
+# ==================== DNS
 
 resource "azurerm_dns_a_record" "ops_manager_dns" {
   name                = "pcf"
@@ -91,7 +102,7 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
   count               = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 }
 
-# ============== VMs
+# ==================== VMs
 
 resource "azurerm_public_ip" "ops_manager_public_ip" {
   name                         = "${var.env_name}-ops-manager-public-ip"
@@ -118,21 +129,25 @@ resource "azurerm_network_interface" "ops_manager_nic" {
 
 resource "azurerm_virtual_machine" "ops_manager_vm" {
   name                          = "${var.env_name}-ops-manager-vm"
-  depends_on                    = ["azurerm_network_interface.ops_manager_nic", "azurerm_storage_blob.ops_manager_image"]
+  depends_on                    = ["azurerm_network_interface.ops_manager_nic"]
   location                      = "${var.location}"
   resource_group_name           = "${var.resource_group_name}"
   network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic.id}"]
   vm_size                       = "${var.ops_manager_vm_size}"
   delete_os_disk_on_termination = "true"
+  count                         = "${var.vm_count}"
+
+  storage_image_reference {
+    id = "${azurerm_image.ops_manager_image.id}"
+  }
 
   storage_os_disk {
-    name          = "opsman-disk.vhd"
-    vhd_uri       = "${azurerm_storage_account.ops_manager_storage_account.primary_blob_endpoint}${azurerm_storage_container.ops_manager_storage_container.name}/opsman-disk.vhd"
-    image_uri     = "${azurerm_storage_blob.ops_manager_image.url}"
-    caching       = "ReadWrite"
-    os_type       = "linux"
-    create_option = "FromImage"
-    disk_size_gb  = "150"
+    name              = "opsman-disk.vhd"
+    caching           = "ReadWrite"
+    os_type           = "linux"
+    create_option     = "FromImage"
+    disk_size_gb      = "150"
+    managed_disk_type = "Premium_LRS"
   }
 
   os_profile {
@@ -155,7 +170,8 @@ resource "tls_private_key" "ops_manager" {
   rsa_bits  = "4096"
 }
 
-# OPTIONAL ==============
+# ==================== OPTIONAL
+
 variable "optional_ops_manager_image_uri" {
   default = ""
 }
@@ -187,21 +203,24 @@ resource "azurerm_network_interface" "optional_ops_manager_nic" {
 
 resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   name                  = "${var.env_name}-optional-ops-manager-vm"
-  depends_on            = ["azurerm_network_interface.optional_ops_manager_nic", "azurerm_storage_blob.optional_ops_manager_image"]
+  depends_on            = ["azurerm_network_interface.optional_ops_manager_nic"]
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
   network_interface_ids = ["${azurerm_network_interface.optional_ops_manager_nic.id}"]
   vm_size               = "${var.ops_manager_vm_size}"
   count                 = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
 
+  storage_image_reference {
+    id = "${azurerm_image.ops_manager_image.id}"
+  }
+
   storage_os_disk {
-    name          = "optional-opsman-disk.vhd"
-    vhd_uri       = "${azurerm_storage_account.ops_manager_storage_account.primary_blob_endpoint}${azurerm_storage_container.ops_manager_storage_container.name}/optional-opsman-disk.vhd"
-    image_uri     = "${azurerm_storage_blob.optional_ops_manager_image.url}"
-    caching       = "ReadWrite"
-    os_type       = "linux"
-    create_option = "FromImage"
-    disk_size_gb  = "150"
+    name              = "optional-opsman-disk"
+    caching           = "ReadWrite"
+    os_type           = "linux"
+    create_option     = "FromImage"
+    disk_size_gb      = "150"
+    managed_disk_type = "Premium_LRS"
   }
 
   os_profile {
@@ -218,6 +237,8 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
     }
   }
 }
+
+# ==================== Outputs
 
 output "dns_name" {
   value = "${azurerm_dns_a_record.ops_manager_dns.name}.${azurerm_dns_a_record.ops_manager_dns.zone_name}"

@@ -29,6 +29,7 @@ module "ops_manager" {
   env_short_name = "${var.env_short_name}"
   location       = "${var.location}"
 
+  vm_count               = "${var.ops_manager_vm ? 1 : 0}"
   ops_manager_image_uri  = "${var.ops_manager_image_uri}"
   ops_manager_vm_size    = "${var.ops_manager_vm_size}"
   ops_manager_private_ip = "${var.ops_manager_private_ip}"
@@ -48,9 +49,8 @@ module "pas" {
   location       = "${var.location}"
   env_short_name = "${var.env_short_name}"
 
-  pas_subnet_cidr              = "${var.pcf_pas_subnet}"
-  services_subnet_cidr         = "${var.pcf_services_subnet}"
-  dynamic_services_subnet_cidr = "${var.pcf_dynamic_services_subnet}"
+  pas_subnet_cidr      = "${var.pcf_pas_subnet}"
+  services_subnet_cidr = "${var.pcf_services_subnet}"
 
   cf_storage_account_name              = "${var.cf_storage_account_name}"
   cf_buildpacks_storage_container_name = "${var.cf_buildpacks_storage_container_name}"

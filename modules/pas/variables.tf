@@ -13,6 +13,5 @@ variable "cf_storage_account_name" {}
 variable "network_name" {}
 variable "pas_subnet_cidr" {}
 variable "services_subnet_cidr" {}
-variable "dynamic_services_subnet_cidr" {}
 
 variable "bosh_deployed_vms_security_group_id" {}

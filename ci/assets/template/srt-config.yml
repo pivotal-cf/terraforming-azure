@@ -1,8 +1,8 @@
 network-properties:
   network:
-    name: pas
+    name: {{.pas_subnet_name}}
   service_network:
-    name: services
+    name: {{.services_subnet_name}}
   other_availability_zones:
     - name: 'null'
   singleton_availability_zone:
