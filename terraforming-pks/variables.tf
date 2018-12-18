@@ -87,3 +87,13 @@ variable "ssl_cert" {
 variable "ssl_private_key" {
   default = ""
 }
+
+variable "azure_master_managed_identity" {
+  type = "string"
+  default = "pks-master"
+}
+
+variable "azure_worker_managed_identity" {
+  type = "string"
+  default = "pks-worker"
+}
