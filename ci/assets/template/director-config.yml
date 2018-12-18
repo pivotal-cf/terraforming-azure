@@ -17,45 +17,37 @@ networks-configuration:
   networks:
   - name: {{.infrastructure_subnet_name}}
     subnets:
-    {{range $i, $a := .infrastructure_subnet_cidrs}}
-    - cidr: {{index $.infrastructure_subnet_cidrs $i}}
+    - cidr: {{.infrastructure_subnet_cidr}}
       dns: 168.63.129.16
-      gateway: {{$.infrastructure_subnet_gateway}}
-      iaas_identifier: {{$.network_name}}/{{$.infrastructure_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.infrastructure_subnet_cidrs $i) 0}}-{{cidrhost (index $.infrastructure_subnet_cidrs $i) 5}}
-    {{end}}
-{{if  index . "pas_subnet_cidrs"}}
+      gateway: {{.infrastructure_subnet_gateway}}
+      iaas_identifier: {{.network_name}}/{{.infrastructure_subnet_name}}
+      reserved_ip_ranges: {{cidrhost .infrastructure_subnet_cidr 0}}-{{cidrhost .infrastructure_subnet_cidr 5}}
+{{if index . "pas_subnet_cidr"}}
   - name: {{.pas_subnet_name}}
     subnets:
-    {{range $i, $a := .pas_subnet_cidrs}}
-    - cidr: {{index $.pas_subnet_cidrs $i}}
+    - cidr: {{.pas_subnet_cidr}}
       dns: 168.63.129.16
-      gateway: {{$.pas_subnet_gateway}}
-      iaas_identifier: {{$.network_name}}/{{$.pas_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.pas_subnet_cidrs $i) 0}}-{{cidrhost (index $.pas_subnet_cidrs $i) 5}}
-    {{end}}
+      gateway: {{.pas_subnet_gateway}}
+      iaas_identifier: {{.network_name}}/{{.pas_subnet_name}}
+      reserved_ip_ranges: {{cidrhost .pas_subnet_cidr 0}}-{{cidrhost .pas_subnet_cidr 5}}
 {{end}}
-{{if  index . "pks_subnet_cidrs"}}
+{{if index . "pks_subnet_cidr"}}
   - name: {{.pks_subnet_name}}
     subnets:
-    {{range $i, $a := .pks_subnet_cidrs}}
-    - cidr: {{index $.pks_subnet_cidrs $i}}
+    - cidr: {{.pks_subnet_cidr}}
       dns: 168.63.129.16
-      gateway: {{$.pks_subnet_gateway}}
-      iaas_identifier: {{$.network_name}}/{{$.pks_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.pks_subnet_cidrs $i) 0}}-{{cidrhost (index $.pks_subnet_cidrs $i) 5}}
-    {{end}}
+      gateway: {{.pks_subnet_gateway}}
+      iaas_identifier: {{.network_name}}/{{.pks_subnet_name}}
+      reserved_ip_ranges: {{cidrhost .pks_subnet_cidr 0}}-{{cidrhost .pks_subnet_cidr 5}}
 {{end}}
-{{if index . "services_subnet_cidrs"}}
+{{if index . "services_subnet_cidr"}}
   - name: {{.services_subnet_name}}
     subnets:
-    {{range $i, $a := .services_subnet_cidrs}}
-    - cidr: {{index $.services_subnet_cidrs $i}}
+    - cidr: {{.services_subnet_cidr}}
       dns: 168.63.129.16
-      gateway: {{$.services_subnet_gateway}}
-      iaas_identifier: {{$.network_name}}/{{$.services_subnet_name}}
-      reserved_ip_ranges: {{cidrhost (index $.services_subnet_cidrs $i) 0}}-{{cidrhost (index $.services_subnet_cidrs $i) 5}}
-    {{end}}
+      gateway: {{.services_subnet_gateway}}
+      iaas_identifier: {{.network_name}}/{{.services_subnet_name}}
+      reserved_ip_ranges: {{cidrhost .services_subnet_cidr 0}}-{{cidrhost .services_subnet_cidr 5}}
 {{end}}
 resource-configuration:
   compilation:

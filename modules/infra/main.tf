@@ -291,8 +291,8 @@ output "infrastructure_subnet_name" {
   value = "${azurerm_subnet.infrastructure_subnet.name}"
 }
 
-output "infrastructure_subnet_cidrs" {
-  value = ["${azurerm_subnet.infrastructure_subnet.address_prefix}"]
+output "infrastructure_subnet_cidr" {
+  value = "${azurerm_subnet.infrastructure_subnet.address_prefix}"
 }
 
 output "infrastructure_subnet_gateway" {
@@ -317,4 +317,10 @@ output "bosh_deployed_vms_security_group_name" {
 
 output "wildcard_vm_storage_account" {
   value = "*${var.env_short_name}${data.template_file.base_storage_account_wildcard.rendered}*"
+}
+
+# Deprecated
+
+output "infrastructure_subnet_cidrs" {
+  value = ["${azurerm_subnet.infrastructure_subnet.address_prefix}"]
 }

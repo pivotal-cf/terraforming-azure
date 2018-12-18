@@ -52,12 +52,8 @@ output "infrastructure_subnet_name" {
   value = "${module.infra.infrastructure_subnet_name}"
 }
 
-output "infrastructure_subnets" {
-  value = ["${module.infra.infrastructure_subnet_name}"]
-}
-
-output "infrastructure_subnet_cidrs" {
-  value = "${module.infra.infrastructure_subnet_cidrs}"
+output "infrastructure_subnet_cidr" {
+  value = "${module.infra.infrastructure_subnet_cidr}"
 }
 
 output "infrastructure_subnet_gateway" {
@@ -124,12 +120,8 @@ output "pks_subnet_name" {
   value = "${module.pks.pks_subnet_name}"
 }
 
-output "pks_subnets" {
-  value = ["${module.pks.pks_subnet_name}"]
-}
-
-output "pks_subnet_cidrs" {
-  value = "${module.pks.pks_subnet_cidrs}"
+output "pks_subnet_cidr" {
+  value = "${module.pks.pks_subnet_cidr}"
 }
 
 output "pks_subnet_gateway" {
@@ -140,12 +132,8 @@ output "services_subnet_name" {
   value = "${module.pks.services_subnet_name}"
 }
 
-output "services_subnets" {
-  value = ["${module.pks.services_subnet_name}"]
-}
-
-output "services_subnet_cidrs" {
-  value = "${module.pks.services_subnet_cidrs}"
+output "services_subnet_cidr" {
+  value = "${module.pks.services_subnet_cidr}"
 }
 
 output "services_subnet_gateway" {
@@ -168,4 +156,28 @@ output "management_subnet_cidrs" {
 
 output "management_subnet_gateway" {
   value = "${module.infra.infrastructure_subnet_gateway}"
+}
+
+output "infrastructure_subnets" {
+  value = ["${module.infra.infrastructure_subnet_name}"]
+}
+
+output "infrastructure_subnet_cidrs" {
+  value = "${module.infra.infrastructure_subnet_cidrs}"
+}
+
+output "pks_subnet_cidrs" {
+  value = "${module.pks.pks_subnet_cidrs}"
+}
+
+output "pks_subnets" {
+  value = ["${module.pks.pks_subnet_name}"]
+}
+
+output "services_subnets" {
+  value = ["${module.pks.services_subnet_name}"]
+}
+
+output "services_subnet_cidrs" {
+  value = "${module.pks.services_subnet_cidrs}"
 }

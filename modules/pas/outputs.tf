@@ -36,8 +36,8 @@ output "pas_subnet_name" {
   value = "${azurerm_subnet.pas_subnet.name}"
 }
 
-output "pas_subnet_cidrs" {
-  value = ["${azurerm_subnet.pas_subnet.address_prefix}"]
+output "pas_subnet_cidr" {
+  value = "${azurerm_subnet.pas_subnet.address_prefix}"
 }
 
 output "pas_subnet_gateway" {
@@ -48,8 +48,8 @@ output "services_subnet_name" {
   value = "${azurerm_subnet.services_subnet.name}"
 }
 
-output "services_subnet_cidrs" {
-  value = ["${azurerm_subnet.services_subnet.address_prefix}"]
+output "services_subnet_cidr" {
+  value = "${azurerm_subnet.services_subnet.address_prefix}"
 }
 
 output "services_subnet_gateway" {
@@ -81,4 +81,14 @@ output "cf_resources_storage_container_name" {
 
 output "cf_buildpacks_storage_container_name" {
   value = "${azurerm_storage_container.cf_buildpacks_storage_container.name}"
+}
+
+# Deprecated
+
+output "pas_subnet_cidrs" {
+  value = ["${azurerm_subnet.pas_subnet.address_prefix}"]
+}
+
+output "services_subnet_cidrs" {
+  value = ["${azurerm_subnet.services_subnet.address_prefix}"]
 }
