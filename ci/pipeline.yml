@@ -147,7 +147,7 @@ jobs:
         KEY: east_us
     - put: env-state-azure
       params:
-        env_name: azurepas
+        generate_random_name: true
         terraform_source: terraforming/terraforming-pas
         delete_on_failure: true
         var_files: [tfvars/terraform.yml]
@@ -214,7 +214,6 @@ jobs:
             env-state: env-state-azure
         - put: env-state-azure
           params:
-            env_name: azurepas
             terraform_source: terraforming/terraforming-pas
             delete_on_failure: true
             action: destroy
