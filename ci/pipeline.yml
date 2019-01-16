@@ -215,6 +215,7 @@ jobs:
         - put: env-state-azure
           params:
             terraform_source: terraforming/terraforming-pas
+            env_name_file: env-state-azure/name
             delete_on_failure: true
             action: destroy
             var_files: [tfvars/terraform.yml]
