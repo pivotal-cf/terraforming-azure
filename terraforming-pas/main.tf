@@ -76,16 +76,20 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${var.isolation_segment ? 1 : 0}"
-
-  environment = "${var.env_name}"
-  location    = "${var.location}"
+  env_name = "${var.env_name}"
+  location = "${var.location}"
 
   ssl_cert           = "${var.iso_seg_ssl_cert}"
   ssl_private_key    = "${var.iso_seg_ssl_private_key}"
   ssl_ca_cert        = "${var.iso_seg_ssl_ca_cert}"
   ssl_ca_private_key = "${var.iso_seg_ssl_ca_private_key}"
 
+  iso_seg_names   = "${var.iso_seg_names}"
+  iso_seg_subnets = "${var.iso_seg_subnets}"
+
   resource_group_name = "${module.infra.resource_group_name}"
   dns_zone            = "${module.infra.dns_zone_name}"
+  network_name        = "${module.infra.network_name}"
+  pas_subnet_cidr     = "${var.pcf_pas_subnet}"
+  infra_subnet_cidr   = "${var.pcf_infrastructure_subnet}"
 }

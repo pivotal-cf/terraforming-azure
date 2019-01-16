@@ -86,6 +86,10 @@ output "tcp_lb_name" {
   value = "${module.pas.tcp_lb_name}"
 }
 
+output "iso_seg_lb_names" {
+  value = "${module.isolation_segment.lb_names}"
+}
+
 output "network_name" {
   value = "${module.infra.network_name}"
 }
@@ -126,6 +130,18 @@ output "services_subnet_cidr" {
 
 output "services_subnet_gateway" {
   value = "${module.pas.services_subnet_gateway}"
+}
+
+output "iso_subnets" {
+  value = "${module.isolation_segment.subnet_names}"
+}
+
+output "iso_subnet_cidrs" {
+  value = "${module.isolation_segment.subnet_cidrs}"
+}
+
+output "iso_subnet_gateways" {
+  value = "${module.isolation_segment.subnet_gateways}"
 }
 
 output "pcf_resource_group_name" {
@@ -201,12 +217,6 @@ output "optional_ops_manager_public_ip" {
 
 output "ops_manager_private_ip" {
   value = "${module.ops_manager.ops_manager_private_ip}"
-}
-
-output "isolation_segment" {
-  value = {
-    "lb_name" = "${module.isolation_segment.lb_name}"
-  }
 }
 
 # Deprecated properties

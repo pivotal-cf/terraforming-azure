@@ -1,74 +1,76 @@
-resource "azurerm_public_ip" "iso-lb-public-ip" {
-  name                         = "iso-lb-public-ip"
-  count                        = "${var.count}"
+resource "azurerm_public_ip" "iso_lb_public_ip" {
+  name                         = "iso-lb-public-ip-${element(var.iso_seg_names, count.index)}"
+  count                        = "${length(var.iso_seg_names)}"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
   public_ip_address_allocation = "static"
+  sku                          = "Standard"
 }
 
 resource "azurerm_lb" "iso" {
-  name                = "${var.environment}-iso-lb"
-  count               = "${var.count}"
+  name                = "${var.env_name}-iso-lb-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
+  sku                 = "Standard"
 
-  frontend_ip_configuration = {
-    name                 = "frontendip"
-    public_ip_address_id = "${azurerm_public_ip.iso-lb-public-ip.id}"
+  frontend_ip_configuration {
+    name                 = "iso-frontendip-${element(var.iso_seg_names, count.index)}"
+    public_ip_address_id = "${azurerm_public_ip.iso_lb_public_ip.*.id[count.index]}"
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "iso-backend-pool" {
-  name                = "iso-backend-pool"
-  count               = "${var.count}"
+resource "azurerm_lb_backend_address_pool" "iso_backend_pool" {
+  name                = "iso-backend-pool-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id     = "${azurerm_lb.iso.id}"
+  loadbalancer_id     = "${azurerm_lb.iso.*.id[count.index]}"
 }
 
-resource "azurerm_lb_probe" "iso-https-probe" {
-  name                = "iso-https-probe"
-  count               = "${var.count}"
+resource "azurerm_lb_probe" "iso_https_probe" {
+  name                = "iso-https-probe-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id     = "${azurerm_lb.iso.id}"
+  loadbalancer_id     = "${azurerm_lb.iso.*.id[count.index]}"
   protocol            = "TCP"
   port                = 443
 }
 
-resource "azurerm_lb_rule" "iso-https-rule" {
-  name                = "iso-https-rule"
-  count               = "${var.count}"
+resource "azurerm_lb_rule" "iso_https_rule" {
+  name                = "iso-https-rule-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id     = "${azurerm_lb.iso.id}"
+  loadbalancer_id     = "${azurerm_lb.iso.*.id[count.index]}"
 
-  frontend_ip_configuration_name = "frontendip"
+  frontend_ip_configuration_name = "iso-frontendip-${element(var.iso_seg_names, count.index)}"
   protocol                       = "TCP"
   frontend_port                  = 443
   backend_port                   = 443
 
-  backend_address_pool_id = "${azurerm_lb_backend_address_pool.iso-backend-pool.id}"
-  probe_id                = "${azurerm_lb_probe.iso-https-probe.id}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.iso_backend_pool.*.id[count.index]}"
+  probe_id                = "${azurerm_lb_probe.iso_https_probe.*.id[count.index]}"
 }
 
-resource "azurerm_lb_probe" "iso-http-probe" {
-  name                = "iso-http-probe"
-  count               = "${var.count}"
+resource "azurerm_lb_probe" "iso_http_probe" {
+  name                = "iso-http-probe-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id     = "${azurerm_lb.iso.id}"
+  loadbalancer_id     = "${azurerm_lb.iso.*.id[count.index]}"
   protocol            = "TCP"
   port                = 80
 }
 
-resource "azurerm_lb_rule" "iso-http-rule" {
-  name                = "iso-http-rule"
-  count               = "${var.count}"
+resource "azurerm_lb_rule" "iso_http_rule" {
+  name                = "iso-http-rule-${element(var.iso_seg_names, count.index)}"
+  count               = "${length(var.iso_seg_names)}"
   resource_group_name = "${var.resource_group_name}"
-  loadbalancer_id     = "${azurerm_lb.iso.id}"
+  loadbalancer_id     = "${azurerm_lb.iso.*.id[count.index]}"
 
-  frontend_ip_configuration_name = "frontendip"
+  frontend_ip_configuration_name = "iso-frontendip-${element(var.iso_seg_names, count.index)}"
   protocol                       = "TCP"
   frontend_port                  = 80
   backend_port                   = 80
 
-  backend_address_pool_id = "${azurerm_lb_backend_address_pool.iso-backend-pool.id}"
-  probe_id                = "${azurerm_lb_probe.iso-http-probe.id}"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.iso_backend_pool.*.id[count.index]}"
+  probe_id                = "${azurerm_lb_probe.iso_http_probe.*.id[count.index]}"
 }

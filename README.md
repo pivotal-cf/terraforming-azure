@@ -115,8 +115,10 @@ dns_subdomain         = ""
 When deploying the isolation segments tile you can optionally route traffic through
 a separate domain and load balancer by specifying:
 
-- isolation_segment: **(default false)** Creates a DNS record and load balancer for
-isolation segment network traffic when set to true.
+- iso_seg_names: **(default empty list)** Creates a DNS record, load balancer, and
+isolation segment network for each named iso segment.
+- iso_seg_subnets: **(default empty list)** The subnet CIDRs for each of the named
+isolation segments. The length of this list must match the length of iso_seg_names.
 
 ## Running
 

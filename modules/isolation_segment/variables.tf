@@ -1,10 +1,8 @@
-variable "count" {}
-
 variable "location" {
   type = "string"
 }
 
-variable "environment" {
+variable "env_name" {
   type = "string"
 }
 
@@ -14,6 +12,30 @@ variable "resource_group_name" {
 
 variable "dns_zone" {
   type = "string"
+}
+
+variable "network_name" {
+  type = "string"
+}
+
+variable "pas_subnet_cidr" {
+  type = "string"
+}
+
+variable "infra_subnet_cidr" {
+  type = "string"
+}
+
+variable "iso_seg_names" {
+  type        = "list"
+  description = "The list of iso segment names used to generate DNS entries etc. The length of this should match the length of iso_seg_subnets"
+  default     = []
+}
+
+variable "iso_seg_subnets" {
+  type        = "list"
+  description = "The list of iso segment subnet CIDRs. The length of this should match the length of iso_seg_names"
+  default     = []
 }
 
 variable "ssl_cert" {
