@@ -1,7 +1,7 @@
 properties-configuration:
-  director-configuration:
+  director_configuration:
     ntp_servers_string: us.pool.ntp.org
-  iaas-configuration:
+  iaas_configuration:
     subscription_id: {{.subscription_id}}
     tenant_id: {{.tenant_id}}
     client_id: {{.client_id}}
