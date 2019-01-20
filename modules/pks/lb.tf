@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "pks-lb-ip" {
   name                         = "${var.env_id}-pks-lb-ip"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "static"
+  allocation_method            = "Static"
   sku                          = "Standard"
 }
 

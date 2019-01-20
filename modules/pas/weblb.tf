@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "web-lb-public-ip" {
   name                         = "web-lb-public-ip"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "static"
+  allocation_method            = "Static"
   sku                          = "Standard"
   idle_timeout_in_minutes      = 30
 }
