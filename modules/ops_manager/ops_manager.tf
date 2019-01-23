@@ -117,6 +117,7 @@ resource "azurerm_network_interface" "ops_manager_nic" {
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
   network_security_group_id = "${var.security_group_id}"
+  count                     = "${var.vm_count}"
 
   ip_configuration {
     name                          = "${var.env_name}-ops-manager-ip-config"
