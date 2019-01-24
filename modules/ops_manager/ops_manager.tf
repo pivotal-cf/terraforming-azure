@@ -250,7 +250,7 @@ output "optional_dns_name" {
 }
 
 output "ops_manager_private_ip" {
-  value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
+  value = "${var.ops_manager_private_ip}"
 }
 
 output "ops_manager_public_ip" {
