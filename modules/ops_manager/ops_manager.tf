@@ -105,10 +105,10 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
 # ==================== VMs
 
 resource "azurerm_public_ip" "ops_manager_public_ip" {
-  name                         = "${var.env_name}-ops-manager-public-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "static"
+  name                = "${var.env_name}-ops-manager-public-ip"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "ops_manager_nic" {
