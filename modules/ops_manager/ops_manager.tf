@@ -68,7 +68,7 @@ resource "azurerm_storage_blob" "ops_manager_image" {
   storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
   storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
   source_uri             = "${var.ops_manager_image_uri}"
-  count                  = "${var.vm_count}" 
+  count                  = "${var.vm_count}"
 }
 
 resource "azurerm_image" "ops_manager_image" {
