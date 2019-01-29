@@ -44,14 +44,23 @@ variable "dns_zone_name" {
   default = ""
 }
 
+resource random_string "storage_account_name" {
+  length  = 20
+  special = false
+}
+
 # ==================== Storage
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
-  name                     = "${var.env_short_name}opsmanager"
+  name                     = "${random_string.storage_account_name.result}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Premium"
   account_replication_type = "LRS"
+
+  tags = {
+    environment = "${var.env_name}"
+  }
 }
 
 resource "azurerm_storage_container" "ops_manager_storage_container" {
