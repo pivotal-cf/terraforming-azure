@@ -13,7 +13,7 @@ resource "azurerm_storage_account" "bosh_root_storage_account" {
 
   tags = {
     environment = "${var.env_name}"
-    account-for = "bosh"
+    account_for = "bosh"
   }
 }
 

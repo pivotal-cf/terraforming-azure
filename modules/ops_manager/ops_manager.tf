@@ -57,7 +57,7 @@ resource "azurerm_storage_account" "ops_manager_storage_account" {
 
   tags = {
     environment = "${var.env_name}"
-    account-for = "ops-manager"
+    account_for = "ops-manager"
   }
 }
 

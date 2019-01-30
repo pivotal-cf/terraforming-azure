@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "cf_storage_account" {
 
   tags = {
     environment = "${var.env_name}"
-    account-for = "cloud-foundry-blobstore"
+    account_for = "cloud-foundry-blobstore"
   }
 }
 
