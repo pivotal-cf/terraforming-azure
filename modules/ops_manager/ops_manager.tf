@@ -47,6 +47,7 @@ variable "dns_zone_name" {
 resource random_string "storage_account_name" {
   length  = 20
   special = false
+  upper   = false
 }
 
 # ==================== Storage
