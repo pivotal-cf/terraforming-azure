@@ -4,10 +4,6 @@ variable "env_name" {
   default = ""
 }
 
-variable "env_short_name" {
-  default = ""
-}
-
 variable "location" {
   default = ""
 }

@@ -73,7 +73,6 @@ resources:
       region: us-central1
       credentials: ((cf_infra_gcp_service_account_key))
     vars:
-      env_short_name: azurepas
       location: "East US"
       subscription_id: ((azure_subscription_id))
       tenant_id: ((azure_tenant_id))

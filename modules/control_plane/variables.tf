@@ -1,7 +1,6 @@
 variable "cidr" {}
 variable "dns_zone_name" {}
 variable "env_name" {}
-variable "env_short_name" {}
 variable "external_db" {}
 variable "location" {}
 variable "resource_group_name" {}

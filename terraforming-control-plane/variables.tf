@@ -12,8 +12,6 @@ variable "dns_suffix" {}
 
 variable "env_name" {}
 
-variable "env_short_name" {}
-
 variable "location" {}
 
 # Optional variables (the following have default values):
