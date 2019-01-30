@@ -1,11 +1,22 @@
 # Storage containers to be used as CF Blobstore
 
+resource random_string "cf_storage_account_name" {
+  length  = 20
+  special = false
+  upper   = false
+}
+
 resource "azurerm_storage_account" "cf_storage_account" {
-  name                     = "${var.env_short_name}${var.cf_storage_account_name}"
+  name                     = "${random_string.cf_storage_account_name.result}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  tags = {
+    environment = "${var.env_name}"
+    account-for = "cloud-foundry-blobstore"
+  }
 }
 
 resource "azurerm_storage_container" "cf_buildpacks_storage_container" {

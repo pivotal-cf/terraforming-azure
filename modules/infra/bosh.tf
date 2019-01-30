@@ -1,9 +1,20 @@
+resource random_string "bosh_storage_account_name" {
+  length  = 20
+  special = false
+  upper   = false
+}
+
 resource "azurerm_storage_account" "bosh_root_storage_account" {
-  name                     = "${var.env_short_name}director"
+  name                     = "${random_string.bosh_storage_account_name.result}"
   resource_group_name      = "${azurerm_resource_group.pcf_resource_group.name}"
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  tags = {
+    environment = "${var.env_name}"
+    account-for = "bosh"
+  }
 }
 
 resource "azurerm_storage_container" "bosh_storage_container" {

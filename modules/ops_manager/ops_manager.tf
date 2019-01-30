@@ -44,7 +44,7 @@ variable "dns_zone_name" {
   default = ""
 }
 
-resource random_string "storage_account_name" {
+resource random_string "ops_manager_storage_account_name" {
   length  = 20
   special = false
   upper   = false
@@ -53,7 +53,7 @@ resource random_string "storage_account_name" {
 # ==================== Storage
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
-  name                     = "${random_string.storage_account_name.result}"
+  name                     = "${random_string.ops_manager_storage_account_name.result}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Premium"
@@ -61,6 +61,7 @@ resource "azurerm_storage_account" "ops_manager_storage_account" {
 
   tags = {
     environment = "${var.env_name}"
+    account-for = "ops-manager"
   }
 }
 
