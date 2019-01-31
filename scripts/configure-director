@@ -4,7 +4,7 @@ main() {
   local path="$1"
   local password="$2"
 
-  pushd "${path}" > /dev/null
+  pushd "$PROJECT_DIR/${path}" > /dev/null
     export OM_TARGET="https://$(terraform output ops_manager_dns)"
     export OM_USERNAME="admin"
     export OM_PASSWORD="${password}"
