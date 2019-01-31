@@ -93,7 +93,7 @@ ops_manager_image_uri = "url-to-opsman-image"
 location              = "West US"
 dns_suffix            = "domain.com"
 
-# optional. if left blank, will default to "pcf".
+# optional. if left blank, will default to the pattern `env_name.dns_suffix`.
 dns_subdomain         = ""
 ```
 
