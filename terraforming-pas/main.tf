@@ -14,7 +14,6 @@ module "infra" {
   source = "../modules/infra"
 
   env_name                          = "${var.env_name}"
-  env_short_name                    = "${var.env_short_name}"
   location                          = "${var.location}"
   dns_subdomain                     = "${var.dns_subdomain}"
   dns_suffix                        = "${var.dns_suffix}"
@@ -25,9 +24,8 @@ module "infra" {
 module "ops_manager" {
   source = "../modules/ops_manager"
 
-  env_name       = "${var.env_name}"
-  env_short_name = "${var.env_short_name}"
-  location       = "${var.location}"
+  env_name = "${var.env_name}"
+  location = "${var.location}"
 
   vm_count               = "${var.ops_manager_vm ? 1 : 0}"
   ops_manager_image_uri  = "${var.ops_manager_image_uri}"
@@ -45,9 +43,8 @@ module "ops_manager" {
 module "pas" {
   source = "../modules/pas"
 
-  env_name       = "${var.env_name}"
-  location       = "${var.location}"
-  env_short_name = "${var.env_short_name}"
+  env_name = "${var.env_name}"
+  location = "${var.location}"
 
   pas_subnet_cidr      = "${var.pcf_pas_subnet}"
   services_subnet_cidr = "${var.pcf_services_subnet}"

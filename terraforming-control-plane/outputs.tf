@@ -34,16 +34,6 @@ output "env_dns_zone_name_servers" {
   value = "${module.infra.dns_zone_name_servers}"
 }
 
-output "ssl_cert" {
-  sensitive = true
-  value     = "${length(module.certs.ssl_cert) > 0 ? module.certs.ssl_cert : var.ssl_cert}"
-}
-
-output "ssl_private_key" {
-  sensitive = true
-  value     = "${length(module.certs.ssl_private_key) > 0 ? module.certs.ssl_private_key : var.ssl_private_key}"
-}
-
 output "network_name" {
   value = "${module.infra.network_name}"
 }
@@ -106,74 +96,37 @@ output "ops_manager_private_ip" {
   value = "${module.ops_manager.ops_manager_private_ip}"
 }
 
-output "pks-master-app-sec-group" {
-  value = "${module.pks.pks-master-app-sec-group}"
+# Control Plane ==========================================================================
+
+output "control_plane_subnet_cidr" {
+  value = "${module.control_plane.cidr}"
 }
 
-# Subnets
-
-output "pks_subnet_name" {
-  value = "${module.pks.pks_subnet_name}"
+output "control_plane_subnet_name" {
+  value = "${module.control_plane.network_name}"
 }
 
-output "pks_subnet_cidr" {
-  value = "${module.pks.pks_subnet_cidr}"
+output "control_plane_subnet_gateway" {
+  value = "${module.control_plane.subnet_gateway}"
 }
 
-output "pks_subnet_gateway" {
-  value = "${module.pks.pks_subnet_gateway}"
+output "control_plane_db_password" {
+  sensitive = true
+  value     = "${var.external_db > 0 ? module.control_plane.postgres_password : "" }"
 }
 
-output "services_subnet_name" {
-  value = "${module.pks.services_subnet_name}"
+output "control_plane_fqdn" {
+  value = "${module.control_plane.postgres_fqdn}"
 }
 
-output "services_subnet_cidr" {
-  value = "${module.pks.services_subnet_cidr}"
+output "control_plane_lb_name" {
+  value = "${module.control_plane.plane_lb_name}"
 }
 
-output "services_subnet_gateway" {
-  value = "${module.pks.services_subnet_gateway}"
+output "control_plane_db_username" {
+  value = "${var.external_db > 0 ? module.control_plane.postgres_username : ""}"
 }
 
-# Deprecated properties
-
-output "management_subnet_name" {
-  value = "${module.infra.infrastructure_subnet_name}"
-}
-
-output "management_subnets" {
-  value = ["${module.infra.infrastructure_subnet_name}"]
-}
-
-output "management_subnet_cidrs" {
-  value = ["${module.infra.infrastructure_subnet_cidrs}"]
-}
-
-output "management_subnet_gateway" {
-  value = "${module.infra.infrastructure_subnet_gateway}"
-}
-
-output "infrastructure_subnets" {
-  value = ["${module.infra.infrastructure_subnet_name}"]
-}
-
-output "infrastructure_subnet_cidrs" {
-  value = "${module.infra.infrastructure_subnet_cidrs}"
-}
-
-output "pks_subnet_cidrs" {
-  value = "${module.pks.pks_subnet_cidrs}"
-}
-
-output "pks_subnets" {
-  value = ["${module.pks.pks_subnet_name}"]
-}
-
-output "services_subnets" {
-  value = ["${module.pks.services_subnet_name}"]
-}
-
-output "services_subnet_cidrs" {
-  value = "${module.pks.services_subnet_cidrs}"
+output "control_plane_domain" {
+  value = "${module.control_plane.dns_name}"
 }

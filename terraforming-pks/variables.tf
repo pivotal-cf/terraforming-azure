@@ -21,8 +21,6 @@ variable "cloud_name" {
 
 variable "env_name" {}
 
-variable "env_short_name" {}
-
 variable "location" {
   default = ""
 }

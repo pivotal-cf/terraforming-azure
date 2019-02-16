@@ -21,15 +21,6 @@ module "infra" {
   pcf_virtual_network_address_space = "${var.pcf_virtual_network_address_space}"
 }
 
-module "certs" {
-  source = "../modules/certs"
-
-  env_name           = "${var.env_name}"
-  dns_suffix         = "${var.dns_suffix}"
-  ssl_ca_cert        = "${var.ssl_ca_cert}"
-  ssl_ca_private_key = "${var.ssl_ca_private_key}"
-}
-
 module "ops_manager" {
   source = "../modules/ops_manager"
 
@@ -49,14 +40,17 @@ module "ops_manager" {
   subnet_id           = "${module.infra.infrastructure_subnet_id}"
 }
 
-module "pks" {
-  source = "../modules/pks"
-
-  env_id   = "${var.env_name}"
-  location = "${var.location}"
-
-  resource_group_cidr = "10.0.0.0/16"
+module "control_plane" {
+  source = "../modules/control_plane"
 
   resource_group_name = "${module.infra.resource_group_name}"
+  env_name            = "${var.env_name}"
+  dns_zone_name       = "${module.infra.dns_zone_name}"
+  cidr                = "${var.plane_cidr}"
   network_name        = "${module.infra.network_name}"
+
+  postgres_username = "${var.postgres_username}"
+
+  location    = "${var.location}"
+  external_db = "${var.external_db}"
 }

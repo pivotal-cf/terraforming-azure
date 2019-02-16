@@ -73,7 +73,6 @@ resources:
       region: us-central1
       credentials: ((cf_infra_gcp_service_account_key))
     vars:
-      env_short_name: azurepas
       location: "East US"
       subscription_id: ((azure_subscription_id))
       tenant_id: ((azure_tenant_id))
@@ -149,11 +148,8 @@ jobs:
       params:
         generate_random_name: true
         terraform_source: terraforming/terraforming-pas
-        delete_on_failure: true
         var_files: [tfvars/terraform.yml]
     - task: add-dns
-      timeout: 5m
-      attempts: 3
       file: ci/scripts/common/manage-gcp-dns/task-terraforming.yml
       params:
         <<: *modify-terraforming-dns-params
@@ -186,11 +182,9 @@ jobs:
         product: srt
         product-config-repo: terraforming
     - task: apply-changes
-      attempts: 3
       file: ci/scripts/terraforming/apply-changes/task.yml
       params:
         <<: *om-creds
-        IGNORE_WARNINGS: true
       input_mapping:
         env-state: env-state-azure
     ensure:

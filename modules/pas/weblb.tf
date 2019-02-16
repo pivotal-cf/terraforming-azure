@@ -1,10 +1,10 @@
 resource "azurerm_public_ip" "web-lb-public-ip" {
-  name                         = "web-lb-public-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  allocation_method            = "Static"
-  sku                          = "Standard"
-  idle_timeout_in_minutes      = 30
+  name                    = "web-lb-public-ip"
+  location                = "${var.location}"
+  resource_group_name     = "${var.resource_group_name}"
+  allocation_method       = "Static"
+  sku                     = "Standard"
+  idle_timeout_in_minutes = 30
 }
 
 resource "azurerm_lb" "web" {

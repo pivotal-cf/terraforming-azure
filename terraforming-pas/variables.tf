@@ -5,10 +5,6 @@ variable "cloud_name" {
   default     = "public"
 }
 
-variable "env_short_name" {
-  description = "Used for creating storage accounts. Must be a-z only, no longer than 10 characters"
-}
-
 variable cf_storage_account_name {
   type        = "string"
   description = "storage account name for cf"

@@ -1,10 +1,10 @@
 resource "azurerm_public_ip" "iso-lb-public-ip" {
-  name                         = "iso-lb-public-ip"
-  count                        = "${var.count}"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  allocation_method            = "Static"
-  sku                          = "Standard"
+  name                = "iso-lb-public-ip"
+  count               = "${var.count}"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_lb" "iso" {

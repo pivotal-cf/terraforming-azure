@@ -89,19 +89,17 @@ client_id       = "some-client-id"
 client_secret   = "some-client-secret"
 
 env_name              = "banana"
-env_short_name        = "banana"
 ops_manager_image_uri = "url-to-opsman-image"
 location              = "West US"
 dns_suffix            = "domain.com"
 
-# optional. if left blank, will default to "pcf".
+# optional. if left blank, will default to the pattern `env_name.dns_suffix`.
 dns_subdomain         = ""
 ```
 
 ## Variables
 
 - env_name: **(required)** An arbitrary unique name for namespacing resources
-- env_short_name: **(required)** Used for creating storage accounts. Must be a-z only, no longer than 10 characters
 - subscription_id: **(required)** Azure account subscription id
 - tenant_id: **(required)** Azure account tenant id
 - client_id: **(required)** Azure automation account client id
@@ -131,6 +129,8 @@ terraform apply plan
 ```
 
 ### Tearing down environment
+
+**Note:** This will only destroy resources deployed by Terraform. You will need to clean up anything deployed on top of that infrastructure yourself (e.g. by running `om delete-installation`)
 
 ```bash
 terraform destroy

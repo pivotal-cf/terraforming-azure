@@ -50,6 +50,15 @@ networks-configuration:
       iaas_identifier: {{.network_name}}/{{.services_subnet_name}}
       reserved_ip_ranges: {{cidrhost .services_subnet_cidr 0}}-{{cidrhost .services_subnet_cidr 5}}
 {{end}}
+{{if index . "control_plane_subnet_cidr"}}
+  - name: {{.control_plane_subnet_name}}
+    subnets:
+    - cidr: {{.control_plane_subnet_cidr}}
+      dns: 168.63.129.16
+      gateway: {{.control_plane_subnet_gateway}}
+      iaas_identifier: {{.network_name}}/{{.control_plane_subnet_name}}
+      reserved_ip_ranges: {{cidrhost .control_plane_subnet_cidr 0}}-{{cidrhost .control_plane_subnet_cidr 5}}
+{{end}}
 resource-configuration:
   compilation:
     instance_type:

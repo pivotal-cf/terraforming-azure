@@ -4,10 +4,6 @@ variable "env_name" {
   default = ""
 }
 
-variable "env_short_name" {
-  default = ""
-}
-
 variable "location" {
   default = ""
 }
@@ -44,14 +40,25 @@ variable "dns_zone_name" {
   default = ""
 }
 
+resource random_string "ops_manager_storage_account_name" {
+  length  = 20
+  special = false
+  upper   = false
+}
+
 # ==================== Storage
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
-  name                     = "${var.env_short_name}opsmanager"
+  name                     = "${random_string.ops_manager_storage_account_name.result}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "Premium"
   account_replication_type = "LRS"
+
+  tags = {
+    environment = "${var.env_name}"
+    account_for = "ops-manager"
+  }
 }
 
 resource "azurerm_storage_container" "ops_manager_storage_container" {
@@ -68,12 +75,14 @@ resource "azurerm_storage_blob" "ops_manager_image" {
   storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
   storage_container_name = "${azurerm_storage_container.ops_manager_storage_container.name}"
   source_uri             = "${var.ops_manager_image_uri}"
+  count                  = "${var.vm_count}"
 }
 
 resource "azurerm_image" "ops_manager_image" {
   name                = "ops_manager_image"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
+  count               = "${var.vm_count}"
 
   os_disk {
     os_type  = "Linux"
@@ -105,11 +114,11 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
 # ==================== VMs
 
 resource "azurerm_public_ip" "ops_manager_public_ip" {
-  name                         = "ops-manager-public-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  allocation_method            = "Static"
-  sku                          = "Standard"
+  name                = "${var.env_name}-ops-manager-public-ip"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "ops_manager_nic" {
@@ -118,6 +127,7 @@ resource "azurerm_network_interface" "ops_manager_nic" {
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
   network_security_group_id = "${var.security_group_id}"
+  count                     = "${var.vm_count}"
 
   ip_configuration {
     name                          = "${var.env_name}-ops-manager-ip-config"
@@ -250,7 +260,7 @@ output "optional_dns_name" {
 }
 
 output "ops_manager_private_ip" {
-  value = "${azurerm_network_interface.ops_manager_nic.private_ip_address}"
+  value = "${var.ops_manager_private_ip}"
 }
 
 output "ops_manager_public_ip" {
