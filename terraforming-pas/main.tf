@@ -4,6 +4,8 @@ provider "azurerm" {
   client_secret   = "${var.client_secret}"
   tenant_id       = "${var.tenant_id}"
   environment     = "${var.cloud_name}"
+
+  version = "~> 1.22"
 }
 
 terraform {
