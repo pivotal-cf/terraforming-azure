@@ -30,8 +30,8 @@ account you must be able to log into the Azure portal.
 
 First, find your account by running the following commands using the [Azure CLI](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/):
 ```bash
-azure login
-azure account list
+az login
+az account list
 ```
 
 To create the automation account, you need `az-automation`. You can use brew or
