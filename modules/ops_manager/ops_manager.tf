@@ -48,7 +48,7 @@ resource "azurerm_image" "ops_manager_image" {
 # ==================== DNS
 
 resource "azurerm_dns_a_record" "ops_manager_dns" {
-  name                = "pcf"
+  name                = "${var.ops_manager_a_record}"
   zone_name           = "${var.dns_zone_name}"
   resource_group_name = "${var.resource_group_name}"
   ttl                 = "60"
@@ -56,7 +56,7 @@ resource "azurerm_dns_a_record" "ops_manager_dns" {
 }
 
 resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
-  name                = "pcf-optional"
+  name                = "${var.ops_manager_a_record}-optional"
   zone_name           = "${var.dns_zone_name}"
   resource_group_name = "${var.resource_group_name}"
   ttl                 = "60"
