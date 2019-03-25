@@ -104,7 +104,7 @@ dns_subdomain         = ""
 - tenant_id: **(required)** Azure account tenant id
 - client_id: **(required)** Azure automation account client id
 - client_secret: **(required)** Azure automation account client secret
-- ops_manager_image_uri: **(required)** URL for an OpsMan image hosted on Azure
+- ops_manager_image_uri: **(required)** URL for an OpsMan image hosted on Azure (if not provided you get no Ops Manager)
 - location: **(required)** Azure location to stand up environment in
 - dns_suffix: **(required)** Domain to add environment subdomain to
 
