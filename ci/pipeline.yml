@@ -137,12 +137,12 @@ jobs:
       trigger: true
       params:
         globs:
-        - '*Azure.yml'
+        - '*azure*.yml'
   - do:
     - task: opsman-url
       file: ci/scripts/terraforming/latest-opsman/task.yml
       params:
-        IAAS: Azure
+        IAAS: azure
         KEY: east_us
     - put: env-state-azure
       params:
