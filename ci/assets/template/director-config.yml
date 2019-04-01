@@ -11,6 +11,8 @@ properties-configuration:
     ssh_public_key: {{.ops_manager_ssh_public_key}}
     ssh_private_key: {{toJson .ops_manager_ssh_private_key}}
 network-assignment:
+  singleton_availability_zone:
+    name: zone-1
   network:
     name: {{.infrastructure_subnet_name}}
 networks-configuration:
