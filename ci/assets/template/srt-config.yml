@@ -5,9 +5,9 @@ network-properties:
   service_network:
     name: {{.services_subnet_name}}
   other_availability_zones:
-    - name: 'null'
+    - name: 'zone-2'
   singleton_availability_zone:
-    name: 'null'
+    name: 'zone-1'
 product-properties:
   .cloud_controller.apps_domain:
     value: {{.apps_domain}}

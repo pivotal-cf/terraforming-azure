@@ -3,9 +3,9 @@ network-properties:
   network:
     name: {{.control_plane_subnet_name}}
   other_availability_zones:
-    - name: 'null'
+    - name: 'zone-2'
   singleton_availability_zone:
-    name: 'null'
+    name: 'zone-1'
 product-properties:
   .properties.domain:
     value: {{.control_plane_domain}}
