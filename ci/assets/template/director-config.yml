@@ -1,4 +1,6 @@
 properties-configuration:
+  security_configuration:
+    opsmanager_root_ca_trusted_certs: true
   director_configuration:
     ntp_servers_string: us.pool.ntp.org
   iaas_configuration:
