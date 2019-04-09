@@ -81,8 +81,8 @@ resources:
       vm_admin_username: "admin-username"
       vm_admin_password: ((azure_vm_admin_password))
       dns_suffix: azure.infrastructure.cf-app.com
-      ssl_cert: ((ssl_cert.certificate))
-      ssl_private_key: ((ssl_cert.private_key))
+      ssl_cert: ((terraforming-azure.certificate))
+      ssl_private_key: ((terraforming-azure.private_key))
 
 - name: infrastructure-ci
   type: git
@@ -146,7 +146,7 @@ jobs:
         KEY: east_us
     - put: env-state-azure
       params:
-        generate_random_name: true
+        env_name: tf-ci
         terraform_source: terraforming/terraforming-pas
         var_files: [tfvars/terraform.yml]
     - task: add-dns
@@ -161,6 +161,7 @@ jobs:
       params:
         <<: *om-creds
         TEMPLATE_PATH: director-config-template/ci/assets/template/director-config.yml
+        CA_CERT: ((terraforming-ca.ca))
       input_mapping:
         env-state: env-state-azure
         director-config-template: terraforming

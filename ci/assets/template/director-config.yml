@@ -1,6 +1,4 @@
 properties-configuration:
-  security_configuration:
-    opsmanager_root_ca_trusted_certs: true
   director_configuration:
     ntp_servers_string: us.pool.ntp.org
   iaas_configuration:
@@ -12,6 +10,11 @@ properties-configuration:
     bosh_storage_account_name: {{.bosh_root_storage_account}}
     ssh_public_key: {{.ops_manager_ssh_public_key}}
     ssh_private_key: {{toJson .ops_manager_ssh_private_key}}
+{{if index . "terraforming_ca_cert"}}
+  security_configuration:
+    trusted_certificates: |
+{{indent 6 .terraforming_ca_cert}}
+{{end}}
 network-assignment:
   singleton_availability_zone:
     name: zone-1
