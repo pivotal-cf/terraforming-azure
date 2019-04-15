@@ -61,4 +61,5 @@ module "pks" {
 
   resource_group_name = "${module.infra.resource_group_name}"
   network_name        = "${module.infra.network_name}"
+  bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
 }
