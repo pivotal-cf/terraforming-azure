@@ -31,6 +31,7 @@ resource "azurerm_storage_blob" "ops_manager_image" {
 }
 
 resource "azurerm_storage_blob" "optional_ops_manager_image" {
+  count                  = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
   name                   = "optional_opsman.vhd"
   resource_group_name    = "${azurerm_resource_group.pcf_resource_group.name}"
   storage_account_name   = "${azurerm_storage_account.ops_manager_storage_account.name}"
