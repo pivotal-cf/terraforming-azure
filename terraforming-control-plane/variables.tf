@@ -37,10 +37,6 @@ variable "ops_manager_private_ip" {
   default     = "10.0.8.4"
 }
 
-variable "ops_manager_vm" {
-  default = true
-}
-
 variable "ops_manager_vm_size" {
   type    = "string"
   default = "Standard_DS2_v2"

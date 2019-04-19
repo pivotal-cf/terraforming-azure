@@ -51,6 +51,7 @@ resource "tls_private_key" "ops_manager" {
   rsa_bits  = "4096"
 }
 
-# Deprecated - remove after next release
-
-variable "vm_count" {}
+locals {
+  ops_man_vm          = "${var.ops_manager_image_uri == "" ? 0 : 1}"
+  optional_ops_man_vm = "${var.optional_ops_manager_image_uri == "" ? 0 : 1}"
+}

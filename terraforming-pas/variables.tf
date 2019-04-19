@@ -144,11 +144,3 @@ variable "pcf_services_subnet" {
   type    = "string"
   default = "10.0.4.0/22"
 }
-
-/*******************************
- * Deprecated, Delete After Next Release *
- *******************************/
-
-variable "ops_manager_vm" {
-  default = true
-}
