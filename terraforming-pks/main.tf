@@ -38,7 +38,7 @@ module "ops_manager" {
   env_name = "${var.env_name}"
   location = "${var.location}"
 
-  vm_count               = "${var.ops_manager_vm ? 1 : 0}"
+  vm_count               = "${var.ops_manager_image_uri == "" ? 0 : 1}"
   ops_manager_image_uri  = "${var.ops_manager_image_uri}"
   ops_manager_vm_size    = "${var.ops_manager_vm_size}"
   ops_manager_private_ip = "${var.ops_manager_private_ip}"

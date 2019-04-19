@@ -1,51 +1,3 @@
-# ==================== Variables
-
-variable "env_name" {
-  default = ""
-}
-
-variable "location" {
-  default = ""
-}
-
-variable "vm_count" {
-  default = 1
-}
-
-variable "ops_manager_private_ip" {
-  default = ""
-}
-
-variable "ops_manager_image_uri" {
-  default = ""
-}
-
-variable "ops_manager_vm_size" {
-  default = ""
-}
-
-variable "resource_group_name" {
-  default = ""
-}
-
-variable "security_group_id" {
-  default = ""
-}
-
-variable "subnet_id" {
-  default = ""
-}
-
-variable "dns_zone_name" {
-  default = ""
-}
-
-resource random_string "ops_manager_storage_account_name" {
-  length  = 20
-  special = false
-  upper   = false
-}
-
 # ==================== Storage
 
 resource "azurerm_storage_account" "ops_manager_storage_account" {
@@ -176,16 +128,7 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
   }
 }
 
-resource "tls_private_key" "ops_manager" {
-  algorithm = "RSA"
-  rsa_bits  = "4096"
-}
-
 # ==================== OPTIONAL
-
-variable "optional_ops_manager_image_uri" {
-  default = ""
-}
 
 resource "azurerm_public_ip" "optional_ops_manager_public_ip" {
   name                         = "${var.env_name}-optional-ops-manager-public-ip"
@@ -247,40 +190,4 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
       key_data = "${tls_private_key.ops_manager.public_key_openssh}"
     }
   }
-}
-
-# ==================== Outputs
-
-output "dns_name" {
-  value = "${azurerm_dns_a_record.ops_manager_dns.name}.${azurerm_dns_a_record.ops_manager_dns.zone_name}"
-}
-
-output "optional_dns_name" {
-  value = "${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.name, list("")), 0)}.${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.zone_name, list("")), 0)}"
-}
-
-output "ops_manager_private_ip" {
-  value = "${var.ops_manager_private_ip}"
-}
-
-output "ops_manager_public_ip" {
-  value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
-}
-
-output "optional_ops_manager_public_ip" {
-  value = "${element(concat(azurerm_public_ip.optional_ops_manager_public_ip.*.ip_address, list("")), 0)}"
-}
-
-output "ops_manager_ssh_public_key" {
-  sensitive = true
-  value     = "${tls_private_key.ops_manager.public_key_openssh}"
-}
-
-output "ops_manager_ssh_private_key" {
-  sensitive = true
-  value     = "${tls_private_key.ops_manager.private_key_pem}"
-}
-
-output "ops_manager_storage_account" {
-  value = "${azurerm_storage_account.ops_manager_storage_account.name}"
 }
