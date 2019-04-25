@@ -15,6 +15,4 @@ locals {
   pks_services_cidr = "${cidrsubnet(var.resource_group_cidr, 6, 4)}"
 }
 
-variable "bosh_deployed_vms_security_group_id" {
-  default = ""
-}
+variable "bosh_deployed_vms_security_group_id" {}
