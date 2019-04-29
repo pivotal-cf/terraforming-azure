@@ -5,6 +5,13 @@ resource "azurerm_dns_a_record" "apps" {
   ttl                 = "60"
   records             = ["${azurerm_public_ip.web-lb-public-ip.ip_address}"]
 }
+resource "azurerm_dns_a_record" "istio" {
+  name                = "*.mesh.apps"
+  zone_name           = "${var.dns_zone_name}"
+  resource_group_name = "${var.resource_group_name}"
+  ttl                 = "60"
+  records             = ["${azurerm_public_ip.istio-lb-public-ip.ip_address}"]
+}
 
 resource "azurerm_dns_a_record" "sys" {
   name                = "*.sys"

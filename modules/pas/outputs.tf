@@ -14,10 +14,17 @@ output "apps_domain" {
   value = "apps.${azurerm_dns_a_record.apps.zone_name}"
 }
 
+output "mesh_domain" {
+  value = "mesh.apps.${azurerm_dns_a_record.istio.zone_name}"
+}
+
 output "web_lb_name" {
   value = "${azurerm_lb.web.name}"
 }
 
+output "istio_lb_name" {
+  value = "${azurerm_lb.istio.name}"
+}
 output "diego_ssh_lb_name" {
   value = "${azurerm_lb.diego-ssh.name}"
 }
