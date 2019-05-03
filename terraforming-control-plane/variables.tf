@@ -33,7 +33,7 @@ variable "ops_manager_image_uri" {
 
 variable "ops_manager_private_ip" {
   type        = "string"
-  description = "IP for the Ops Manager instance if not deploying in the default infrasstructure subnet"
+  description = "IP for the Ops Manager instance if not deploying in the default infrastructure subnet"
   default     = "10.0.8.4"
 }
 
