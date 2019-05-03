@@ -45,12 +45,12 @@ module "ops_manager" {
 module "control_plane" {
   source = "../modules/control_plane"
 
-  resource_group_name = "${module.infra.resource_group_name}"
-  env_name            = "${var.env_name}"
-  dns_zone_name       = "${module.infra.dns_zone_name}"
-  plane_dns_name      = "${var.plane_dns_name}"
-  cidr                = "${var.plane_cidr}"
-  network_name        = "${module.infra.network_name}"
+  resource_group_name    = "${module.infra.resource_group_name}"
+  env_name               = "${var.env_name}"
+  dns_zone_name          = "${module.infra.dns_zone_name}"
+  control_plane_dns_name = "${var.control_plane_dns_name}"
+  cidr                   = "${var.plane_cidr}"
+  network_name           = "${module.infra.network_name}"
 
   postgres_username = "${var.postgres_username}"
 

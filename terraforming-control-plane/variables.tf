@@ -64,7 +64,7 @@ variable "plane_cidr" {
   default = "10.0.10.0/28"
 }
 
-variable "plane_dns_name" {
+variable "control_plane_dns_name" {
   default = "plane"
 }
 

@@ -7,7 +7,7 @@ locals {
 
 resource "azurerm_dns_a_record" "plane" {
   resource_group_name = "${var.resource_group_name}"
-  name                = "${var.plane_dns_name}"
+  name                = "${var.control_plane_dns_name}"
   zone_name           = "${var.dns_zone_name}"
   ttl                 = "60"
   records             = ["${azurerm_public_ip.plane.ip_address}"]
