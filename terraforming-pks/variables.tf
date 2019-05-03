@@ -70,6 +70,10 @@ variable "ops_manager_private_ip" {
   default     = "10.0.8.4"
 }
 
+variable "ops_manager_dns_name" {
+  default = "pcf"
+}
+
 variable "optional_ops_manager_image_uri" {
   default = ""
 }

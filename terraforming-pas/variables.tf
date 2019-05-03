@@ -89,6 +89,10 @@ variable "ops_manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
+variable "ops_manager_dns_name" {
+  default = "pcf"
+}
+
 variable "dns_suffix" {}
 
 variable "dns_subdomain" {

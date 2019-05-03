@@ -37,6 +37,10 @@ variable "ops_manager_private_ip" {
   default     = "10.0.8.4"
 }
 
+variable "ops_manager_dns_name" {
+  default = "pcf"
+}
+
 variable "ops_manager_vm_size" {
   type    = "string"
   default = "Standard_DS2_v2"
@@ -58,6 +62,10 @@ variable "pcf_virtual_network_address_space" {
 
 variable "plane_cidr" {
   default = "10.0.10.0/28"
+}
+
+variable "plane_dns_name" {
+  default = "plane"
 }
 
 variable "postgres_username" {
