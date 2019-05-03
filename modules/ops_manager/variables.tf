@@ -20,6 +20,10 @@ variable "ops_manager_vm_size" {
   default = ""
 }
 
+variable "ops_manager_a_record" {
+  default = ""
+}
+
 variable "resource_group_name" {
   default = ""
 }

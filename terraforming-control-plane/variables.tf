@@ -42,6 +42,12 @@ variable "ops_manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
+variable "ops_manager_a_record" {
+  type        = "string"
+  description = "The A record to associate with the Ops Manager VM. For example, if your ops_manager_a_record is `pcf`, and your dns_suffix is `pivotal.io`, your Opsman domain would be `pcf.pivotal.io`"
+  default     = "pcf"
+}
+
 variable "optional_ops_manager_image_uri" {
   default = ""
 }
