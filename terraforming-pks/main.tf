@@ -31,6 +31,7 @@ module "ops_manager" {
   ops_manager_image_uri  = "${var.ops_manager_image_uri}"
   ops_manager_vm_size    = "${var.ops_manager_vm_size}"
   ops_manager_private_ip = "${var.ops_manager_private_ip}"
+  ops_manager_dns_name   = "${var.ops_manager_dns_name}"
 
   optional_ops_manager_image_uri = "${var.optional_ops_manager_image_uri}"
 
