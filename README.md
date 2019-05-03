@@ -94,7 +94,11 @@ location              = "West US"
 dns_suffix            = "domain.com"
 
 # optional. if left blank, will default to the pattern `env_name.dns_suffix`.
-dns_subdomain         = ""
+dns_subdomain          = ""
+# optional dns values. If left blank opsmanager is `pcf.env_name_dns_suffix` and control plane is `plane.env_name_dns_suffix` .
+control_plane_dns_name = ""
+ops_manager_dns_name   = ""
+
 ```
 
 ## Variables
