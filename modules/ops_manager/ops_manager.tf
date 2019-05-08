@@ -67,10 +67,11 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
 # ==================== VMs
 
 resource "azurerm_public_ip" "ops_manager_public_ip" {
-  name                = "${var.env_name}-ops-manager-public-ip"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-  allocation_method   = "Static"
+  name                    = "${var.env_name}-ops-manager-public-ip"
+  location                = "${var.location}"
+  resource_group_name     = "${var.resource_group_name}"
+  allocation_method       = "Static"
+  idle_timeout_in_minutes = 30
 }
 
 resource "azurerm_network_interface" "ops_manager_nic" {
