@@ -8,7 +8,7 @@ authenticate_om() {
 main() {
   local path=${1?"Path is required (e.g. terraforming-pas, terraforming-control-plane)"}
   local password=${2?"OpsManager password is required."}
-  local password=${3?"OpsManager username is required."}
+  local username=${3?"OpsManager username is required."}
 
   pushd "$PROJECT_DIR/${path}" > /dev/null
     RAW_JSON=$(jq -e --raw-output '.modules[0].outputs | map_values(.value)' terraform.tfstate)
@@ -17,7 +17,7 @@ main() {
     authenticate_om "${password}" ${username}
 
     om -k configure-authentication -dp "${OM_PASSWORD}"
-    om -k configure-director --config <(texplate execute "$PROJECT_DIR/ci/assets/template/director-config.yml" -f  <(echo "${WITH_CERT}") -o yaml)
+    om -k configure-director --config <(texplate execute "$PROJECT_DIR/ci/assets/template/director-config.yml" -f  <(echo "${RAW_JSON}") -o yaml)
   popd > /dev/null
 }
 
