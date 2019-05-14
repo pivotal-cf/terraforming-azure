@@ -90,6 +90,11 @@ resource "azurerm_network_security_rule" "plane" {
   destination_address_prefix = "*"
 }
 
+resource "azurerm_subnet_network_security_group_association" "plane" {
+  subnet_id                 = "${azurerm_subnet.plane.id}"
+  network_security_group_id = "${azurerm_network_security_group.plan.id}"
+}
+
 # Network
 
 resource "azurerm_subnet" "plane" {
