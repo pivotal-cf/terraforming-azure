@@ -92,7 +92,7 @@ resource "azurerm_network_security_rule" "plane" {
 
 resource "azurerm_subnet_network_security_group_association" "plane" {
   subnet_id                 = "${azurerm_subnet.plane.id}"
-  network_security_group_id = "${azurerm_network_security_group.plan.id}"
+  network_security_group_id = "${azurerm_network_security_group.plane.id}"
 }
 
 # Network
