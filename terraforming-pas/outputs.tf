@@ -117,7 +117,7 @@ output "pas_subnet_cidr" {
 }
 
 output "pas_subnet_reserved_ip_ranges" {
-  value = "${cidrhost(module.infra.pas_subnet_cidr, 0)}-${cidrhost(module.infra.pas_subnet_cidr, 4)}"
+  value = "${cidrhost(module.pas.pas_subnet_cidr, 0)}-${cidrhost(module.pas.pas_subnet_cidr, 4)}"
 }
 
 output "pas_subnet_gateway" {
@@ -133,7 +133,7 @@ output "services_subnet_cidr" {
 }
 
 output "services_subnet_reserved_ip_ranges" {
-  value = "${cidrhost(module.infra.services_subnet_cidr, 0)}-${cidrhost(module.infra.services_subnet_cidr, 4)}"
+  value = "${cidrhost(module.pas.services_subnet_cidr, 0)}-${cidrhost(module.pas.services_subnet_cidr, 4)}"
 }
 
 output "services_subnet_gateway" {
