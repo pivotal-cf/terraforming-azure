@@ -33,3 +33,7 @@ output "ops_manager_ssh_private_key" {
 output "ops_manager_storage_account" {
   value = "${azurerm_storage_account.ops_manager_storage_account.name}"
 }
+
+output "ops_manager_storage_account_access_key" {
+  sensitive = true
+  value     = "${azurerm_storage_account.ops_manager_storage_account.primary_access_key}"
