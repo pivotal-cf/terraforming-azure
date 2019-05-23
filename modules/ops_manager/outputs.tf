@@ -37,3 +37,4 @@ output "ops_manager_storage_account" {
 output "ops_manager_storage_account_access_key" {
   sensitive = true
   value     = "${azurerm_storage_account.ops_manager_storage_account.primary_access_key}"
+}
