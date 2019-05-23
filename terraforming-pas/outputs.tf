@@ -149,7 +149,8 @@ output "ops_manager_storage_account" {
 }
 
 output "ops_manager_storage_account_access_key" {
-  value = "${module.ops_manager.ops_manager_storage_account_access_key}"
+  sensitive = true
+  value     = "${module.ops_manager.ops_manager_storage_account_access_key}"
 }
 
 output "cf_storage_account_name" {
