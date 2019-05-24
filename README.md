@@ -135,4 +135,3 @@ terraform apply plan
 ```bash
 terraform destroy
 ```
-
