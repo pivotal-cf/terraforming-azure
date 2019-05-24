@@ -2,10 +2,6 @@ output "iaas" {
   value = "azure"
 }
 
-output "location" {
-  value = "${var.location}"
-}
-
 output "subscription_id" {
   sensitive = true
   value     = "${var.subscription_id}"
