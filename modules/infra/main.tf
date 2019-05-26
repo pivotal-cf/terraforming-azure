@@ -6,6 +6,10 @@ variable "pcf_vnet_rg" {
   default = ""
 }
 
+variable "vnet_name" {
+  default = ""
+}
+
 variable "location" {
   default = ""
 }
@@ -235,7 +239,7 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
 # ============= Networking
 
 resource "azurerm_virtual_network" "pcf_virtual_network" {
-  name                = "${var.env_name}-virtual-network"
+  name                = "${var.vnet_name != "" ? "${var.vnet_name}" : "${var.env_name}-virtual-network"}"
   depends_on          = ["azurerm_resource_group.pcf_network_rg"]
   resource_group_name = "${azurerm_resource_group.pcf_network_rg.name}"
   address_space       = "${var.pcf_virtual_network_address_space}"
