@@ -6,6 +6,10 @@ variable "pcf_vnet_rg" {
   default = ""
 }
 
+variable "create_vnet" {
+  default = true
+}
+
 variable "vnet_name" {
   default = ""
 }
@@ -239,6 +243,7 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
 # ============= Networking
 
 resource "azurerm_virtual_network" "pcf_virtual_network" {
+  count               = "${var.create_vnet ? "1" : "0"}"
   name                = "${var.vnet_name != "" ? "${var.vnet_name}" : "${var.env_name}-virtual-network"}"
   depends_on          = ["azurerm_resource_group.pcf_network_rg"]
   resource_group_name = "${azurerm_resource_group.pcf_network_rg.name}"
@@ -246,11 +251,17 @@ resource "azurerm_virtual_network" "pcf_virtual_network" {
   location            = "${var.location}"
 }
 
+data "azurerm_virtual_network" "pcf_virtual_network" {
+  name                = "${var.create_vnet ? "${var.vnet_name != "" ? "${var.vnet_name}" : "${var.env_name}-virtual-network"}" : "${var.vnet_name}"}"
+  depends_on          = ["azurerm_virtual_network.pcf_virtual_network"]
+  resource_group_name = "${azurerm_resource_group.pcf_network_rg.name}"
+}
+
 resource "azurerm_subnet" "infrastructure_subnet" {
   name                      = "${var.env_name}-infrastructure-subnet"
   depends_on                = ["azurerm_resource_group.pcf_network_rg"]
   resource_group_name       = "${azurerm_resource_group.pcf_network_rg.name}"
-  virtual_network_name      = "${azurerm_virtual_network.pcf_virtual_network.name}"
+  virtual_network_name      = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix            = "${var.pcf_infrastructure_subnet}"
   network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 }
@@ -288,7 +299,7 @@ output "network_rg_name" {
 }
 
 output "network_name" {
-  value = "${azurerm_virtual_network.pcf_virtual_network.name}"
+  value = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
 }
 
 output "infrastructure_subnet_id" {

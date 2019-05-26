@@ -149,3 +149,11 @@ variable "pcf_services_subnet" {
 variable "pcf_vnet_rg" {
   default = ""
 }
+
+variable "pcf_vnet_name" {
+  default = ""
+}
+
+variable "create_vnet" {
+  default = true
+}

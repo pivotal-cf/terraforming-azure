@@ -17,6 +17,8 @@ module "infra" {
 
   env_name                          = "${var.env_name}"
   pcf_vnet_rg                       = "${var.pcf_vnet_rg}"
+  create_vnet                       = "${var.create_vnet}"
+  vnet_name                         = "${var.pcf_vnet_name}"
   location                          = "${var.location}"
   dns_subdomain                     = "${var.dns_subdomain}"
   dns_suffix                        = "${var.dns_suffix}"
