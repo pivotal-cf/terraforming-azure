@@ -18,48 +18,45 @@ We have other terraform templates to help you!
 
 ## Prerequisites
 
+- [terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
+- [azure cli](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/)
+
 ```bash
 brew update
 brew install terraform
+brew install az
+brew install jq
 ```
 
-## Creating An Automation Account
+## Creating A Service Principal
 
-You need an automation account to deploy anything on top of Azure. However, before you can create an automation
-account you must be able to log into the Azure portal.
+You need a [service principal account](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#create-a-service-principal)
+to deploy anything on top of Azure.
 
-First, find your account by running the following commands using the [Azure CLI](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/):
-```bash
-az login
-az account list
-```
+1. Login.
 
-To create the automation account, you need `az-automation`. You can use brew or
-go to the [releases](https://github.com/genevieve/az-automation/releases)
-and get the necessary binary.
+  ```bash
+  $ az login
+  $ az account show | jq -r '.id, .tenantId'
+  the-subscription-id
+  the-tenant-id
+  ```
 
-```
-brew tap genevieve/tap
-brew install az-automation
-```
+1. Create the service principal where the name is a valid URI.
 
-Then run:
+  ```bash
+  $ az ad sp create-for-rbac --name http://<service-principal-name> | jq -r '.appId, .password'
+  the-app-id
+  the-password
+  ```
 
-```bash
-az-automation \
-  --account some-account-id \
-  --identifier-uri http://example.com \
-  --display-name some-display-name \
-  --credential-output-file some-credentials.tfvars
-```
-
-The file created as an output here should include the following:
-```hcl
-subscription_id = "some-subscription-id"
-tenant_id       = "some-tenant-id"
-client_id       = "some-client-id"
-client_secret   = "some-client-secret"
-```
+1. Create a `terraform.tfvars` file the following:
+  ```hcl
+  subscription_id = "the-subscription-id"
+  tenant_id       = "the-tenant-id"
+  client_id       = "the-app-id"
+  client_secret   = "the-password"
+  ```
 
 ## Deploying Ops Manager
 
@@ -83,10 +80,10 @@ These vars will be used when you run `terraform  apply`.
 You should fill in the stub values with the correct content.
 
 ```hcl
-subscription_id = "some-subscription-id"
-tenant_id       = "some-tenant-id"
-client_id       = "some-client-id"
-client_secret   = "some-client-secret"
+subscription_id = "the-subscription-id"
+tenant_id       = "the-tenant-id"
+client_id       = "the-app-id"
+client_secret   = "the-password"
 
 env_name              = "banana"
 ops_manager_image_uri = "url-to-opsman-image"
