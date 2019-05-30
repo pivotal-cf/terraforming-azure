@@ -34,29 +34,27 @@ You need a [service principal account](https://docs.microsoft.com/en-us/cli/azur
 to deploy anything on top of Azure.
 
 1. Login.
-
-  ```bash
-  $ az login
-  $ az account show | jq -r '.id, .tenantId'
-  the-subscription-id
-  the-tenant-id
-  ```
+    ```bash
+    $ az login
+    $ az account show | jq -r '.id, .tenantId'
+    the-subscription-id
+    the-tenant-id
+    ```
 
 1. Create the service principal where the name is a valid URI.
-
-  ```bash
-  $ az ad sp create-for-rbac --name http://<service-principal-name> | jq -r '.appId, .password'
-  the-app-id
-  the-password
-  ```
+    ```bash
+    $ az ad sp create-for-rbac --name http://<service-principal-name> | jq -r '.appId, .password'
+    the-app-id
+    the-password
+    ```
 
 1. Create a `terraform.tfvars` file the following:
-  ```hcl
-  subscription_id = "the-subscription-id"
-  tenant_id       = "the-tenant-id"
-  client_id       = "the-app-id"
-  client_secret   = "the-password"
-  ```
+    ```hcl
+    subscription_id = "the-subscription-id"
+    tenant_id       = "the-tenant-id"
+    client_id       = "the-app-id"
+    client_secret   = "the-password"
+    ```
 
 ## Deploying Ops Manager
 
