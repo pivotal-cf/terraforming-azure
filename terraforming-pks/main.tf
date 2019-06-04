@@ -55,8 +55,8 @@ module "pks" {
 
 provider "azurerm" {
   subscription_id = "${var.subscription_id}"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
+  # client_id       = "${var.client_id}"
+  # client_secret   = "${var.client_secret}"
   tenant_id       = "${var.tenant_id}"
   environment     = "${var.cloud_name}"
 
@@ -107,7 +107,7 @@ resource "azurerm_user_assigned_identity" "pks_master_identity" {
   resource_group_name = "${module.infra.resource_group_name}"
   location            = "${var.location}"
 
-  name = "pks-master"
+  name = "${var.azure_master_managed_identity}"
 }
 
 resource "azurerm_role_assignment" "master_role_assignemnt" {
@@ -120,7 +120,7 @@ resource "azurerm_user_assigned_identity" "pks_worker_identity" {
   resource_group_name = "${module.infra.resource_group_name}"
   location            = "${var.location}"
 
-  name = "pks-worker"
+  name = "${var.azure_worker_managed_identity}"
 }
 
 resource "azurerm_role_assignment" "worker_role_assignemnt" {
