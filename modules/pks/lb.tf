@@ -67,3 +67,13 @@ resource "azurerm_lb_rule" "pks-lb-api-rule" {
   probe_id                       = "${azurerm_lb_probe.pks-lb-api-health-probe.id}"
   backend_address_pool_id        = "${azurerm_lb_backend_address_pool.pks-lb-backend-pool.id}"
 }
+
+# ==================== DNS
+
+resource "azurerm_dns_a_record" "pks_api_dns" {
+  name                = "pks"
+  zone_name           = "${var.dns_zone_name}"
+  resource_group_name = "${var.resource_group_name}"
+  ttl                 = "60"
+  records             = ["${azurerm_public_ip.pks-lb-ip.ip_address}"]
+}

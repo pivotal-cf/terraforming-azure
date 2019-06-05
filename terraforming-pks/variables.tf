@@ -83,11 +83,16 @@ variable "ssl_private_key" {
 }
 
 variable "azure_master_managed_identity" {
-  type = "string"
+  type    = "string"
   default = "pks-master"
 }
 
 variable "azure_worker_managed_identity" {
-  type = "string"
+  type    = "string"
   default = "pks-worker"
+}
+
+variable "availability_zones" {
+  type    = "list"
+  default = ["zone-1", "zone-2", "zone-3"]
 }

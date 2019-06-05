@@ -7,6 +7,10 @@ output "subscription_id" {
   value     = "${var.subscription_id}"
 }
 
+output "location" {
+  value = "${var.location}"
+}
+
 output "tenant_id" {
   sensitive = true
   value     = "${var.tenant_id}"
@@ -110,6 +114,10 @@ output "pks-master-app-sec-group" {
   value = "${module.pks.pks-master-app-sec-group}"
 }
 
+output "pks_lb_name" {
+  value = "${module.pks.pks-lb-name}"
+}
+
 # Subnets
 
 output "pks_subnet_name" {
@@ -134,6 +142,44 @@ output "services_subnet_cidr" {
 
 output "services_subnet_gateway" {
   value = "${module.pks.services_subnet_gateway}"
+}
+
+# Kubernetes Cloud Provider Configuration
+
+output "resource_group_name" {
+  value = "${var.env_name}"
+}
+
+output "vnet_name" {
+  value = "${module.infra.network_name}"
+}
+
+output "vnet_resource_group_name" {
+  value = "${var.env_name}"
+}
+
+output "default_security_group" {
+  value = "${module.infra.bosh_deployed_vms_security_group_name}"
+}
+
+output "primary_availability_set" {
+  value = "${azurerm_availability_set.pks.name}"
+}
+
+output "azure_master_managed_identity" {
+  value = "${var.azure_master_managed_identity}"
+}
+
+output "azure_worker_managed_identity" {
+  value = "${var.azure_worker_managed_identity}"
+}
+
+output "pks_api_endpoint" {
+  value = "${module.pks.pks_api_endpoint}"
+}
+
+output "azs" {
+  value = "${var.availability_zones}"
 }
 
 # Deprecated properties

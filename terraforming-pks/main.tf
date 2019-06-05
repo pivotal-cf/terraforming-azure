@@ -46,6 +46,8 @@ module "pks" {
   env_id   = "${var.env_name}"
   location = "${var.location}"
 
+  dns_zone_name       = "${module.infra.dns_zone_name}"
+
   resource_group_cidr = "10.0.0.0/16"
 
   resource_group_name = "${module.infra.resource_group_name}"

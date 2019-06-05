@@ -16,3 +16,7 @@ locals {
 }
 
 variable "bosh_deployed_vms_security_group_id" {}
+
+variable "dns_zone_name" {
+  default = ""
+}
