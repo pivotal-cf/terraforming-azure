@@ -146,6 +146,10 @@ variable "pcf_services_subnet" {
   default = "10.0.4.0/22"
 }
 
+variable "use_existing_rgs" {
+  default = false
+}
+
 variable "pcf_vnet_rg" {
   default = ""
 }

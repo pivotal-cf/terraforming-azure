@@ -16,6 +16,7 @@ module "infra" {
   source = "../modules/infra"
 
   env_name                          = "${var.env_name}"
+  use_existing_rgs                  = "${var.use_existing_rgs}"
   pcf_vnet_rg                       = "${var.pcf_vnet_rg}"
   create_vnet                       = "${var.create_vnet}"
   vnet_name                         = "${var.pcf_vnet_name}"
