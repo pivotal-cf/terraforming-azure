@@ -223,3 +223,7 @@ output "services_subnets" {
 output "services_subnet_cidrs" {
   value = "${module.pks.services_subnet_cidrs}"
 }
+
+output "pks_lb_network_sg" {
+  value = "${module.pks.pks_lb_network_sg}"
+}

@@ -10,6 +10,9 @@ output "pks-lb-name" {
   value = "${azurerm_lb.pks-lb.name}"
 }
 
+output "pks_lb_network_sg" {
+  value = "${azurerm_network_security_group.pks-api.name}"
+}
 
 # Subnets
 

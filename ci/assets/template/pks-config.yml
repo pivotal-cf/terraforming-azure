@@ -65,6 +65,8 @@ resource-config:
   pivotal-container-service:
     elb_names:
     - {{.pks_lb_name}}
+    additional_vm_extensions:
+    - pks-api-lb-security-groups
 errand-config:
   smoke-tests:
     post-deploy-state: true
