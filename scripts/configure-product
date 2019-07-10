@@ -7,32 +7,34 @@ authenticate_om() {
 }
 
 main() {
-  local path="$1"
-  local product="$2"
-  local password="$3"
+  local path=${1?"Path is required (e.g. terraforming-pas, terraforming-pks, terraforming-control-plane)"}
+  local product=${2?"Product slug is required (e.g. cf, pivotal-container-service, control-plane)"}
+  local password=${3?"OpsManager password is required."}
 
-  pushd "${path}" > /dev/null
+  local product_template
+  case $product in
+    cf)
+      product_template=$PROJECT_DIR/ci/assets/template/srt-config.yml
+      ;;
+    pivotal-container-service)
+      product_template=$PROJECT_DIR/ci/assets/template/pks-config.yml
+      ;;
+    control-plane)
+      product_template=$PROJECT_DIR/ci/assets/template/control-plane-config.yml
+      curl -X GET 'https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt' -o /tmp/BaltimoreCyberTrustRoot.crt
+
+      openssl x509 -inform DER -in /tmp/BaltimoreCyberTrustRoot.crt -text -out /tmp/azure.pem
+
+      cat /tmp/env-state/metadata | jq --arg db_ca_cert "$(cat /tmp/azure.pem)" '. + {"db_ca_cert": $db_ca_cert}' > /tmp/env-state/metadata_tmp
+      mv /tmp/env-state/metadata{_tmp,}
+      ;;
+  esac
+
+  pushd $PROJECT_DIR/$path > /dev/null
     authenticate_om "${password}"
 
     mkdir -p /tmp/env-state
     jq -e --raw-output '.modules[0].outputs | map_values(.value)' terraform.tfstate > /tmp/env-state/metadata
-
-    local product_template
-    case $product in
-      cf)
-        product_template=$PROJECT_DIR/ci/assets/template/srt-config.yml
-        ;;
-      control-plane)
-        product_template=$PROJECT_DIR/ci/assets/template/control-plane-config.yml
-        curl -X GET 'https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt' -o /tmp/BaltimoreCyberTrustRoot.crt
-
-        openssl x509 -inform DER -in /tmp/BaltimoreCyberTrustRoot.crt -text -out /tmp/azure.pem
-
-        cat /tmp/env-state/metadata | jq --arg db_ca_cert "$(cat /tmp/azure.pem)" '. + {"db_ca_cert": $db_ca_cert}' > /tmp/env-state/metadata_tmp
-        mv /tmp/env-state/metadata{_tmp,}
-        ;;
-    esac
-
 
     om -k configure-product \
       -c <(texplate execute "${product_template}" -f /tmp/env-state/metadata -o yaml)

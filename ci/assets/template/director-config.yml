@@ -70,3 +70,11 @@ resource-configuration:
   compilation:
     instance_type:
       id: automatic
+{{if index . "pks_lb_network_sg"}}
+vmextensions-configuration:
+  - name: pks-api-lb-security-groups
+    cloud_properties:
+      security_groups: 
+      - {{.pks_lb_network_sg}}
+      - {{.default_security_group}}
+{{end}}
