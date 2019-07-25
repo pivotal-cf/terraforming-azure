@@ -4,7 +4,7 @@ resource "azurerm_storage_account" "ops_manager_storage_account" {
   name                     = "${random_string.ops_manager_storage_account_name.result}"
   resource_group_name      = "${var.resource_group_name}"
   location                 = "${var.location}"
-  account_tier             = "Premium"
+  account_tier             = "Standard"
   account_replication_type = "LRS"
 
   tags = {
@@ -16,7 +16,6 @@ resource "azurerm_storage_account" "ops_manager_storage_account" {
 resource "azurerm_storage_container" "ops_manager_storage_container" {
   name                  = "opsmanagerimage"
   depends_on            = ["azurerm_storage_account.ops_manager_storage_account"]
-  resource_group_name   = "${var.resource_group_name}"
   storage_account_name  = "${azurerm_storage_account.ops_manager_storage_account.name}"
   container_access_type = "private"
 }
