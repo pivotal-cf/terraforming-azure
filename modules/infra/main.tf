@@ -209,32 +209,6 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
     destination_address_prefix = "*"
   }
 
-  # TODO: remove this rule once we have an internal mysql LB
-  security_rule {
-    name                       = "mysql"
-    priority                   = 207
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = 3306
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
-
-  # TODO: remove this rule once we have an internal mysql LB
-  security_rule {
-    name                       = "mysql-healthcheck"
-    priority                   = 208
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = 1936
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
-
   security_rule {
     name                       = "diego-ssh"
     priority                   = 209

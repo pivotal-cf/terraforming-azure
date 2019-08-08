@@ -2,6 +2,16 @@ terraform {
   required_version = "< 0.12.0"
 }
 
+provider "azurerm" {
+  subscription_id = "${var.subscription_id}"
+  client_id       = "${var.client_id}"
+  client_secret   = "${var.client_secret}"
+  tenant_id       = "${var.tenant_id}"
+  environment     = "${var.cloud_name}"
+
+  version = "~> 1.32"
+}
+
 module "infra" {
   source = "../modules/infra"
 
@@ -48,19 +58,9 @@ module "pks" {
 
   resource_group_cidr = "10.0.0.0/16"
 
-  resource_group_name = "${module.infra.resource_group_name}"
-  network_name        = "${module.infra.network_name}"
+  resource_group_name                 = "${module.infra.resource_group_name}"
+  network_name                        = "${module.infra.network_name}"
   bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
-}
-
-provider "azurerm" {
-  subscription_id = "${var.subscription_id}"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
-  tenant_id       = "${var.tenant_id}"
-  environment     = "${var.cloud_name}"
-
-  version = "~> 1.22"
 }
 
 data "azurerm_subscription" "primary" {}
@@ -71,7 +71,7 @@ resource "azurerm_role_definition" "pks_master_role" {
   description = "This is a custom role created via Terraform"
 
   permissions {
-    actions     = [
+    actions = [
       "Microsoft.Network/*",
       "Microsoft.Compute/disks/*",
       "Microsoft.Compute/virtualMachines/write",
@@ -92,7 +92,7 @@ resource "azurerm_role_definition" "pks_worker_role" {
   description = "This is a custom role created via Terraform"
 
   permissions {
-    actions     = [
+    actions = [
       "Microsoft.Storage/storageAccounts/*"
     ]
     not_actions = []
