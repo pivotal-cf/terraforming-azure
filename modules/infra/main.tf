@@ -2,22 +2,6 @@ variable "env_name" {
   default = ""
 }
 
-variable "use_existing_rgs" {
-  default = false
-}
-
-variable "pcf_vnet_rg" {
-  default = ""
-}
-
-variable "create_vnet" {
-  default = true
-}
-
-variable "vnet_name" {
-  default = ""
-}
-
 variable "location" {
   default = ""
 }
@@ -27,6 +11,7 @@ variable "dns_subdomain" {
 }
 
 variable "dns_suffix" {
+  default = ""
 }
 
 variable "pcf_virtual_network_address_space" {
@@ -38,30 +23,9 @@ variable "pcf_infrastructure_subnet" {
   default = ""
 }
 
-locals {
-  pcf_network_rg_name = "${var.pcf_vnet_rg != "" ? var.pcf_vnet_rg : var.env_name}"
-}
-
 resource "azurerm_resource_group" "pcf_resource_group" {
-  count = "${var.use_existing_rgs ? "0" : "1"}"
   name     = "${var.env_name}"
   location = "${var.location}"
-}
-
-data "azurerm_resource_group" "pcf_resource_group" {
-  depends_on          = ["azurerm_resource_group.pcf_resource_group"]
-  name = "${var.env_name}"
-}
-
-resource "azurerm_resource_group" "pcf_network_rg" {
-  count = "${var.use_existing_rgs || var.pcf_vnet_rg != "" ? "0" : "1"}"
-  name = "${local.pcf_network_rg_name}"
-  location = "${var.location}"
-}
-
-data "azurerm_resource_group" "pcf_network_rg" {
-  depends_on          = ["azurerm_resource_group.pcf_network_rg"]
-  name = "${local.pcf_network_rg_name}"
 }
 
 # ============== Security Groups ===============
@@ -69,7 +33,7 @@ data "azurerm_resource_group" "pcf_network_rg" {
 resource "azurerm_network_security_group" "ops_manager_security_group" {
   name                = "${var.env_name}-ops-manager-security-group"
   location            = "${var.location}"
-  resource_group_name = "${data.azurerm_resource_group.pcf_network_rg.name}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 
   security_rule {
     name                       = "ssh"
@@ -111,7 +75,7 @@ resource "azurerm_network_security_group" "ops_manager_security_group" {
 resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
   name                = "${var.env_name}-bosh-deployed-vms-security-group"
   location            = "${var.location}"
-  resource_group_name = "${data.azurerm_resource_group.pcf_network_rg.name}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 
   security_rule {
     name                       = "internal-anything"
@@ -237,25 +201,18 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
 # ============= Networking
 
 resource "azurerm_virtual_network" "pcf_virtual_network" {
-  count               = "${var.create_vnet ? "1" : "0"}"
-  name                = "${var.vnet_name != "" ? "${var.vnet_name}" : "${var.env_name}-virtual-network"}"
-  depends_on          = ["data.azurerm_resource_group.pcf_network_rg"]
-  resource_group_name = "${data.azurerm_resource_group.pcf_network_rg.name}"
+  name                = "${var.env_name}-virtual-network"
+  depends_on          = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   address_space       = "${var.pcf_virtual_network_address_space}"
   location            = "${var.location}"
 }
 
-data "azurerm_virtual_network" "pcf_virtual_network" {
-  name                = "${var.create_vnet ? "${var.vnet_name != "" ? "${var.vnet_name}" : "${var.env_name}-virtual-network"}" : "${var.vnet_name}"}"
-  depends_on          = ["azurerm_virtual_network.pcf_virtual_network"]
-  resource_group_name = "${data.azurerm_resource_group.pcf_network_rg.name}"
-}
-
 resource "azurerm_subnet" "infrastructure_subnet" {
   name                      = "${var.env_name}-infrastructure-subnet"
-  depends_on                = ["data.azurerm_resource_group.pcf_network_rg"]
-  resource_group_name       = "${data.azurerm_resource_group.pcf_network_rg.name}"
-  virtual_network_name      = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
+  depends_on                = ["azurerm_resource_group.pcf_resource_group"]
+  resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
+  virtual_network_name      = "${azurerm_virtual_network.pcf_virtual_network.name}"
   address_prefix            = "${var.pcf_infrastructure_subnet}"
   network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 }
@@ -273,7 +230,7 @@ locals {
 
 resource "azurerm_dns_zone" "env_dns_zone" {
   name                = "${var.dns_subdomain != "" ? var.dns_subdomain : local.dns_subdomain}.${var.dns_suffix}"
-  resource_group_name = "${data.azurerm_resource_group.pcf_resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
 }
 
 output "dns_zone_name" {
@@ -285,15 +242,11 @@ output "dns_zone_name_servers" {
 }
 
 output "resource_group_name" {
-  value = "${data.azurerm_resource_group.pcf_resource_group.name}"
-}
-
-output "network_rg_name" {
-  value = "${data.azurerm_resource_group.pcf_network_rg.name}"
+  value = "${azurerm_resource_group.pcf_resource_group.name}"
 }
 
 output "network_name" {
-  value = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
+  value = "${azurerm_virtual_network.pcf_virtual_network.name}"
 }
 
 output "infrastructure_subnet_id" {

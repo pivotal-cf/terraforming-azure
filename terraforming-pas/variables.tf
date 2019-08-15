@@ -89,8 +89,7 @@ variable "ops_manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "dns_suffix" {
-}
+variable "dns_suffix" {}
 
 variable "dns_subdomain" {
   "type"        = "string"
@@ -144,20 +143,4 @@ variable "pcf_pas_subnet" {
 variable "pcf_services_subnet" {
   type    = "string"
   default = "10.0.4.0/22"
-}
-
-variable "use_existing_rgs" {
-  default = false
-}
-
-variable "pcf_vnet_rg" {
-  default = ""
-}
-
-variable "pcf_vnet_name" {
-  default = ""
-}
-
-variable "create_vnet" {
-  default = true
 }

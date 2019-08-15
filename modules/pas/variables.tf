@@ -1,7 +1,6 @@
 variable "env_name" {}
 variable "location" {}
 variable "resource_group_name" {}
-variable "network_rg_name" {}
 variable "dns_zone_name" {}
 
 variable "cf_buildpacks_storage_container_name" {}
