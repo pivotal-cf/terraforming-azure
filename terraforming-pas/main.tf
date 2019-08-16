@@ -9,7 +9,7 @@ provider "azurerm" {
 }
 
 terraform {
-  required_version = "< 0.12.0"
+  required_version = ">= 0.12.6"
 }
 
 module "infra" {
@@ -79,7 +79,7 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${var.isolation_segment ? 1 : 0}"
+  deploy = "${var.isolation_segment ? 1 : 0}"
 
   environment = "${var.env_name}"
   location    = "${var.location}"
