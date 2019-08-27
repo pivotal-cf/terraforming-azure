@@ -56,7 +56,12 @@ to deploy anything on top of Azure.
     client_secret   = "the-password"
     ```
 
-## Deploying Ops Manager
+## Are you using Platform Automation?
+Be sure to skip the creation of the Ops Manager VM. Do not include the `ops_manager_image_uri` var as a [variable](/README.md#variables). If you create your Ops Manager using terraform, you will not be able to manage it with [Platform Automation](https://docs.pivotal.io/platform-automation).
+
+Deployment of the infrastructure is still required.
+
+## Deploying Infrastructure
 
 *Note:* If you're using Platform Automation, be sure to skip this step as explained [here](/README.md#variables). If you create your Ops Manager here, you will not be able to manage it with [Platform Automation](https://docs.pivotal.io/platform-automation).
 
