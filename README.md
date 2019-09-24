@@ -1,5 +1,8 @@
 # Terraforming Azure [![build-status](https://infra.ci.cf-app.com/api/v1/teams/main/pipelines/terraforming-azure/jobs/deploy-pas/badge)](https://infra.ci.cf-app.com/teams/main/pipelines/terraforming-azure)
 
+## Deprecation Notice
+The intention is to archive this repo. The new repos for the templates can be found here: [paving-pas](https://github.com/pivotal/paving-pas) and [paving-pks](https://github.com/pivotal/paving-pks). These repos hold the templates for Azure, AWS, and GCP.
+
 ## How Does One Use This?
 
 Please note that the master branch is generally *unstable*. If you are looking for something "tested", please consume one of our [releases](https://github.com/pivotal-cf/terraforming-azure/releases).
