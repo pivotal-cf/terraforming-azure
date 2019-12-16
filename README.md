@@ -1,4 +1,4 @@
-# Terraforming Azure [![build-status](https://infra.ci.cf-app.com/api/v1/teams/main/pipelines/terraforming-azure/jobs/deploy-pas/badge)](https://infra.ci.cf-app.com/teams/main/pipelines/terraforming-azure)
+# Terraforming Azure
 
 ## How Does One Use This?
 
