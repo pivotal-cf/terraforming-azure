@@ -5,7 +5,7 @@ properties-configuration:
     subscription_id: {{.subscription_id}}
     tenant_id: {{.tenant_id}}
     client_id: {{.client_id}}
-    client_secret: {{.client_secret}}
+    client_secret: "{{.client_secret}}"
     resource_group_name: {{.pcf_resource_group_name}}
     bosh_storage_account_name: {{.bosh_root_storage_account}}
     ssh_public_key: {{.ops_manager_ssh_public_key}}
