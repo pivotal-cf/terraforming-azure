@@ -93,6 +93,7 @@ resource "azurerm_role_definition" "pks_worker_role" {
 
   permissions {
     actions = [
+      "Microsoft.Compute/virtualMachines/read",
       "Microsoft.Storage/storageAccounts/*"
     ]
     not_actions = []
