@@ -9,13 +9,17 @@ provider "azurerm" {
 }
 
 terraform {
-  required_version = "< 0.12.0"
+  required_version = ">= 0.12.6"
 }
 
 module "infra" {
   source = "../modules/infra"
 
   env_name                          = "${var.env_name}"
+  use_existing_rgs                  = "${var.use_existing_rgs}"
+  pcf_vnet_rg                       = "${var.pcf_vnet_rg}"
+  create_vnet                       = "${var.create_vnet}"
+  vnet_name                         = "${var.pcf_vnet_name}"
   location                          = "${var.location}"
   dns_subdomain                     = "${var.dns_subdomain}"
   dns_suffix                        = "${var.dns_suffix}"
@@ -57,6 +61,7 @@ module "pas" {
   cf_resources_storage_container_name  = "${var.cf_resources_storage_container_name}"
 
   resource_group_name                 = "${module.infra.resource_group_name}"
+  network_rg_name                     = "${module.infra.network_rg_name}"
   dns_zone_name                       = "${module.infra.dns_zone_name}"
   network_name                        = "${module.infra.network_name}"
   bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
@@ -74,7 +79,7 @@ module "certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${var.isolation_segment ? 1 : 0}"
+  deploy = "${var.isolation_segment ? 1 : 0}"
 
   environment = "${var.env_name}"
   location    = "${var.location}"

@@ -89,12 +89,13 @@ variable "ops_manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "dns_suffix" {}
+variable "dns_suffix" {
+}
 
 variable "dns_subdomain" {
-  "type"        = "string"
-  "description" = "The base subdomain used for PCF. For example, if your dns_subdomain is `cf`, and your dns_suffix is `pivotal.io`, your PCF domain would be `cf.pivotal.io`"
-  "default"     = ""
+  type        = "string"
+  description = "The base subdomain used for PCF. For example, if your dns_subdomain is `cf`, and your dns_suffix is `pivotal.io`, your PCF domain would be `cf.pivotal.io`"
+  default     = ""
 }
 
 variable "isolation_segment" {
@@ -143,4 +144,26 @@ variable "pcf_pas_subnet" {
 variable "pcf_services_subnet" {
   type    = "string"
   default = "10.0.4.0/22"
+}
+
+variable "use_existing_rgs" {
+  default = false
+}
+
+variable "pcf_vnet_rg" {
+  default = ""
+}
+
+variable "pcf_vnet_name" {
+  default = ""
+}
+
+variable "create_vnet" {
+  default = true
+}
+
+variable "env_short_name" {}
+
+variable "vm_admin_username" {
+  default = "ubuntu"
 }

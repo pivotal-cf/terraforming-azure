@@ -1,6 +1,6 @@
 resource "tls_cert_request" "ssl_csr" {
   key_algorithm   = "RSA"
-  private_key_pem = "${tls_private_key.ssl_private_key.private_key_pem}"
+  private_key_pem = "${tls_private_key.ssl_private_key[0].private_key_pem}"
 
   dns_names = [
     "*.iso.${var.dns_zone}",
@@ -19,7 +19,7 @@ resource "tls_cert_request" "ssl_csr" {
 }
 
 resource "tls_locally_signed_cert" "ssl_cert" {
-  cert_request_pem   = "${tls_cert_request.ssl_csr.cert_request_pem}"
+  cert_request_pem   = "${tls_cert_request.ssl_csr[0].cert_request_pem}"
   ca_key_algorithm   = "RSA"
   ca_private_key_pem = "${var.ssl_ca_private_key}"
   ca_cert_pem        = "${var.ssl_ca_cert}"

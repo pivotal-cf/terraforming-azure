@@ -4,7 +4,7 @@ resource "azurerm_lb" "mysql" {
   resource_group_name = "${var.resource_group_name}"
   sku                 = "Standard"
 
-  frontend_ip_configuration = {
+  frontend_ip_configuration {
     name      = "frontendip"
     subnet_id = "${azurerm_subnet.pas_subnet.id}"
   }

@@ -12,7 +12,7 @@ resource "azurerm_lb" "diego-ssh" {
   resource_group_name = "${var.resource_group_name}"
   sku                 = "Standard"
 
-  frontend_ip_configuration = {
+  frontend_ip_configuration {
     name                 = "frontendip"
     public_ip_address_id = "${azurerm_public_ip.diego-ssh-lb-public-ip.id}"
   }
