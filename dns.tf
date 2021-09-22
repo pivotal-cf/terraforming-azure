@@ -57,7 +57,7 @@ resource "azurerm_dns_a_record" "mysql" {
 }
 
 resource "azurerm_dns_a_record" "tcp" {
-  name                = "tcp"
+  name                = "tcp.apps"
   zone_name           = "${azurerm_dns_zone.env_dns_zone.name}"
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   ttl                 = "60"
