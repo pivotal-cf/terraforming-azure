@@ -9,7 +9,8 @@ provider "azurerm" {
   tenant_id       = "${var.tenant_id}"
   environment     = "${var.cloud_name}"
 
-  version = "~> 1.32"
+  # version = "~> 1.32"
+  version = "= 3.81.0"
 }
 
 module "infra" {
