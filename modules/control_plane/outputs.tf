@@ -3,7 +3,7 @@ output "cidr" {
 }
 
 output "postgres_fqdn" {
-  value = "${element(concat(azurerm_postgresql_server.plane.*.fqdn, list("")), 0)}"
+  value = "${element(tolist(azurerm_postgresql_server.plane.*.fqdn), 0)}"
 }
 
 output "postgres_password" {
@@ -11,7 +11,7 @@ output "postgres_password" {
 }
 
 output "postgres_username" {
-  value = "${var.postgres_username}@${element(concat(azurerm_postgresql_server.plane.*.name, list("")), 0)}"
+  value = "${var.postgres_username}@${element(tolist(azurerm_postgresql_server.plane.*.name), 0)}"
 }
 
 output "plane_lb_name" {

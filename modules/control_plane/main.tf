@@ -34,13 +34,13 @@ resource "azurerm_lb" "plane" {
 }
 
 resource "azurerm_lb_backend_address_pool" "plane" {
-  resource_group_name = "${var.resource_group_name}"
+  # resource_group_name = "${var.resource_group_name}"
   name                = "${local.name_prefix}-pool"
   loadbalancer_id     = "${azurerm_lb.plane.id}"
 }
 
 resource "azurerm_lb_probe" "plane" {
-  resource_group_name = "${var.resource_group_name}"
+  # resource_group_name = "${var.resource_group_name}"
   count               = "${length(local.web_ports)}"
   name                = "${local.name_prefix}-${element(local.web_ports, count.index)}-probe"
 
@@ -53,7 +53,7 @@ resource "azurerm_lb_probe" "plane" {
 }
 
 resource "azurerm_lb_rule" "plane" {
-  resource_group_name = "${var.resource_group_name}"
+  # resource_group_name = "${var.resource_group_name}"
   count               = "${length(local.web_ports)}"
   name                = "${local.name_prefix}-${element(local.web_ports, count.index)}"
 
@@ -61,7 +61,7 @@ resource "azurerm_lb_rule" "plane" {
   loadbalancer_id                = "${azurerm_lb.plane.id}"
   frontend_port                  = "${element(local.web_ports, count.index)}"
   backend_port                   = "${element(local.web_ports, count.index)}"
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.plane.id}"
+  # backend_address_pool_id        = "${azurerm_lb_backend_address_pool.plane.id}"
   frontend_ip_configuration_name = "${azurerm_public_ip.plane.name}"
   probe_id                       = "${element(azurerm_lb_probe.plane.*.id, count.index)}"
 }

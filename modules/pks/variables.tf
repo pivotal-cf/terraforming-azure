@@ -3,7 +3,7 @@ variable "env_id" {}
 variable "location" {}
 
 variable "resource_group_name" {
-  type = "string"
+  type = string
 }
 
 variable "network_name" {}

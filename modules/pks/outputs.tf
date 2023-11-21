@@ -13,11 +13,11 @@ output "pks_subnet_name" {
 }
 
 output "pks_subnet_cidr" {
-  value = "${azurerm_subnet.pks.address_prefix}"
+  value = "${azurerm_subnet.pks.address_prefixes[0]}"
 }
 
 output "pks_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.pks.address_prefix, 1)}"
+  value = "${cidrhost(azurerm_subnet.pks.address_prefixes[0], 1)}"
 }
 
 output "services_subnet_name" {
@@ -25,19 +25,19 @@ output "services_subnet_name" {
 }
 
 output "services_subnet_cidr" {
-  value = "${azurerm_subnet.pks_services.address_prefix}"
+  value = "${azurerm_subnet.pks_services.address_prefixes[0]}"
 }
 
 output "services_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.pks_services.address_prefix, 1)}"
+  value = "${cidrhost(azurerm_subnet.pks_services.address_prefixes[0], 1)}"
 }
 
 # Deprecated
 
 output "pks_subnet_cidrs" {
-  value = ["${azurerm_subnet.pks.address_prefix}"]
+  value = ["${azurerm_subnet.pks.address_prefixes}"]
 }
 
 output "services_subnet_cidrs" {
-  value = ["${azurerm_subnet.pks_services.address_prefix}"]
+  value = ["${azurerm_subnet.pks_services.address_prefixes}"]
 }

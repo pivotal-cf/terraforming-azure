@@ -15,7 +15,7 @@ variable "dns_suffix" {
 }
 
 variable "pcf_virtual_network_address_space" {
-  type    = "list"
+  type    = list
   default = []
 }
 
@@ -202,7 +202,7 @@ resource "azurerm_network_security_group" "bosh_deployed_vms_security_group" {
 
 resource "azurerm_virtual_network" "pcf_virtual_network" {
   name                = "${var.env_name}-virtual-network"
-  depends_on          = ["azurerm_resource_group.pcf_resource_group"]
+  depends_on          = [azurerm_resource_group.pcf_resource_group]
   resource_group_name = "${azurerm_resource_group.pcf_resource_group.name}"
   address_space       = "${var.pcf_virtual_network_address_space}"
   location            = "${var.location}"
@@ -210,11 +210,11 @@ resource "azurerm_virtual_network" "pcf_virtual_network" {
 
 resource "azurerm_subnet" "infrastructure_subnet" {
   name                      = "${var.env_name}-infrastructure-subnet"
-  depends_on                = ["azurerm_resource_group.pcf_resource_group"]
+  depends_on                = [azurerm_resource_group.pcf_resource_group]
   resource_group_name       = "${azurerm_resource_group.pcf_resource_group.name}"
   virtual_network_name      = "${azurerm_virtual_network.pcf_virtual_network.name}"
-  address_prefix            = "${var.pcf_infrastructure_subnet}"
-  network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
+  address_prefixes          = ["${var.pcf_infrastructure_subnet}"]
+  # network_security_group_id = "${azurerm_network_security_group.ops_manager_security_group.id}"
 }
 
 resource "azurerm_subnet_network_security_group_association" "ops_manager_security_group" {
@@ -258,11 +258,11 @@ output "infrastructure_subnet_name" {
 }
 
 output "infrastructure_subnet_cidr" {
-  value = "${azurerm_subnet.infrastructure_subnet.address_prefix}"
+  value = "${azurerm_subnet.infrastructure_subnet.address_prefixes}"
 }
 
 output "infrastructure_subnet_gateway" {
-  value = "${cidrhost(azurerm_subnet.infrastructure_subnet.address_prefix, 1)}"
+  value = "${cidrhost(azurerm_subnet.infrastructure_subnet.address_prefixes[0], 1)}"
 }
 
 output "security_group_id" {
@@ -284,5 +284,5 @@ output "bosh_deployed_vms_security_group_name" {
 # Deprecated
 
 output "infrastructure_subnet_cidrs" {
-  value = ["${azurerm_subnet.infrastructure_subnet.address_prefix}"]
+  value = ["${azurerm_subnet.infrastructure_subnet.address_prefixes}"]
 }

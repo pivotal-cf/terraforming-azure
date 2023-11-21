@@ -1,17 +1,17 @@
-terraform {
-  required_version = "= 0.11.15"
-}
+# terraform {
+#   required_version = "= 0.11.15"
+# }
 
-provider "azurerm" {
-  subscription_id = "${var.subscription_id}"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
-  tenant_id       = "${var.tenant_id}"
-  environment     = "${var.cloud_name}"
+# provider "azurerm" {
+#   subscription_id = "${var.subscription_id}"
+#   client_id       = "${var.client_id}"
+#   client_secret   = "${var.client_secret}"
+#   tenant_id       = "${var.tenant_id}"
+#   environment     = "${var.cloud_name}"
 
-  # version = "~> 1.32"
-  version = "= 2.88.0"
-}
+#   # version = "~> 1.32"
+#   version = "= 2.88.0"
+# }
 
 module "infra" {
   source = "../modules/infra"
@@ -113,7 +113,7 @@ resource "azurerm_user_assigned_identity" "pks_master_identity" {
 
 resource "azurerm_role_assignment" "master_role_assignemnt" {
   scope              = "${data.azurerm_subscription.primary.id}/resourceGroups/${var.env_name}"
-  role_definition_id = "${azurerm_role_definition.pks_master_role.id}"
+  role_definition_id = "${azurerm_role_definition.pks_master_role.role_definition_resource_id}"
   principal_id       = "${azurerm_user_assigned_identity.pks_master_identity.principal_id}"
 }
 
@@ -126,7 +126,7 @@ resource "azurerm_user_assigned_identity" "pks_worker_identity" {
 
 resource "azurerm_role_assignment" "worker_role_assignemnt" {
   scope              = "${data.azurerm_subscription.primary.id}/resourceGroups/${var.env_name}"
-  role_definition_id = "${azurerm_role_definition.pks_worker_role.id}"
+  role_definition_id = "${azurerm_role_definition.pks_worker_role.role_definition_resource_id}"
   principal_id       = "${azurerm_user_assigned_identity.pks_worker_identity.principal_id}"
 }
 
