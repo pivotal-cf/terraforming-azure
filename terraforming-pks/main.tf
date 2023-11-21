@@ -142,5 +142,5 @@ resource "azurerm_dns_ns_record" "environment_ns_records" {
   resource_group_name = "pks-releng-azure"
   ttl                 = 300
 
-  records = ["${module.infra.dns_zone_name_servers[0]}", "${module.infra.dns_zone_name_servers[1]}", "${module.infra.dns_zone_name_servers[2]}", "${module.infra.dns_zone_name_servers[3]}"]
+  records = module.infra.dns_zone_name_servers
 }
