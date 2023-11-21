@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "bosh_root_storage_account" {
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  min_tls_version       = "TLS1_2"
+  min_tls_version          = "TLS1_2"
 
   tags = {
     environment = "${var.env_name}"

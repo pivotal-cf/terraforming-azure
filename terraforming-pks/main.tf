@@ -10,7 +10,7 @@ provider "azurerm" {
   environment     = "${var.cloud_name}"
 
   # version = "~> 1.32"
-  version = "= 3.81.0"
+  version = "= 2.88.0"
 }
 
 module "infra" {
