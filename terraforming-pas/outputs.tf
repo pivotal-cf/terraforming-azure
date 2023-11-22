@@ -216,7 +216,7 @@ output "management_subnets" {
 }
 
 output "management_subnet_cidrs" {
-  value = ["${module.infra.infrastructure_subnet_cidrs}"]
+  value = ["${module.infra.}"]
 }
 
 output "management_subnet_gateway" {

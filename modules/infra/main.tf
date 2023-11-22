@@ -284,5 +284,5 @@ output "bosh_deployed_vms_security_group_name" {
 # Deprecated
 
 output "infrastructure_subnet_cidrs" {
-  value = ["${azurerm_subnet.infrastructure_subnet.address_prefixes}"]
+  value = azurerm_subnet.infrastructure_subnet.address_prefixes[0]
 }
