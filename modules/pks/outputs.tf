@@ -35,9 +35,9 @@ output "services_subnet_gateway" {
 # Deprecated
 
 output "pks_subnet_cidrs" {
-  value = ["${azurerm_subnet.pks.address_prefixes}"]
+  value = azurerm_subnet.pks.address_prefixes[0]
 }
 
 output "services_subnet_cidrs" {
-  value = ["${azurerm_subnet.pks_services.address_prefixes}"]
+  value = azurerm_subnet.pks_services.address_prefixes[0]
 }
