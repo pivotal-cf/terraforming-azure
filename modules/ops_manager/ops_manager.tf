@@ -39,7 +39,7 @@ resource "azurerm_image" "ops_manager_image" {
   os_disk {
     os_type  = "Linux"
     os_state = "Generalized"
-    blob_uri = "${azurerm_storage_blob.ops_manager_image.url}"
+    blob_uri = "${azurerm_storage_blob.ops_manager_image[0].url}"
     size_gb  = 150
   }
 }
@@ -59,7 +59,7 @@ resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
   zone_name           = "${var.dns_zone_name}"
   resource_group_name = "${var.resource_group_name}"
   ttl                 = "60"
-  records             = ["${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"]
+  records             = ["${azurerm_public_ip.optional_ops_manager_public_ip[0].ip_address}"]
   count               = "${local.optional_ops_man_vm}"
 }
 
@@ -95,13 +95,13 @@ resource "azurerm_virtual_machine" "ops_manager_vm" {
   depends_on                    = ["azurerm_network_interface.ops_manager_nic"]
   location                      = "${var.location}"
   resource_group_name           = "${var.resource_group_name}"
-  network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic.id}"]
+  network_interface_ids         = ["${azurerm_network_interface.ops_manager_nic[0].id}"]
   vm_size                       = "${var.ops_manager_vm_size}"
   delete_os_disk_on_termination = "true"
   count                         = "${local.ops_man_vm}"
 
   storage_image_reference {
-    id = "${azurerm_image.ops_manager_image.id}"
+    id = "${azurerm_image.ops_manager_image[0].id}"
   }
 
   storage_os_disk {
@@ -151,7 +151,7 @@ resource "azurerm_network_interface" "optional_ops_manager_nic" {
     subnet_id                     = "${var.subnet_id}"
     private_ip_address_allocation = "static"
     private_ip_address            = "10.0.8.5"
-    public_ip_address_id          = "${azurerm_public_ip.optional_ops_manager_public_ip.id}"
+    public_ip_address_id          = "${azurerm_public_ip.optional_ops_manager_public_ip[0].id}"
   }
 }
 
@@ -160,12 +160,12 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
   depends_on            = ["azurerm_network_interface.optional_ops_manager_nic"]
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
-  network_interface_ids = ["${azurerm_network_interface.optional_ops_manager_nic.id}"]
+  network_interface_ids = ["${azurerm_network_interface.optional_ops_manager_nic[0].id}"]
   vm_size               = "${var.ops_manager_vm_size}"
   count                 = "${local.optional_ops_man_vm}"
 
   storage_image_reference {
-    id = "${azurerm_image.ops_manager_image.id}"
+    id = "${azurerm_image.ops_manager_image[0].id}"
   }
 
   storage_os_disk {

@@ -1,4 +1,4 @@
-variable "count" {}
+variable "deploy" {}
 
 variable "location" {
   type = "string"
