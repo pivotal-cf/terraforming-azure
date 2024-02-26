@@ -20,6 +20,7 @@ resource "azurerm_public_ip" "plane" {
   name                = "${local.name_prefix}-ip"
   location            = "${var.location}"
   allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_lb" "plane" {

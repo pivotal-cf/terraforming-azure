@@ -71,6 +71,7 @@ resource "azurerm_public_ip" "ops_manager_public_ip" {
   resource_group_name     = "${var.resource_group_name}"
   allocation_method       = "Static"
   idle_timeout_in_minutes = 30
+  sku                     = "Standard"
 }
 
 resource "azurerm_network_interface" "ops_manager_nic" {
@@ -136,6 +137,7 @@ resource "azurerm_public_ip" "optional_ops_manager_public_ip" {
   resource_group_name = "${var.resource_group_name}"
   allocation_method   = "static"
   count               = "${local.optional_ops_man_vm}"
+  sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "optional_ops_manager_nic" {
